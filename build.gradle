@@ -1,0 +1,19 @@
+group 'com.google.iot'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+   mavenCentral()
+}
+
+
+dependencies {
+   compile 'org.apache.commons:commons-lang3:3.4'
+   compile 'com.google.guava:guava:19.0'
+   compile files('lib/rxtx-2.2.jar')
+   compile files('lib/seroUtils.jar')
+}
