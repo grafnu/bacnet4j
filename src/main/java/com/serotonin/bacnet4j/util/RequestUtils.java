@@ -304,7 +304,6 @@ public class RequestUtils {
                     updater.increment(oid, ack.getPropertyIdentifier(), ack.getPropertyArrayIndex(), ack.getValue());
                 }
                 catch (BACnetTimeoutException e) {
-                	  System.out.println("check3");
                     updater.increment(oid, ref.getPropertyIdentifier(), ref.getPropertyArrayIndex(), new BACnetError(
                             ErrorClass.communication, ErrorCode.timeout));
                 }
