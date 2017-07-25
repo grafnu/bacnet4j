@@ -345,6 +345,11 @@ public class IpNetwork extends Network implements Runnable {
     }
 
     @Override
+    public Address getSourceAddress() {
+        return new Address(this.getLocalNetworkNumber(), getLocalBindAddress(), getPort());
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();

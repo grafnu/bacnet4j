@@ -46,6 +46,8 @@ abstract public class Network {
 
     abstract public Address[] getAllLocalAddresses();
 
+    abstract public Address getSourceAddress();
+
     abstract public void sendAPDU(Address recipient, OctetString linkService, APDU apdu, boolean broadcast)
             throws BACnetException;
 
@@ -53,18 +55,19 @@ abstract public class Network {
 
     protected void writeNpci(ByteQueue queue, Address recipient, OctetString link, APDU apdu) {
         NPCI npci;
+        Address source = getSourceAddress();
         if (recipient.isGlobal())
-            npci = new NPCI((Address) null);
+            npci = new NPCI(source);
         else if (isLocal(recipient)) {
             if (link != null)
                 throw new RuntimeException("Invalid arguments: link service address provided for a local recipient");
-            npci = new NPCI(null, null, apdu.expectsReply());
+            npci = new NPCI(null, source, apdu.expectsReply());
         }
         else {
             if (link == null)
                 throw new RuntimeException(
                         "Invalid arguments: link service address not provided for a remote recipient");
-            npci = new NPCI(recipient, null, apdu.expectsReply());
+            npci = new NPCI(recipient, source, apdu.expectsReply());
         }
         npci.write(queue);
     }
