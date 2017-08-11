@@ -22,6 +22,13 @@
  */
 package com.serotonin.bacnet4j.test;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.List;
 
 import com.serotonin.bacnet4j.LocalDevice;
@@ -42,13 +49,20 @@ import com.serotonin.bacnet4j.util.RequestUtils;
  * @author Matthew Lohbihler
  */
 public class DiscoveryTest {
+
+    public static final String BROADCAST_IP = "192.168.99.255";
+    public static final String LOCAL_BIND_ADDRESS = "0.0.0.0";
+    public static final String LOCAL_IP_ADDRESS = "192.168.99.1";
+    public static final int PORT = 47808;
+    public static final int DEVICE_ID = 2516;
+
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws Exception {
-        IpNetwork network = new IpNetwork(IpNetwork.DEFAULT_BROADCAST_IP, IpNetwork.DEFAULT_PORT,
-                IpNetwork.DEFAULT_BIND_IP, 1);
+        IpNetwork network = new IpNetwork(BROADCAST_IP, PORT,
+            LOCAL_BIND_ADDRESS, 0, LOCAL_IP_ADDRESS);
 
         // LocalDevice localDevice = new LocalDevice(1234, "192.168.0.255");
-        LocalDevice localDevice = new LocalDevice(1234, new Transport(network));
+        LocalDevice localDevice = new LocalDevice(DEVICE_ID, new Transport(network));
         localDevice.getEventHandler().addListener(new Listener());
         localDevice.initialize();
 
@@ -67,26 +81,30 @@ public class DiscoveryTest {
         localDevice.sendGlobalBroadcast(new WhoIsRequest());
 
         // Wait a bit for responses to come in.
-        Thread.sleep(1000);
+        Thread.sleep(5000);
 
         // Get extended information for all remote devices.
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
-            RequestUtils.getExtendedDeviceInformation(localDevice, d);
-            List<ObjectIdentifier> oids = ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
-                    localDevice, d, d.getObjectIdentifier(), PropertyIdentifier.objectList)).getValues();
+            try {
+                System.out.println("Query remote device " + d);
+                RequestUtils.getExtendedDeviceInformation(localDevice, d);
+                List<ObjectIdentifier>
+                    oids =
+                    ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
+                        localDevice, d, d.getObjectIdentifier(), PropertyIdentifier.objectList))
+                        .getValues();
 
-            PropertyReferences refs = new PropertyReferences();
-            for (ObjectIdentifier oid : oids)
-                addPropertyReferences(refs, oid);
+                PropertyReferences refs = new PropertyReferences();
+                for (ObjectIdentifier oid : oids)
+                    addPropertyReferences(refs, oid);
 
-            PropertyValues pvs = RequestUtils.readProperties(localDevice, d, refs, null);
-            // pvs.
-            System.out.println(pvs);
-            System.out.println(d);
+                PropertyValues pvs = RequestUtils.readProperties(localDevice, d, refs, null);
+                // pvs.
+                System.out.println(pvs);
+            } catch (Exception e) {
+                System.out.println("Error reading device " + e.getMessage());
+            }
         }
-
-        // Wait a bit for responses to come in.
-        Thread.sleep(200000);
 
         localDevice.terminate();
     }

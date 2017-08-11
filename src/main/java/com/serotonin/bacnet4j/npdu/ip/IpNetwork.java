@@ -31,6 +31,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class IpNetwork extends Network implements Runnable {
 
     private final int port;
     private final String localBindAddress;
+    private final String localIpAddress;
     private final String broadcastIp;
 
     // Runtime
@@ -85,16 +87,21 @@ public class IpNetwork extends Network implements Runnable {
     }
 
     public IpNetwork(String broadcastIp, int port, String localBindAddress, int localNetworkNumber) {
+        this(broadcastIp, port, localBindAddress, localNetworkNumber, localBindAddress);
+    }
+
+    public IpNetwork(String broadcastIp, int port, String localBindAddress, int localNetworkNumber, String localIpAddress) {
         super(localNetworkNumber);
         this.broadcastIp = broadcastIp;
         this.port = port;
         this.localBindAddress = localBindAddress;
+        this.localIpAddress = localIpAddress;
     }
 
 
     @Override
     public NetworkIdentifier getNetworkIdentifier() {
-        return new IpNetworkIdentifier(port, localBindAddress);
+        return new IpNetworkIdentifier(port, localIpAddress);
     }
 
     @Override
@@ -108,6 +115,10 @@ public class IpNetwork extends Network implements Runnable {
 
     public String getLocalBindAddress() {
         return localBindAddress;
+    }
+
+    public String getLocalIpAddress() {
+        return localIpAddress;
     }
 
     public String getBroadcastIp() {
@@ -239,8 +250,12 @@ public class IpNetwork extends Network implements Runnable {
                 socket.receive(p);
 
                 ByteQueue queue = new ByteQueue(p.getData(), 0, p.getLength());
-                OctetString link = new OctetString(p.getAddress().getAddress(), p.getPort());
-                new IncomingMessageExecutor(this, queue, link).run();
+                byte[] address = p.getAddress().getAddress();
+                // Only process ipv4 addresses.
+                if (address.length == 4) {
+                    OctetString link = new OctetString(address, p.getPort());
+                    new IncomingMessageExecutor(this, queue, link).run();
+                }
                 p.setData(buffer);
             }
             catch (IOException e) {
@@ -346,7 +361,7 @@ public class IpNetwork extends Network implements Runnable {
 
     @Override
     public Address getSourceAddress() {
-        return new Address(this.getLocalNetworkNumber(), getLocalBindAddress(), getPort());
+        return new Address(this.getLocalNetworkNumber(), getLocalIpAddress(), getPort());
     }
 
     @Override
@@ -355,6 +370,7 @@ public class IpNetwork extends Network implements Runnable {
         int result = super.hashCode();
         result = prime * result + ((broadcastIp == null) ? 0 : broadcastIp.hashCode());
         result = prime * result + ((localBindAddress == null) ? 0 : localBindAddress.hashCode());
+        result = prime * result + ((localIpAddress == null) ? 0 : localIpAddress.hashCode());
         result = prime * result + port;
         return result;
     }
@@ -379,6 +395,12 @@ public class IpNetwork extends Network implements Runnable {
                 return false;
         }
         else if (!localBindAddress.equals(other.localBindAddress))
+            return false;
+        if (localIpAddress == null) {
+            if (other.localIpAddress != null)
+                return false;
+        }
+        else if (!localIpAddress.equals(other.localIpAddress))
             return false;
         if (port != other.port)
             return false;
