@@ -22,15 +22,6 @@
  */
 package com.serotonin.bacnet4j.test;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.util.List;
-
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.event.DeviceEventAdapter;
@@ -45,21 +36,27 @@ import com.serotonin.bacnet4j.util.PropertyReferences;
 import com.serotonin.bacnet4j.util.PropertyValues;
 import com.serotonin.bacnet4j.util.RequestUtils;
 
+import java.util.List;
+
 /**
  * @author Matthew Lohbihler
  */
 public class DiscoveryTest {
 
-    public static final String BROADCAST_IP = "192.168.99.255";
     public static final String LOCAL_BIND_ADDRESS = "0.0.0.0";
-    public static final String LOCAL_IP_ADDRESS = "192.168.99.1";
     public static final int PORT = 47808;
     public static final int DEVICE_ID = 2516;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws Exception {
-        IpNetwork network = new IpNetwork(BROADCAST_IP, PORT,
-            LOCAL_BIND_ADDRESS, 0, LOCAL_IP_ADDRESS);
+        if (args.length != 2) {
+            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr");
+        }
+        String localIpAddr = args[0];
+        String broadcastIpAddr = args[1];
+
+        IpNetwork network = new IpNetwork(broadcastIpAddr, PORT,
+            LOCAL_BIND_ADDRESS, 0, localIpAddr);
 
         // LocalDevice localDevice = new LocalDevice(1234, "192.168.0.255");
         LocalDevice localDevice = new LocalDevice(DEVICE_ID, new Transport(network));
