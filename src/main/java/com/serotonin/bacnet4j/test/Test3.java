@@ -13,12 +13,13 @@ import com.serotonin.bacnet4j.util.RequestUtils;
 
 public class Test3 {
     public static void main(String[] args) throws Exception {
-        IpNetwork network = new IpNetwork();
+        IpNetwork network = new IpNetwork(IpNetwork.DEFAULT_BROADCAST_IP, 47808,
+            IpNetwork.DEFAULT_BIND_IP, 0, "172.25.73.60");
         Transport transport = new Transport(network);
         LocalDevice ld = new LocalDevice(1, transport);
         ld.initialize();
 
-        RemoteDevice rd = ld.findRemoteDevice(new Address("192.168.0.68", 0xbac0), null, 101);
+        RemoteDevice rd = ld.findRemoteDevice(new Address("172.17.7.74", 0xbac0), null, 3400205);
 
         Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(ld, rd, null,
                 PropertyIdentifier.objectName, PropertyIdentifier.vendorName, PropertyIdentifier.modelName,

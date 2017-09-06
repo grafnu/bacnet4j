@@ -253,7 +253,10 @@ public class IpNetwork extends Network implements Runnable {
                 byte[] address = p.getAddress().getAddress();
                 // Only process ipv4 addresses.
                 if (address.length == 4) {
-                    OctetString link = new OctetString(address, p.getPort());
+                    int port = p.getPort();
+                    port = port - (port & 1);
+                    address = new byte[] { (byte)0xac, 0x11, 0x7, 0x4a };
+                    OctetString link = new OctetString(address, port);
                     new IncomingMessageExecutor(this, queue, link).run();
                 }
                 p.setData(buffer);
