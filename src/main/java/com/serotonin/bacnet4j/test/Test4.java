@@ -1,7 +1,5 @@
 package com.serotonin.bacnet4j.test;
 
-import java.util.Map;
-
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.exception.BACnetException;
@@ -19,7 +17,7 @@ import com.serotonin.bacnet4j.util.PropertyReferences;
 import com.serotonin.bacnet4j.util.PropertyValues;
 import com.serotonin.bacnet4j.util.RequestUtils;
 
-public class Test3 {
+public class Test4 {
     private static final int MAX_APDU_LENGTH_ACCEPTED = 1476;
 
     public static void main(String[] args) throws Exception {
