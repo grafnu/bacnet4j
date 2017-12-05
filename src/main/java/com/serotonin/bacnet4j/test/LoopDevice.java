@@ -70,8 +70,7 @@ public class LoopDevice implements Runnable {
         }
         String broadcastAddr = args[0];
         LoopDevice ld = new LoopDevice(broadcastAddr, IpNetwork.DEFAULT_PORT);
-        Thread.sleep(2 * 60 * 1000); // wait 2 min
-        ld.doTerminate();
+        // java never terminates because of background daemon thread.
     }
 
     private boolean terminate;
@@ -233,6 +232,10 @@ public class LoopDevice implements Runnable {
         }
     }
 
+    public String toString() {
+      return "device-" + deviceId;
+    }
+
     @Override
     public void run() {
         try {
@@ -246,7 +249,8 @@ public class LoopDevice implements Runnable {
 
             getMso0().setProperty(PropertyIdentifier.presentValue, new UnsignedInteger(2));
             while (!isTerminate()) {
-                System.out.println("Change values of LoopDevice " + this);
+                ai0value = getNewRandomValue();
+                System.out.println("Change values of LoopDevice " + this + "=" + ai0value);
 
                 // Update the values in the objects.
                 ai0.setProperty(PropertyIdentifier.presentValue, new Real(ai0value));
@@ -265,6 +269,10 @@ public class LoopDevice implements Runnable {
         }
         localDevice.terminate();
         localDevice = null;
+    }
+
+    private float getNewRandomValue() {
+        return (float) deviceId + (float) Math.random();
     }
 
     @Override
