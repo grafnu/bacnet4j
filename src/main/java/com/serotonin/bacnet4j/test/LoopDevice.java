@@ -65,11 +65,12 @@ public class LoopDevice implements Runnable {
     private final int deviceId = (int) Math.floor(Math.random() * 1000.0);
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            throw new RuntimeException("Usage: [broadcastAddr]");
+        if (args.length != 2) {
+            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr");
         }
-        String broadcastAddr = args[0];
-        LoopDevice ld = new LoopDevice(broadcastAddr, IpNetwork.DEFAULT_PORT);
+        String localIpAddr = args[0];
+        String broadcastIpAddr = args[1];
+        LoopDevice ld = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
         // java never terminates because of background daemon thread.
     }
 
@@ -84,7 +85,12 @@ public class LoopDevice implements Runnable {
     private BACnetObject ao0;
 
     public LoopDevice(String broadcastAddress, int port) throws BACnetServiceException, Exception {
-        network = new IpNetwork(broadcastAddress, port);
+        this(broadcastAddress, port, IpNetwork.DEFAULT_BIND_IP);
+    }
+
+    public LoopDevice(String broadcastAddress, int port, String localAddress) throws BACnetServiceException, Exception {
+        network = new IpNetwork(broadcastAddress, port,
+            IpNetwork.DEFAULT_BIND_IP, 0, localAddress);
         System.out.println("Creating LoopDevice id " + deviceId);
         localDevice = new LocalDevice(deviceId, new Transport(network));
         try {

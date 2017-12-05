@@ -132,13 +132,15 @@ public class IpNetwork extends Network implements Runnable {
         this.localDevice = transport.getLocalDevice();
 
         System.err.println("Binding to address " + localBindAddress + ":" + port);
+        System.err.println("Local address is " + localIpAddress + ":" + port);
+        System.err.println("Using broadcast address " + broadcastIp + ":" + port);
+
         if (localBindAddress.equals("0.0.0.0"))
             socket = new DatagramSocket(port);
         else
             socket = new DatagramSocket(port, InetAddress.getByName(localBindAddress));
         socket.setBroadcast(true);
 
-        //        broadcastAddress = new Address(broadcastIp, port, new Network(0xffff, new byte[0]));
         broadcastAddress = new Address(BACnetUtils.dottedStringToBytes(broadcastIp), port);
 
         thread = new Thread(this);
