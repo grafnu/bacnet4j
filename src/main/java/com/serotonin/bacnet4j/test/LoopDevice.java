@@ -61,9 +61,16 @@ import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
  * @author aploese
  */
 public class LoopDevice implements Runnable {
+
+    private final int deviceId = (int) Math.floor(Math.random() * 1000.0);
+
     public static void main(String[] args) throws Exception {
-        LoopDevice ld = new LoopDevice("127.0.0.255", IpNetwork.DEFAULT_PORT + 1);
-        Thread.sleep(12000); // wait 2 min
+        if (args.length != 1) {
+            throw new RuntimeException("Usage: [broadcastAddr]");
+        }
+        String broadcastAddr = args[0];
+        LoopDevice ld = new LoopDevice(broadcastAddr, IpNetwork.DEFAULT_PORT);
+        Thread.sleep(2 * 60 * 1000); // wait 2 min
         ld.doTerminate();
     }
 
@@ -79,7 +86,8 @@ public class LoopDevice implements Runnable {
 
     public LoopDevice(String broadcastAddress, int port) throws BACnetServiceException, Exception {
         network = new IpNetwork(broadcastAddress, port);
-        localDevice = new LocalDevice(1968, new Transport(network));
+        System.out.println("Creating LoopDevice id " + deviceId);
+        localDevice = new LocalDevice(deviceId, new Transport(network));
         try {
             localDevice.getEventHandler().addListener(new DeviceEventListener() {
 
@@ -238,7 +246,7 @@ public class LoopDevice implements Runnable {
 
             getMso0().setProperty(PropertyIdentifier.presentValue, new UnsignedInteger(2));
             while (!isTerminate()) {
-                System.out.print("Change values of LoopDevice " + this);
+                System.out.println("Change values of LoopDevice " + this);
 
                 // Update the values in the objects.
                 ai0.setProperty(PropertyIdentifier.presentValue, new Real(ai0value));

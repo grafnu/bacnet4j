@@ -75,11 +75,14 @@ public class DiscoveryTest {
         // rd.setMaxAPDULengthAccepted(1476);
         // localDevice.addRemoteDevice(rd);
         //        localDevice.sendLocalBroadcast(new WhoIsRequest());
+        System.err.println("Sending whois...");
         localDevice.sendGlobalBroadcast(new WhoIsRequest());
 
         // Wait a bit for responses to come in.
+        System.err.println("Waiting...");
         Thread.sleep(5000);
 
+        System.err.println("Processing...");
         // Get extended information for all remote devices.
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
             try {
@@ -103,6 +106,7 @@ public class DiscoveryTest {
             }
         }
 
+        System.err.println("Done.");
         localDevice.terminate();
     }
 

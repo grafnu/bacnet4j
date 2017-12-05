@@ -131,6 +131,7 @@ public class IpNetwork extends Network implements Runnable {
 
         this.localDevice = transport.getLocalDevice();
 
+        System.err.println("Binding to address " + localBindAddress + ":" + port);
         if (localBindAddress.equals("0.0.0.0"))
             socket = new DatagramSocket(port);
         else
@@ -245,22 +246,25 @@ public class IpNetwork extends Network implements Runnable {
         byte[] buffer = new byte[MESSAGE_LENGTH];
         DatagramPacket p = new DatagramPacket(buffer, buffer.length);
 
-        while (!socket.isClosed()) {
-            try {
-                socket.receive(p);
+        try {
+            while (!socket.isClosed()) {
+                try {
+                    socket.receive(p);
 
-                ByteQueue queue = new ByteQueue(p.getData(), 0, p.getLength());
-                byte[] address = p.getAddress().getAddress();
-                // Only process ipv4 addresses.
-                if (address.length == 4) {
-                    OctetString link = new OctetString(address, p.getPort());
-                    new IncomingMessageExecutor(this, queue, link).run();
+                    ByteQueue queue = new ByteQueue(p.getData(), 0, p.getLength());
+                    byte[] address = p.getAddress().getAddress();
+                    // Only process ipv4 addresses.
+                    if (address.length == 4) {
+                        OctetString link = new OctetString(address, p.getPort());
+                        new IncomingMessageExecutor(this, queue, link).run();
+                    }
+                    p.setData(buffer);
+                } catch (IOException e) {
+                    // no op. This happens if the socket gets closed by the destroy method.
                 }
-                p.setData(buffer);
             }
-            catch (IOException e) {
-                // no op. This happens if the socket gets closed by the destroy method.
-            }
+        } finally {
+            System.err.println("Done with receive loop");
         }
     }
 
