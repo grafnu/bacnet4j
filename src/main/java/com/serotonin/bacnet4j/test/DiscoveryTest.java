@@ -28,6 +28,7 @@ import com.serotonin.bacnet4j.event.DeviceEventAdapter;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.Transport;
+import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
@@ -99,8 +100,9 @@ public class DiscoveryTest {
                     addPropertyReferences(refs, oid);
 
                 PropertyValues pvs = RequestUtils.readProperties(localDevice, d, refs, null);
-                // pvs.
-                System.out.println(pvs);
+                for (ObjectPropertyReference opr : pvs) {
+                    System.out.println("  " + opr.getObjectIdentifier() + "/" + opr.getPropertyIdentifier() + " = " + pvs.get(opr));
+                }
             } catch (Exception e) {
                 System.out.println("Error reading device " + e.getMessage());
             }
