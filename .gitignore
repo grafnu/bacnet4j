@@ -4,4 +4,6 @@ out/
 .gradle/
 build/
 readings/
+.idea/codeStyles
+
 
