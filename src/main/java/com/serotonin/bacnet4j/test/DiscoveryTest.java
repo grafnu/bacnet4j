@@ -64,18 +64,6 @@ public class DiscoveryTest {
         localDevice.getEventHandler().addListener(new Listener());
         localDevice.initialize();
 
-        // Who is
-        // InetSocketAddress addr = new InetSocketAddress(InetAddress.getByName("96.51.27.33"), 47808);
-        // localDevice.sendUnconfirmed(addr, null, new WhoIsRequest());
-        //        localDevice.sendBroadcast(network.getBroadcastAddress(2068), null, new WhoIsRequest());
-        // localDevice.sendUnconfirmed(new Address(new UnsignedInteger(47808), new OctetString(new byte[] { (byte) 96,
-        // (byte) 51, (byte) 24, (byte) 1 })), null, new WhoIsRequest());
-        // RemoteDevice rd = new RemoteDevice(105, new Address(new UnsignedInteger(47808),
-        // new OctetString(new byte[] {(byte)206, (byte)210, 100, (byte)134})), null);
-        // rd.setSegmentationSupported(Segmentation.segmentedBoth);
-        // rd.setMaxAPDULengthAccepted(1476);
-        // localDevice.addRemoteDevice(rd);
-        //        localDevice.sendLocalBroadcast(new WhoIsRequest());
         System.err.println("Sending whois...");
         localDevice.sendGlobalBroadcast(new WhoIsRequest());
 
@@ -87,6 +75,10 @@ public class DiscoveryTest {
         // Get extended information for all remote devices.
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
             try {
+                if (d.getInstanceNumber() == DEVICE_ID) {
+                    System.out.println("Ignoring other device with self-same ID " + DEVICE_ID);
+                    continue;
+                }
                 System.out.println("Query remote device " + d);
                 RequestUtils.getExtendedDeviceInformation(localDevice, d);
                 List<ObjectIdentifier>
