@@ -44,10 +44,6 @@ import java.util.List;
  */
 public class DiscoveryTest {
 
-    public static final String LOCAL_BIND_ADDRESS = "0.0.0.0";
-    public static final int PORT = 47808;
-    public static final int DEVICE_ID = 2516;
-
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
@@ -56,13 +52,11 @@ public class DiscoveryTest {
         String localIpAddr = args[0];
         String broadcastIpAddr = args[1];
 
-        IpNetwork network = new IpNetwork(broadcastIpAddr, PORT,
-            LOCAL_BIND_ADDRESS, 0, localIpAddr);
+        LoopDevice loopDevice = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
 
-        // LocalDevice localDevice = new LocalDevice(1234, "192.168.0.255");
-        LocalDevice localDevice = new LocalDevice(DEVICE_ID, new Transport(network));
+        LocalDevice localDevice = loopDevice.getLocalDevice();
         localDevice.getEventHandler().addListener(new Listener());
-        localDevice.initialize();
+        int deviceId = loopDevice.getDeviceId();
 
         System.err.println("Sending whois...");
         localDevice.sendGlobalBroadcast(new WhoIsRequest());
@@ -75,8 +69,8 @@ public class DiscoveryTest {
         // Get extended information for all remote devices.
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
             try {
-                if (d.getInstanceNumber() == DEVICE_ID) {
-                    System.out.println("Ignoring other device with self-same ID " + DEVICE_ID);
+                if (d.getInstanceNumber() == deviceId) {
+                    System.out.println("Ignoring other device with self-same ID " + deviceId);
                     continue;
                 }
                 System.out.println("Query remote device " + d);

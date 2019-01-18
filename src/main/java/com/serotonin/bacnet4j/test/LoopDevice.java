@@ -328,6 +328,10 @@ public class LoopDevice implements Runnable {
         return localDevice;
     }
 
+    public int getDeviceId() {
+        return deviceId;
+    }
+
     /**
      * @return the ai0
      */
