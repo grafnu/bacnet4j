@@ -25,6 +25,7 @@ package com.serotonin.bacnet4j.test;
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.event.DeviceEventAdapter;
+import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.Transport;
@@ -44,7 +45,6 @@ import java.util.List;
  */
 public class DiscoveryTest {
 
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
             throw new RuntimeException("Usage: localIpAddr broadcastIpAddr");
@@ -54,9 +54,15 @@ public class DiscoveryTest {
 
         LoopDevice loopDevice = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
 
+        while (!loopDevice.isTerminate()) {
+            doWhoIs(loopDevice);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void doWhoIs(LoopDevice loopDevice)
+        throws BACnetException, InterruptedException {
         LocalDevice localDevice = loopDevice.getLocalDevice();
-        localDevice.getEventHandler().addListener(new Listener());
-        int deviceId = loopDevice.getDeviceId();
 
         System.err.println("Sending whois...");
         localDevice.sendGlobalBroadcast(new WhoIsRequest());
@@ -67,6 +73,7 @@ public class DiscoveryTest {
 
         System.err.println("Processing...");
         // Get extended information for all remote devices.
+        int deviceId = loopDevice.getDeviceId();
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
             try {
                 if (d.getInstanceNumber() == deviceId) {
@@ -94,8 +101,7 @@ public class DiscoveryTest {
             }
         }
 
-        System.err.println("Done.");
-        localDevice.terminate();
+        System.err.println("Done with whoIs.");
     }
 
     private static void addPropertyReferences(PropertyReferences refs, ObjectIdentifier oid) {
@@ -128,12 +134,5 @@ public class DiscoveryTest {
             return;
 
         refs.add(oid, PropertyIdentifier.presentValue);
-    }
-
-    static class Listener extends DeviceEventAdapter {
-        @Override
-        public void iAmReceived(RemoteDevice d) {
-            System.out.println("IAm received" + d);
-        }
     }
 }
