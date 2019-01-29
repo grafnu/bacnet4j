@@ -92,7 +92,9 @@ public class LoopDevice implements Runnable {
         network = new IpNetwork(broadcastAddress, port,
             IpNetwork.DEFAULT_BIND_IP, 0, localAddress);
         System.out.println("Creating LoopDevice id " + deviceId);
-        localDevice = new LocalDevice(deviceId, new Transport(network));
+      Transport transport = new Transport(network);
+      transport.setTimeout(1000);
+      localDevice = new LocalDevice(deviceId, transport);
         try {
             localDevice.getEventHandler().addListener(new DeviceEventListener() {
 
