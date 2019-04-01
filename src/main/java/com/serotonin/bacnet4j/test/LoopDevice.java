@@ -251,7 +251,7 @@ public class LoopDevice implements Runnable {
 
             // Let it go...
             float ai0value = 0;
-            float ai1value = 0;
+            float ai1value = (float) deviceId;
             boolean bi0value = false;
             boolean bi1value = false;
 
