@@ -49,7 +49,6 @@ public class MessageControl extends Thread {
         start();
     }
 
-    @Override
     public void destroy() {
         if (socket != null)
             socket.close();

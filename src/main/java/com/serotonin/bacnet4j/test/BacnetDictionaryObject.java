@@ -75,7 +75,6 @@ public class BacnetDictionaryObject {
 		}
 	}
 	
-	
 	private static class Points {
 		public Map<String, String> points = new Hashtable<String, String>();
 		
@@ -93,5 +92,4 @@ public class BacnetDictionaryObject {
 			}
 		}
 	}
-
 }

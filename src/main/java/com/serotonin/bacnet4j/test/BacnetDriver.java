@@ -34,8 +34,6 @@ public class BacnetDriver {
 	BacnetDictionaryObject bacnetDictionaryObject = new BacnetDictionaryObject();
 	Multimap<BacnetObjectType, Hashtable<String, String>>bacnetObjectMap = ArrayListMultimap.create();
 	
-	
-	
 	String[] dictionaryTypes = {
 			"Device",
 			"Analog Input", 
@@ -82,7 +80,6 @@ public class BacnetDriver {
         }
     }
 	
-	
 	public void getDevicePoints() throws Exception {
 		
 		for (RemoteDevice remoteDevice : allDevices) {
@@ -108,7 +105,6 @@ public class BacnetDriver {
             System.out.println(String.format("Properties read done in %d ms", System.currentTimeMillis() - start));
 //            printObject(remoteDevice.getObjectIdentifier(), pvs);
             
-            
             for (ObjectIdentifier oid : oids) {
                 printObject(oid, pvs, remoteDevice.getObjectIdentifier().toString());
             }
@@ -131,7 +127,6 @@ public class BacnetDriver {
             	
 //                System.out.println(String.format("\t\t%s = %s", opr.getPropertyIdentifier().toString(),
 //                        pvs.getNoErrorCheck(opr)));
-                
                 
              // get object type and assign it to BacnetObjectTypes
 				for (int dictionaryTypesPosition = 0; dictionaryTypesPosition < dictionaryTypes.length; dictionaryTypesPosition++) {
@@ -169,5 +164,4 @@ public class BacnetDriver {
             System.out.println("IAm received" + remoteDevice);
         }
     }
-
 }
