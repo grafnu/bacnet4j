@@ -26,10 +26,8 @@ public class BacnetDriver {
 	private static LocalDevice localDevice;
 	private static List<RemoteDevice> allDevices = new ArrayList<>();
 	private int discoverTimeout = 1;
-	private String reportText = "";
 	private String broadcastIp = "";
 	private boolean networkInitialized = false;
-//	private LoopDevice loopDevice;
 	
 	BacnetDictionaryObject bacnetDictionaryObject = new BacnetDictionaryObject();
 	Multimap<BacnetObjectType, Hashtable<String, String>>bacnetObjectMap = ArrayListMultimap.create();
@@ -86,70 +84,73 @@ public class BacnetDriver {
 			RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
 
 			@SuppressWarnings("unchecked")
-            List<ObjectIdentifier> oids = ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
-                    localDevice, remoteDevice, remoteDevice.getObjectIdentifier(), PropertyIdentifier.objectList)).getValues();
+            List<ObjectIdentifier> allObjectsIdentifier = 
+            	((SequenceOf<ObjectIdentifier>) 
+            			RequestUtils.sendReadPropertyAllowNull(
+            					localDevice, 
+            					remoteDevice, 
+            					remoteDevice.getObjectIdentifier(), 
+            					PropertyIdentifier.objectList))
+            	  .getValues();
 
             PropertyReferences refs = new PropertyReferences();
             // add the property references of the "device object" to the list
             refs.add(remoteDevice.getObjectIdentifier(), PropertyIdentifier.all);
 
             // and now from all objects under the device object >> ai0, ai1,bi0,bi1...
-            for (ObjectIdentifier oid : oids) {
-                refs.add(oid, PropertyIdentifier.all);
+            for (ObjectIdentifier objectIdentifier : allObjectsIdentifier) {
+                refs.add(objectIdentifier, PropertyIdentifier.all);
             }
 
             System.out.println("Start read properties");
             final long start = System.currentTimeMillis();
 
-            PropertyValues pvs = RequestUtils.readProperties(localDevice, remoteDevice, refs, null);
+            PropertyValues propertyValues = RequestUtils.readProperties(localDevice, remoteDevice, refs, null);
             System.out.println(String.format("Properties read done in %d ms", System.currentTimeMillis() - start));
-//            printObject(remoteDevice.getObjectIdentifier(), pvs);
+//            printObject(remoteDevice.getObjectIdentifier(), propertyValues);
             
-            for (ObjectIdentifier oid : oids) {
-                printObject(oid, pvs, remoteDevice.getObjectIdentifier().toString());
+            for (ObjectIdentifier objectIdentifier : allObjectsIdentifier) {
+                saveObject(objectIdentifier, propertyValues, remoteDevice.getObjectIdentifier().toString());
             }
-            bacnetDictionaryObject.addObject2(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
-//            bacnetDictionaryObject.print();
+            
+            bacnetDictionaryObject.addObject(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
             bacnetDictionaryObject.printAllDevices();
 		}
     }
 	
-	private void printObject(ObjectIdentifier oid, PropertyValues pvs, String remoteDevice) {
+	private void saveObject(ObjectIdentifier objectIdentifier, PropertyValues propertyValues, String remoteDevice) {
 		
 		Hashtable<String, String> points = new Hashtable<String, String>();
-//		Hashtable<BacnetObjectType, Hashtable<String, String>>bacnetObjectMap = new Hashtable<BacnetObjectType, Hashtable<String, String>>();
 		
-		BacnetObjectType bot = null;
+		BacnetObjectType bacnetObjectType = null;
 		
-//        System.out.println(String.format("\t%s", oid));
-        for (ObjectPropertyReference opr : pvs) {
-            if (oid.equals(opr.getObjectIdentifier())) {
+//        System.out.println(String.format("\t%s", objectIdentifier));
+        for (ObjectPropertyReference objectPropertyReference : propertyValues) {
+            if (objectIdentifier.equals(objectPropertyReference.getObjectIdentifier())) {
             	
 //                System.out.println(String.format("\t\t%s = %s", opr.getPropertyIdentifier().toString(),
-//                        pvs.getNoErrorCheck(opr)));
+//                        pvs.getNoErrorCheck(objectPropertyReference)));
                 
              // get object type and assign it to BacnetObjectTypes
 				for (int dictionaryTypesPosition = 0; dictionaryTypesPosition < dictionaryTypes.length; dictionaryTypesPosition++) {
-					if (oid.toString().contains(dictionaryTypes[dictionaryTypesPosition])) {
+					if (objectIdentifier.toString().contains(dictionaryTypes[dictionaryTypesPosition])) {
 						BacnetObjectType arr[] = BacnetObjectType.values(); 
 						for (BacnetObjectType obj : arr) 
 				        { 
 							if(obj.ordinal() == dictionaryTypesPosition) {
-								bot = obj;
+								bacnetObjectType = obj;
 							}
 				        } 
 					}
 				}
 				
-				if(bot != null) {
-					points.put(opr.getPropertyIdentifier().toString(), pvs.getNoErrorCheck(opr).toString());
+				if(bacnetObjectType != null) {
+					points.put(objectPropertyReference.getPropertyIdentifier().toString(), propertyValues.getNoErrorCheck(objectPropertyReference).toString());
 				}
             }
         }
-        if(bot != null) {
-//        	bacnetDictionaryObject.addObject(bot, points);
-        	bacnetObjectMap.put(bot, points);
-//        	bacnetDictionaryObject.addObject2(remoteDevice, bacnetObjectMap);
+        if(bacnetObjectType != null) {
+        	bacnetObjectMap.put(bacnetObjectType, points);
         }
     }
 
