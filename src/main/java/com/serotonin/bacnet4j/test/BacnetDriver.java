@@ -1,17 +1,22 @@
 package com.serotonin.bacnet4j.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.event.DeviceEventAdapter;
+import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
+import com.serotonin.bacnet4j.test.DevicesProfile.DistechController;
 import com.serotonin.bacnet4j.transport.Transport;
+import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
@@ -32,6 +37,7 @@ public class BacnetDriver {
 
     BacnetDictionaryObject bacnetDictionaryObject = new BacnetDictionaryObject();
     Multimap<BacnetObjectType, Hashtable<String, String>> bacnetObjectMap = ArrayListMultimap.create();
+    DistechController disthechController = new DistechController();
 
     String[] dictionaryTypes = {
             "Device",
@@ -140,26 +146,33 @@ public class BacnetDriver {
             //            printObject(remoteDevice.getObjectIdentifier(), propertyValues);
 
             for (ObjectIdentifier objectIdentifier : allObjectsIdentifier) {
-                saveObject(objectIdentifier, propertyValues, remoteDevice.getObjectIdentifier().toString());
+                saveObject(objectIdentifier, propertyValues, remoteDevice.getObjectIdentifier().toString(), remoteDevice);
             }
+           
+            // Get Device name, version 
+//            Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice, remoteDevice, null,
+//                        PropertyIdentifier.objectName, PropertyIdentifier.vendorName, PropertyIdentifier.modelName,
+//                        PropertyIdentifier.description, PropertyIdentifier.location, PropertyIdentifier.objectList);
+//
+//            System.out.println(values);
+                
 
             bacnetDictionaryObject.addObject(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
             bacnetDictionaryObject.printAllDevices();
+            disthechController.print();
         }
     }
 
-    private void saveObject(ObjectIdentifier objectIdentifier, PropertyValues propertyValues, String remoteDevice) {
+    private void saveObject(ObjectIdentifier objectIdentifier, PropertyValues propertyValues, String remoteDevice, RemoteDevice r) {
 
         Hashtable<String, String> points = new Hashtable<String, String>();
-
         BacnetObjectType bacnetObjectType = null;
+        String ObjectIdentifier = "";
 
         //        System.out.println(String.format("\t%s", objectIdentifier));
         for (ObjectPropertyReference objectPropertyReference : propertyValues) {
             if (objectIdentifier.equals(objectPropertyReference.getObjectIdentifier())) {
-
-                //                System.out.println(String.format("\t\t%s = %s", opr.getPropertyIdentifier().toString(),
-                //                        pvs.getNoErrorCheck(objectPropertyReference)));
+                ObjectIdentifier = objectPropertyReference.getObjectIdentifier().toString();
 
                 // get object type and assign it to BacnetObjectTypes
                 for (int dictionaryTypesPosition = 0; dictionaryTypesPosition < dictionaryTypes.length; dictionaryTypesPosition++) {
@@ -181,6 +194,7 @@ public class BacnetDriver {
         }
         if (bacnetObjectType != null) {
             bacnetObjectMap.put(bacnetObjectType, points);
+            disthechController.compare(bacnetObjectType.toString(), points, ObjectIdentifier);
         }
     }
 
