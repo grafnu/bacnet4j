@@ -11,31 +11,31 @@ public class BacnetDictionaryObject {
     Report report = new Report();
     private String reportText = "";
 
-    Multimap<String, Multimap<BacnetObjectType, Hashtable<String, String>>> devices = ArrayListMultimap.create();
+    Multimap<String, Multimap<BacnetObjectType, Hashtable<String, Object>>> devices = ArrayListMultimap.create();
 
-    public void addObject(String remoteDevice, Multimap<BacnetObjectType, Hashtable<String, String>> bacnetObjectMap2) {
+    public void addObject(String remoteDevice, Multimap<BacnetObjectType, Hashtable<String, Object>> bacnetObjectMap2) {
         devices.put(remoteDevice, bacnetObjectMap2);
     }
 
     public void printAllDevices() {
         System.out.println(" \n \n ******** PRINT ******** \n \n");
 
-        for (Entry<String, Multimap<BacnetObjectType, Hashtable<String, String>>> deviceObject : devices.entries()) {
+        for (Entry<String, Multimap<BacnetObjectType, Hashtable<String, Object>>> deviceObject : devices.entries()) {
             String deviceName = deviceObject.getKey();
-            Multimap<BacnetObjectType, Hashtable<String, String>> deviceProperties = deviceObject.getValue();
+            Multimap<BacnetObjectType, Hashtable<String, Object>> deviceProperties = deviceObject.getValue();
 
             System.out.println(deviceName);
             reportText += deviceName + '\n';
 
-            for (Entry<BacnetObjectType, Hashtable<String, String>> devicePropertiesObject : deviceProperties
+            for (Entry<BacnetObjectType, Hashtable<String, Object>> devicePropertiesObject : deviceProperties
                     .entries()) {
                 BacnetObjectType key = devicePropertiesObject.getKey();
-                Hashtable<String, String> value = devicePropertiesObject.getValue();
+                Hashtable<String, Object> value = devicePropertiesObject.getValue();
 
                 System.out.println(String.format("\t%s", key));
                 reportText += String.format("\t%s", key) + "\n";
 
-                for (Entry<String, String> v : value.entrySet()) {
+                for (Entry<String, Object> v : value.entrySet()) {
                     System.out.println(String.format("\t\t%s = %s", v.getKey(), v.getValue()));
                     reportText += String.format("\t\t%s = %s", v.getKey(), v.getValue() + "\n");
                 }

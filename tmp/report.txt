@@ -590,10 +590,10 @@ Device 1010026
 		Location = 
 		Vendor name = Distech Controls, Inc.
 		Restart Notification Recipients = [Encodable(com.serotonin.bacnet4j.type.constructed.Recipient)]
-		Local time = 12:4:46.0
+		Local time = 9:28:33.0
 		Last Restart Reason = 0
 		System status = 0
-		Local date = MONDAY APRIL 8, 119
+		Local date = TUESDAY APRIL 9, 119
 		Configuration files = [File 1]
 		Interval Offset = 0
 		Backup And Restore State = 0

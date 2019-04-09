@@ -15,7 +15,7 @@ public class DistechController {
     
 //    Map<Map<String, String>, String> lines = new HashMap<Map<String, String>, String>();
     
-    Multimap<String, Map<Map<String, String>, Map<String, String>>> lines = ArrayListMultimap.create();
+    Multimap<String, Map<Map<String, String>, Map<Object, String>>> lines = ArrayListMultimap.create();
 
     String[] ObjectType = {
             "AnalogInput", "AnalogOutput", "AnalogValue", "BinaryInput", "BinaryOutput", "BinaryValue", "MultistateInput",
@@ -36,7 +36,7 @@ public class DistechController {
     String[] AnalogInput_Proprietary = {
             "COV period", "Cov min send time" };
 
-    public void compare(String deviceType, Hashtable<String, String> devicePoints, String objectIdentifier) {
+    public void compare(String deviceType, Hashtable<String, Object> devicePoints, String objectIdentifier) {
 //        if (Arrays.asList(ObjectType).contains(deviceType)) {
         if (deviceType == "AnalogInput") {
 //            System.out.println("\n\n" + deviceType.toUpperCase() + "\n");
@@ -44,7 +44,7 @@ public class DistechController {
             String[] AnalogInput_Optional_Copy = AnalogInput_Optional;
             String[] AnalogInput_Proprietary_Copy = AnalogInput_Proprietary;
                         
-            for (Entry<String, String> v : devicePoints.entrySet()) {
+            for (Entry<String, Object> v : devicePoints.entrySet()) {
 
                 if (Arrays.asList(AnalogInput_Manadatory).contains(v.getKey())) {
                     AnalogInputMandatoryAnalysis(deviceType, v.getKey(), v.getValue(), objectIdentifier);
@@ -69,10 +69,10 @@ public class DistechController {
                 for(int i = 0; i < AnalogInput_Mandatory_Copy.length; i++) {
                     Map<String, String> pics = new Hashtable<String, String>();
                     pics.put(AnalogInput_Mandatory_Copy[i], "Mandatory");
-                    Map<String, String> picsValue = new Hashtable<String, String>();
+                    Map<Object, String> picsValue = new Hashtable<Object, String>();
                     picsValue.put("", "FAILED");
                     
-                    Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
                     obj2.put(pics, picsValue);
                     lines.put(objectIdentifier, obj2);
                 }
@@ -82,10 +82,10 @@ public class DistechController {
                 for(int i = 0; i < AnalogInput_Optional_Copy.length; i++) {
                     Map<String, String> pics = new Hashtable<String, String>();
                     pics.put(AnalogInput_Optional_Copy[i], "Optional");
-                    Map<String, String> picsValue = new Hashtable<String, String>();
+                    Map<Object, String> picsValue = new Hashtable<Object, String>();
                     picsValue.put("", "WARNING");
                     
-                    Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
                     obj2.put(pics, picsValue);
                     lines.put(objectIdentifier, obj2);
                 }
@@ -95,10 +95,10 @@ public class DistechController {
                 for(int i = 0; i < AnalogInput_Proprietary_Copy.length; i++) {
                     Map<String, String> pics = new Hashtable<String, String>();
                     pics.put(AnalogInput_Proprietary_Copy[i], "Proprietary");
-                    Map<String, String> picsValue = new Hashtable<String, String>();
+                    Map<Object, String> picsValue = new Hashtable<Object, String>();
                     picsValue.put("", "WARNING");
                     
-                    Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
                     obj2.put(pics, picsValue);
                     lines.put(objectIdentifier, obj2);
                 }
@@ -107,41 +107,41 @@ public class DistechController {
         }
     }
 
-    private void AnalogInputMandatoryAnalysis(String deviceType, String key, String value, String objectIdentifier) {
+    private void AnalogInputMandatoryAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
 //        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
         Map<String, String> pics = new Hashtable<String, String>();
         pics.put(key, "Mandatory");
         
-        Map<String, String> picsValue = new Hashtable<String, String>();
+        Map<Object, String> picsValue = new Hashtable<Object, String>();
         picsValue.put(value, "PASSED");
         
-        Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
         obj2.put(pics, picsValue);
         lines.put(objectIdentifier, obj2);
     }
     
-    private void AnalogInputOptionalAnalysis(String deviceType, String key, String value, String objectIdentifier) {
+    private void AnalogInputOptionalAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
 //        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
         Map<String, String> pics = new Hashtable<String, String>();
         pics.put(key, "Optional");
         
-        Map<String, String> picsValue = new Hashtable<String, String>();
+        Map<Object, String> picsValue = new Hashtable<Object, String>();
         picsValue.put(value, "PASSED");
         
-        Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
         obj2.put(pics, picsValue);
         lines.put(objectIdentifier, obj2);
     }
     
-    private void AnalogInputProprietaryAnalysis(String deviceType, String key, String value, String objectIdentifier) {
+    private void AnalogInputProprietaryAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
 //        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
         Map<String, String> pics = new Hashtable<String, String>();
         pics.put(key, "Proprietary");
         
-        Map<String, String> picsValue = new Hashtable<String, String>();
+        Map<Object, String> picsValue = new Hashtable<Object, String>();
         picsValue.put(value, "PASSED");
         
-        Map<Map<String, String>, Map<String,String>> obj2 = new Hashtable<Map<String, String>, Map<String,String>>();
+        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
         obj2.put(pics, picsValue);
         
         lines.put(objectIdentifier, obj2);
@@ -149,7 +149,7 @@ public class DistechController {
     
     public void print() {
         String prevDeviceType = "";
-        for (Entry<String, Map<Map<String, String>, Map<String, String>>> line : lines.entries()) {
+        for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
             String deviceType = line.getKey();
             String propertyName = "";
             String category = "";
@@ -166,14 +166,14 @@ public class DistechController {
                 }
             }
             
-            for(Entry<Map<String, String>, Map<String, String>> map : line.getValue().entrySet()) {
+            for(Entry<Map<String, String>, Map<Object, String>> map : line.getValue().entrySet()) {
                 for (Entry<String, String> keySet : map.getKey().entrySet()) {
                   propertyName = keySet.getKey();
                   category = keySet.getValue();
                 }
                 
-                for(Entry<String, String> valueSet : map.getValue().entrySet()) {
-                    value = valueSet.getKey();
+                for(Entry<Object, String> valueSet : map.getValue().entrySet()) {
+                    value = (String) valueSet.getKey();
                     picsResult = valueSet.getValue();
                 }
                 System.out.format("%-30s%-15s%-35s%-25s\n", propertyName, category, value, picsResult);

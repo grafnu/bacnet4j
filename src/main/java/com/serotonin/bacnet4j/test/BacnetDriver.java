@@ -13,12 +13,17 @@ import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.event.DeviceEventAdapter;
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
+import com.serotonin.bacnet4j.service.acknowledgement.ReadPropertyMultipleAck;
+import com.serotonin.bacnet4j.service.confirmed.ReadPropertyMultipleRequest;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.test.DevicesProfile.DistechController;
 import com.serotonin.bacnet4j.transport.Transport;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
+import com.serotonin.bacnet4j.type.constructed.ReadAccessResult;
+import com.serotonin.bacnet4j.type.constructed.ReadAccessSpecification;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
+import com.serotonin.bacnet4j.type.constructed.ReadAccessResult.Result;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import com.serotonin.bacnet4j.util.PropertyReferences;
@@ -36,7 +41,7 @@ public class BacnetDriver {
     private boolean networkInitialized = false;
 
     BacnetDictionaryObject bacnetDictionaryObject = new BacnetDictionaryObject();
-    Multimap<BacnetObjectType, Hashtable<String, String>> bacnetObjectMap = ArrayListMultimap.create();
+    Multimap<BacnetObjectType, Hashtable<String, Object>> bacnetObjectMap = ArrayListMultimap.create();
     DistechController disthechController = new DistechController();
 
     String[] dictionaryTypes = {
@@ -162,10 +167,73 @@ public class BacnetDriver {
             disthechController.print();
         }
     }
+    
+//    public void getDevicesPoints1() throws BACnetException {
+//        for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
+//            RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
+//            
+//            List<ReadAccessSpecification> specifications = new ArrayList<ReadAccessSpecification>();
+//
+//            @SuppressWarnings("unchecked")
+//            List<ObjectIdentifier> oids = ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
+//                        localDevice, remoteDevice, remoteDevice.getObjectIdentifier(),
+//                        PropertyIdentifier.objectList)).getValues();
+//            
+//            for (ObjectIdentifier objectIdentifier : oids) {
+//                //         if(objectIdentifier.getObjectType().equals(ObjectType.analogInput))
+//                specifications.add(new ReadAccessSpecification(objectIdentifier, PropertyIdentifier.all));
+//            }
+//            
+//            ReadPropertyMultipleRequest request = new ReadPropertyMultipleRequest(
+//                        new SequenceOf<ReadAccessSpecification>(specifications));
+//            ReadPropertyMultipleAck ack;
+//            ack = (ReadPropertyMultipleAck) localDevice.send(remoteDevice, request);
+//            SequenceOf<ReadAccessResult> results = ack.getListOfReadAccessResults();
+//            
+//            System.out.println("Start read properties");
+//            final long start = System.currentTimeMillis();
+//            System.out.println(String.format("Properties read done in %d ms", System.currentTimeMillis() - start));
+//            
+//            for (ReadAccessResult readAccessResult : results) {
+//                saveObj(readAccessResult.getObjectIdentifier(), readAccessResult);
+//            }
+//            
+//        }
+//    }
+//    
+//    private void saveObj(ObjectIdentifier objectIdentifier, ReadAccessResult readAccessResult) {
+//        Hashtable<String, String> points = new Hashtable<String, String>();
+//        BacnetObjectType bacnetObjectType = null;
+//        
+//        // get object type and assign it to BacnetObjectTypes
+//        for (int dictionaryTypesPosition = 0; dictionaryTypesPosition < dictionaryTypes.length; dictionaryTypesPosition++) {
+//            if (readAccessResult.getObjectIdentifier().toString()
+//                        .contains(dictionaryTypes[dictionaryTypesPosition])) {
+//                BacnetObjectType arr[] = BacnetObjectType.values();
+//                for (BacnetObjectType obj : arr) {
+//                    if (obj.ordinal() == dictionaryTypesPosition) {
+//                        bacnetObjectType = obj;
+//                    }
+//                }
+//            }
+//        }
+//        
+//        for (Result result : readAccessResult.getListOfResults()) {
+//            String propertyIdentifier = result.getPropertyIdentifier().toString();
+//            String propertyValue = result.getReadResult().toString();
+//
+//            System.out.println(result.getPropertyIdentifier() + ": " + result.getReadResult());
+//
+//            if (bacnetObjectType != null) {
+//                points.put(propertyIdentifier, propertyValue);
+//            }
+//        }
+//        
+//    }
 
     private void saveObject(ObjectIdentifier objectIdentifier, PropertyValues propertyValues, String remoteDevice, RemoteDevice r) {
 
-        Hashtable<String, String> points = new Hashtable<String, String>();
+        Hashtable<String, Object> points = new Hashtable<String, Object>();
         BacnetObjectType bacnetObjectType = null;
         String ObjectIdentifier = "";
 
