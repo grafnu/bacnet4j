@@ -271,6 +271,14 @@ public class ObjectProperties {
         add(ObjectType.accessDoor, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.accessDoor, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.accessDoor, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.accessDoor, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.accessDoor, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.accessDoor, PropertyIdentifier.timeDelayNormal,  UnsignedInteger.class, false, true, null); //added by Joel
+        add(ObjectType.accessDoor, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.accessDoor, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.accessDoor, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
 
         // Accumulator
         add(ObjectType.accumulator, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -310,6 +318,15 @@ public class ObjectProperties {
         add(ObjectType.accumulator, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.accumulator, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.accumulator, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.accumulator, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.accumulator, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.accumulator, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); //added by Joel
+        add(ObjectType.accumulator, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.accumulator, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.accumulator, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Analog input
         add(ObjectType.analogInput, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -343,6 +360,26 @@ public class ObjectProperties {
         add(ObjectType.analogInput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.analogInput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.analogInput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.analogInput, PropertyIdentifier.passbackMode, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.eventMessageTexts, EventTransitionBits.class, true, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.activeVtSessions, VtSession.class, true, false, null);
+        add(ObjectType.analogInput, PropertyIdentifier.reliabilityEvaluationInhibit, Boolean.class, false, true, new Boolean(true)); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.faultHighLimit, Real.class, false, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.faultLowLimit, Real.class, false, false, null); // added by Joel
+        add(ObjectType.analogInput, PropertyIdentifier.profileLocation, CharacterString.class, true, false, null); // added by Joel
+//        add(ObjectType.analogInput, PropertyIdentifier.propertyList, PropertyIdentifier.class, true, 0);
+//        add(ObjectType.analogInput, PropertyIdentifier.interfaceValue, OptionalReal.class, false);
+        
+//        add(ObjectType.analogInput, PropertyIdentifier.tags, NameValue.class, false, 0);
+        
+
 
         // Analog output
         add(ObjectType.analogOutput, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -378,6 +415,15 @@ public class ObjectProperties {
         add(ObjectType.analogOutput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.analogOutput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.analogOutput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.analogOutput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.analogOutput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.analogOutput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.analogOutput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogOutput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogOutput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Analog value
         add(ObjectType.analogValue, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -409,6 +455,15 @@ public class ObjectProperties {
         add(ObjectType.analogValue, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.analogValue, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.analogValue, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.analogValue, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.analogValue, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.analogValue, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.analogValue, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogValue, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.analogValue, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Averaging
         add(ObjectType.averaging, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -462,6 +517,15 @@ public class ObjectProperties {
         add(ObjectType.binaryInput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.binaryInput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.binaryInput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.binaryInput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryInput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryInput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.binaryInput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryInput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryInput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Binary output
         add(ObjectType.binaryOutput, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -499,6 +563,15 @@ public class ObjectProperties {
         add(ObjectType.binaryOutput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.binaryOutput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.binaryOutput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.binaryOutput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Binary value
         add(ObjectType.binaryValue, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -534,6 +607,15 @@ public class ObjectProperties {
         add(ObjectType.binaryValue, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.binaryValue, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.binaryValue, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.binaryValue, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryValue, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryValue, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.binaryValue, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryValue, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.binaryValue, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Calendar
         add(ObjectType.calendar, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -557,6 +639,11 @@ public class ObjectProperties {
         add(ObjectType.command, PropertyIdentifier.action, ActionList.class, true, true, null);
         add(ObjectType.command, PropertyIdentifier.actionText, CharacterString.class, true, false, null);
         add(ObjectType.command, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.command, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.command, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.command, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+
 
         // Device
         add(ObjectType.device, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -622,6 +709,11 @@ public class ObjectProperties {
         add(ObjectType.device, PropertyIdentifier.restartNotificationRecipients, Recipient.class, true, false, null);
         add(ObjectType.device, PropertyIdentifier.timeOfDeviceRestart, TimeStamp.class, false, false, null);
         add(ObjectType.device, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.device, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.device, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.device, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+
 
         // Event enrollment
         add(ObjectType.eventEnrollment, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -642,6 +734,13 @@ public class ObjectProperties {
         add(ObjectType.eventEnrollment, PropertyIdentifier.notificationClass, UnsignedInteger.class, false, false, null);
         add(ObjectType.eventEnrollment, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, true, null);
         add(ObjectType.eventEnrollment, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.eventEnrollment, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.eventEnrollment, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.eventEnrollment, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.eventEnrollment, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.eventEnrollment, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
 
         // Event log
         add(ObjectType.eventLog, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -671,6 +770,14 @@ public class ObjectProperties {
         add(ObjectType.eventLog, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.eventLog, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.eventLog, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.eventLog, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.eventLog, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.eventLog, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.eventLog, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.eventLog, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // File
         add(ObjectType.file, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -736,6 +843,15 @@ public class ObjectProperties {
                 EngineeringUnits.noUnits);
         add(ObjectType.lifeSafetyPoint, PropertyIdentifier.memberOf, DeviceObjectReference.class, true, false, null);
         add(ObjectType.lifeSafetyPoint, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.lifeSafetyPoint, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Life safety zone
         add(ObjectType.lifeSafetyZone, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -773,6 +889,15 @@ public class ObjectProperties {
         add(ObjectType.lifeSafetyZone, PropertyIdentifier.zoneMembers, DeviceObjectReference.class, true, true, null);
         add(ObjectType.lifeSafetyZone, PropertyIdentifier.memberOf, DeviceObjectReference.class, true, false, null);
         add(ObjectType.lifeSafetyZone, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.lifeSafetyZone, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Load control
         add(ObjectType.loadControl, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -805,6 +930,15 @@ public class ObjectProperties {
         add(ObjectType.loadControl, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.loadControl, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.loadControl, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.loadControl, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.loadControl, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.loadControl, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.loadControl, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.loadControl, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.loadControl, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Loop
         add(ObjectType.loop, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -849,6 +983,15 @@ public class ObjectProperties {
         add(ObjectType.loop, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.loop, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.loop, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.loop, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.loop, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.loop, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.loop, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.loop, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.loop, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Multi state input
         add(ObjectType.multiStateInput, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -876,6 +1019,15 @@ public class ObjectProperties {
         add(ObjectType.multiStateInput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.multiStateInput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.multiStateInput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.multiStateInput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateInput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateInput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.multiStateInput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateInput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateInput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Multi state output
         add(ObjectType.multiStateOutput, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -909,6 +1061,15 @@ public class ObjectProperties {
         add(ObjectType.multiStateOutput, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.multiStateOutput, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.multiStateOutput, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.multiStateOutput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateOutput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateOutput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.multiStateOutput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateOutput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateOutput, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Multi state value
         add(ObjectType.multiStateValue, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -940,6 +1101,15 @@ public class ObjectProperties {
         add(ObjectType.multiStateValue, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.multiStateValue, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.multiStateValue, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.multiStateValue, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateValue, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.multiStateValue, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.multiStateValue, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateValue, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.multiStateValue, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Notification class
         add(ObjectType.notificationClass, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -954,6 +1124,11 @@ public class ObjectProperties {
         add(ObjectType.notificationClass, PropertyIdentifier.ackRequired, EventTransitionBits.class, false, true, null);
         add(ObjectType.notificationClass, PropertyIdentifier.recipientList, Destination.class, true, true, null);
         add(ObjectType.notificationClass, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.notificationClass, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.notificationClass, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.notificationClass, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+
 
         // Program
         add(ObjectType.program, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -972,6 +1147,11 @@ public class ObjectProperties {
         add(ObjectType.program, PropertyIdentifier.reliability, Reliability.class, false, false, null);
         add(ObjectType.program, PropertyIdentifier.outOfService, Boolean.class, false, true, new Boolean(true));
         add(ObjectType.program, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.program, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.program, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.program, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+
 
         // Pulse converter
         add(ObjectType.pulseConverter, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -1010,6 +1190,15 @@ public class ObjectProperties {
         add(ObjectType.pulseConverter, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.pulseConverter, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.pulseConverter, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.pulseConverter, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.pulseConverter, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.pulseConverter, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
+        add(ObjectType.pulseConverter, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.pulseConverter, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.pulseConverter, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Schedule
         add(ObjectType.schedule, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -1030,6 +1219,11 @@ public class ObjectProperties {
         add(ObjectType.schedule, PropertyIdentifier.reliability, Reliability.class, false, true, null);
         add(ObjectType.schedule, PropertyIdentifier.outOfService, Boolean.class, false, true, new Boolean(true));
         add(ObjectType.schedule, PropertyIdentifier.profileName, CharacterString.class, false, true, null);
+        
+        add(ObjectType.schedule, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.schedule, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.schedule, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+
 
         // Structured View
         add(ObjectType.structuredView, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -1083,6 +1277,14 @@ public class ObjectProperties {
         add(ObjectType.trendLog, PropertyIdentifier.statusFlags, StatusFlags.class, false, true, new StatusFlags(false,
                 false, false, true));
         add(ObjectType.trendLog, PropertyIdentifier.reliability, Reliability.class, false, false, null);
+        
+        add(ObjectType.trendLog, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.trendLog, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.trendLog, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.trendLog, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.trendLog, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
+
 
         // Trend log multiple
         add(ObjectType.trendLogMultiple, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true,
@@ -1125,5 +1327,12 @@ public class ObjectProperties {
         add(ObjectType.trendLogMultiple, PropertyIdentifier.notifyType, NotifyType.class, false, false, null);
         add(ObjectType.trendLogMultiple, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false, null);
         add(ObjectType.trendLogMultiple, PropertyIdentifier.profileName, CharacterString.class, false, false, null);
+        
+        add(ObjectType.trendLogMultiple, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.trendLogMultiple, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.trendLogMultiple, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.trendLogMultiple, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
+        add(ObjectType.trendLogMultiple, PropertyIdentifier.eventAlgorithmInhibitRef, ObjectPropertyReference.class, true,
+                    false, null); // added by Joel
     }
 }

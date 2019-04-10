@@ -1,10 +1,15 @@
 package com.serotonin.bacnet4j.test;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
+import com.serotonin.bacnet4j.util.PropertyReferences;
+import com.serotonin.bacnet4j.type.AmbiguousValue;
 
 public class BacnetDictionaryObject {
 
@@ -32,12 +37,16 @@ public class BacnetDictionaryObject {
                 BacnetObjectType key = devicePropertiesObject.getKey();
                 Hashtable<String, Object> value = devicePropertiesObject.getValue();
 
-                System.out.println(String.format("\t%s", key));
+                System.out.println(String.format("\t%s", key) + " - " + value.get("Object identifier"));
                 reportText += String.format("\t%s", key) + "\n";
 
                 for (Entry<String, Object> v : value.entrySet()) {
-                    System.out.println(String.format("\t\t%s = %s", v.getKey(), v.getValue()));
-                    reportText += String.format("\t\t%s = %s", v.getKey(), v.getValue() + "\n");
+                     if(v.getValue() instanceof AmbiguousValue) {
+                         System.out.println(String.format("\t\t%s = %s", v.getKey(), v.getValue()));
+                     } else {
+                         System.out.println(String.format("\t\t%s = %s", v.getKey(), v.getValue().toString()));
+                       reportText += String.format("\t\t%s = %s", v.getKey(), v.getValue() + "\n");
+                     }
                 }
                 System.out.println("\n");
                 reportText += "\n";

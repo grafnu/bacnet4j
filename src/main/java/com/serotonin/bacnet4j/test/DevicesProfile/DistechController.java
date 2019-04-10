@@ -158,11 +158,11 @@ public class DistechController {
             
             if(prevDeviceType == "") {
                 prevDeviceType = deviceType;
-                System.out.println(deviceType);
+                System.out.println("\n"+deviceType+"\n");
             } else {
                 if (deviceType != prevDeviceType) {
                     prevDeviceType = deviceType;
-                    System.out.println(deviceType);
+                    System.out.println("\n"+deviceType+"\n");
                 }
             }
             
@@ -173,11 +173,12 @@ public class DistechController {
                 }
                 
                 for(Entry<Object, String> valueSet : map.getValue().entrySet()) {
-                    value = (String) valueSet.getKey();
+                    value = valueSet.getKey().toString();
                     picsResult = valueSet.getValue();
                 }
                 System.out.format("%-30s%-15s%-35s%-25s\n", propertyName, category, value, picsResult);
             }
+//            System.out.println("\n");
         }
     }
 }

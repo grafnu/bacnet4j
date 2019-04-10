@@ -168,7 +168,7 @@ public class BacnetDriver {
         }
     }
     
-//    public void getDevicesPoints1() throws BACnetException {
+//    public void getDevicePoints1() throws BACnetException {
 //        for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
 //            RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
 //            
@@ -222,11 +222,7 @@ public class BacnetDriver {
 //            String propertyIdentifier = result.getPropertyIdentifier().toString();
 //            String propertyValue = result.getReadResult().toString();
 //
-//            System.out.println(result.getPropertyIdentifier() + ": " + result.getReadResult());
-//
-//            if (bacnetObjectType != null) {
-//                points.put(propertyIdentifier, propertyValue);
-//            }
+//            System.out.println(result.getPropertyIdentifier().toString() + ": " + result.getReadResult().toString());
 //        }
 //        
 //    }
@@ -256,7 +252,7 @@ public class BacnetDriver {
 
                 if (bacnetObjectType != null) {
                     points.put(objectPropertyReference.getPropertyIdentifier().toString(),
-                                propertyValues.getNoErrorCheck(objectPropertyReference).toString());
+                                propertyValues.getNoErrorCheck(objectPropertyReference));
                 }
             }
         }
