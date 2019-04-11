@@ -1,7 +1,6 @@
 package com.serotonin.bacnet4j.test.DevicesProfile;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,16 +11,26 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class DistechController {
-    
-//    Map<Map<String, String>, String> lines = new HashMap<Map<String, String>, String>();
-    
+
+    public DistechController() {
+        initializeProfile();
+    }
+
     Multimap<String, Map<Map<String, String>, Map<Object, String>>> lines = ArrayListMultimap.create();
+
+    Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
+
+    String[] Category = {
+            "Mandatory", "Optional", "Proprietary" };
+
+    // Object Type -> category -> fields
+    Map<String, Map<String, String[]>> profile = new Hashtable<String, Map<String, String[]>>();
 
     String[] ObjectType = {
             "AnalogInput", "AnalogOutput", "AnalogValue", "BinaryInput", "BinaryOutput", "BinaryValue", "MultistateInput",
             "MultistateValue" };
 
-    String[] AnalogInput_Manadatory = {
+    String[] AnalogInput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
             "Out of service", "Units", "Property list" };
 
@@ -36,149 +45,137 @@ public class DistechController {
     String[] AnalogInput_Proprietary = {
             "COV period", "Cov min send time" };
 
-    public void compare(String deviceType, Hashtable<String, Object> devicePoints, String objectIdentifier) {
-//        if (Arrays.asList(ObjectType).contains(deviceType)) {
-        if (deviceType == "AnalogInput") {
-//            System.out.println("\n\n" + deviceType.toUpperCase() + "\n");
-            String[] AnalogInput_Mandatory_Copy = AnalogInput_Manadatory;
-            String[] AnalogInput_Optional_Copy = AnalogInput_Optional;
-            String[] AnalogInput_Proprietary_Copy = AnalogInput_Proprietary;
-                        
-            for (Entry<String, Object> v : devicePoints.entrySet()) {
+    private void initializeProfile() {
+        System.out.println("Initializing DistechController...");
+        DeviceProperties.put("AnalogInput_Mandatory", AnalogInput_Mandatory);
+        DeviceProperties.put("AnalogInput_Optional", AnalogInput_Optional);
+        DeviceProperties.put("AnalogInput_Proprietary", AnalogInput_Proprietary);
 
-                if (Arrays.asList(AnalogInput_Manadatory).contains(v.getKey())) {
-                    AnalogInputMandatoryAnalysis(deviceType, v.getKey(), v.getValue(), objectIdentifier);
-                    int index = Arrays.asList(AnalogInput_Mandatory_Copy).indexOf(v.getKey());
-                    AnalogInput_Mandatory_Copy = ArrayUtils.remove(AnalogInput_Mandatory_Copy, index);
-                }
+        for (int count = 0; count < ObjectType.length; count++) {
+            String objectType = ObjectType[count];
 
-                if (Arrays.asList(AnalogInput_Optional).contains(v.getKey())) {
-                    AnalogInputOptionalAnalysis(deviceType, v.getKey(), v.getValue(), objectIdentifier);
-                    int index = Arrays.asList(AnalogInput_Optional_Copy).indexOf(v.getKey());
-                    AnalogInput_Optional_Copy = ArrayUtils.remove(AnalogInput_Optional_Copy, index);
-                }
+            Map<String, String[]> propertiesTable = new Hashtable<String, String[]>();
+            for (int categoryCount = 0; categoryCount < Category.length; categoryCount++) {
+                String category = Category[categoryCount];
 
-                if (Arrays.asList(AnalogInput_Proprietary).contains(v.getKey())) {
-                    AnalogInputProprietaryAnalysis(deviceType, v.getKey(), v.getValue(), objectIdentifier);
-                    int index = Arrays.asList(AnalogInput_Proprietary_Copy).indexOf(v.getKey());
-                    AnalogInput_Proprietary_Copy = ArrayUtils.remove(AnalogInput_Proprietary_Copy, index);
+                for (Entry<String, String[]> deviceProperty : DeviceProperties.entrySet()) {
+                    String propertyName = deviceProperty.getKey();
+                    if (propertyName.contains(objectType) && propertyName.contains(category)) {
+                        String[] propertyValues = deviceProperty.getValue();
+                        propertiesTable.put(category, propertyValues);
+                    }
                 }
             }
-            
-            if(AnalogInput_Mandatory_Copy.length > 0) {
-                for(int i = 0; i < AnalogInput_Mandatory_Copy.length; i++) {
-                    Map<String, String> pics = new Hashtable<String, String>();
-                    pics.put(AnalogInput_Mandatory_Copy[i], "Mandatory");
-                    Map<Object, String> picsValue = new Hashtable<Object, String>();
-                    picsValue.put("", "FAILED");
-                    
-                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
-                    obj2.put(pics, picsValue);
-                    lines.put(objectIdentifier, obj2);
-                }
-            }
-            
-            if(AnalogInput_Optional_Copy.length > 0) {
-                for(int i = 0; i < AnalogInput_Optional_Copy.length; i++) {
-                    Map<String, String> pics = new Hashtable<String, String>();
-                    pics.put(AnalogInput_Optional_Copy[i], "Optional");
-                    Map<Object, String> picsValue = new Hashtable<Object, String>();
-                    picsValue.put("", "WARNING");
-                    
-                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
-                    obj2.put(pics, picsValue);
-                    lines.put(objectIdentifier, obj2);
-                }
-            }
-            
-            if(AnalogInput_Proprietary_Copy.length > 0) {
-                for(int i = 0; i < AnalogInput_Proprietary_Copy.length; i++) {
-                    Map<String, String> pics = new Hashtable<String, String>();
-                    pics.put(AnalogInput_Proprietary_Copy[i], "Proprietary");
-                    Map<Object, String> picsValue = new Hashtable<Object, String>();
-                    picsValue.put("", "WARNING");
-                    
-                    Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
-                    obj2.put(pics, picsValue);
-                    lines.put(objectIdentifier, obj2);
-                }
-            }
-            System.out.println("\n");
+            profile.put(objectType, propertiesTable);
         }
     }
 
-    private void AnalogInputMandatoryAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
-//        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
+    public void printProfile() {
+        System.out.println("printing profile");
+        for (Entry<String, Map<String, String[]>> p : profile.entrySet()) {
+            String key = p.getKey();
+            Map<String, String[]> values = p.getValue();
+            for (Entry<String, String[]> v : values.entrySet()) {
+                String k = v.getKey();
+                String[] v1 = v.getValue();
+
+                System.out.println(String.format("%s \n\t %s \n\t\t %s", key, k, Arrays.toString(v1)));
+            }
+        }
+    }
+
+    public void addToProfile(String deviceType, Hashtable<String, Object> DevicePoints, String objectIdentifier) {
+
+        if (Arrays.asList(ObjectType).contains(deviceType) && deviceType == "AnalogInput") {
+            String[] mandatoryPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Mandatory");
+            String[] optionalPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Optional");
+            String[] proprietaryPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Proprietary");
+
+            Map<String, String[]> copyArrays = new Hashtable<String, String[]>();
+            copyArrays.put(deviceType + "_Mandatory_Copy", mandatoryPropertiesArrayCopy);
+            copyArrays.put(deviceType + "_Optional_Copy", optionalPropertiesArrayCopy);
+            copyArrays.put(deviceType + "_Proprietary_Copy", proprietaryPropertiesArrayCopy);
+
+            for (Entry<String, Object> devicePoints : DevicePoints.entrySet()) {
+                for (int count = 0; count < Category.length; count++) {
+                    if (Arrays.asList(DeviceProperties.get(deviceType + "_" + Category[count]))
+                                .contains(devicePoints.getKey())) {
+                        addToMap(deviceType, devicePoints.getKey(), devicePoints.getValue(), objectIdentifier,
+                                    Category[count]);
+                        int index = Arrays.asList(copyArrays.get(deviceType + "_" + Category[count] + "_Copy"))
+                                    .indexOf(devicePoints.getKey());
+                        copyArrays.put(deviceType + "_" + Category[count] + "_Copy", ArrayUtils
+                                    .remove(copyArrays.get(deviceType + "_" + Category[count] + "_Copy"), index));
+                    }
+                }
+            }
+
+            for (int categoryCount = 0; categoryCount < Category.length; categoryCount++) {
+                String[] arrayRef = copyArrays.get(deviceType + "_" + Category[categoryCount] + "_Copy");
+                if (arrayRef.length > 0) {
+                    for (int i = 0; i < arrayRef.length; i++) {
+                        Map<String, String> pics = new Hashtable<String, String>();
+                        pics.put(arrayRef[i], Category[categoryCount]);
+                        Map<Object, String> picsValue = new Hashtable<Object, String>();
+                        if(Category[categoryCount] == Category[0]) {
+                            picsValue.put("", "FAILED");
+                        } else {
+                            picsValue.put("", "WARNING");
+                        }
+                        
+                        Map<Map<String, String>, Map<Object, String>> obj2 = new Hashtable<Map<String, String>, Map<Object, String>>();
+                        obj2.put(pics, picsValue);
+                        lines.put(objectIdentifier, obj2);
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void addToMap(String deviceType, String key, Object value, String objectIdentifier, String category) {
         Map<String, String> pics = new Hashtable<String, String>();
-        pics.put(key, "Mandatory");
-        
+        pics.put(key, category);
+
         Map<Object, String> picsValue = new Hashtable<Object, String>();
         picsValue.put(value, "PASSED");
-        
-        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
+
+        Map<Map<String, String>, Map<Object, String>> obj2 = new Hashtable<Map<String, String>, Map<Object, String>>();
         obj2.put(pics, picsValue);
         lines.put(objectIdentifier, obj2);
     }
-    
-    private void AnalogInputOptionalAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
-//        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
-        Map<String, String> pics = new Hashtable<String, String>();
-        pics.put(key, "Optional");
-        
-        Map<Object, String> picsValue = new Hashtable<Object, String>();
-        picsValue.put(value, "PASSED");
-        
-        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
-        obj2.put(pics, picsValue);
-        lines.put(objectIdentifier, obj2);
-    }
-    
-    private void AnalogInputProprietaryAnalysis(String deviceType, String key, Object value, String objectIdentifier) {
-//        System.out.println(key.toUpperCase() + " is contained in..." + deviceType);
-        Map<String, String> pics = new Hashtable<String, String>();
-        pics.put(key, "Proprietary");
-        
-        Map<Object, String> picsValue = new Hashtable<Object, String>();
-        picsValue.put(value, "PASSED");
-        
-        Map<Map<String, String>, Map<Object,String>> obj2 = new Hashtable<Map<String, String>, Map<Object,String>>();
-        obj2.put(pics, picsValue);
-        
-        lines.put(objectIdentifier, obj2);
-    }  
-    
+
     public void print() {
         String prevDeviceType = "";
         for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
             String deviceType = line.getKey();
             String propertyName = "";
             String category = "";
-            String value = "";  
+            String value = "";
             String picsResult = "";
-            
-            if(prevDeviceType == "") {
+
+            if (prevDeviceType == "") {
                 prevDeviceType = deviceType;
-                System.out.println("\n"+deviceType+"\n");
+                System.out.println("\n" + deviceType + "\n");
             } else {
                 if (deviceType != prevDeviceType) {
                     prevDeviceType = deviceType;
-                    System.out.println("\n"+deviceType+"\n");
+                    System.out.println("\n" + deviceType + "\n");
                 }
             }
-            
-            for(Entry<Map<String, String>, Map<Object, String>> map : line.getValue().entrySet()) {
+
+            for (Entry<Map<String, String>, Map<Object, String>> map : line.getValue().entrySet()) {
                 for (Entry<String, String> keySet : map.getKey().entrySet()) {
-                  propertyName = keySet.getKey();
-                  category = keySet.getValue();
+                    propertyName = keySet.getKey();
+                    category = keySet.getValue();
                 }
-                
-                for(Entry<Object, String> valueSet : map.getValue().entrySet()) {
+
+                for (Entry<Object, String> valueSet : map.getValue().entrySet()) {
                     value = valueSet.getKey().toString();
                     picsResult = valueSet.getValue();
                 }
                 System.out.format("%-30s%-15s%-35s%-25s\n", propertyName, category, value, picsResult);
             }
-//            System.out.println("\n");
         }
     }
 }

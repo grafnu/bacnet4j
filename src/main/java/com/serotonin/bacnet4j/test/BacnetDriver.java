@@ -121,7 +121,7 @@ public class BacnetDriver {
     }
 
     public void getDevicePoints() throws Exception {
-
+        
         for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
             RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
 
@@ -164,68 +164,13 @@ public class BacnetDriver {
 
             bacnetDictionaryObject.addObject(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
             bacnetDictionaryObject.printAllDevices();
+            
+            
             disthechController.print();
+            
+//            disthechController.printProfile();
         }
     }
-    
-//    public void getDevicePoints1() throws BACnetException {
-//        for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
-//            RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
-//            
-//            List<ReadAccessSpecification> specifications = new ArrayList<ReadAccessSpecification>();
-//
-//            @SuppressWarnings("unchecked")
-//            List<ObjectIdentifier> oids = ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
-//                        localDevice, remoteDevice, remoteDevice.getObjectIdentifier(),
-//                        PropertyIdentifier.objectList)).getValues();
-//            
-//            for (ObjectIdentifier objectIdentifier : oids) {
-//                //         if(objectIdentifier.getObjectType().equals(ObjectType.analogInput))
-//                specifications.add(new ReadAccessSpecification(objectIdentifier, PropertyIdentifier.all));
-//            }
-//            
-//            ReadPropertyMultipleRequest request = new ReadPropertyMultipleRequest(
-//                        new SequenceOf<ReadAccessSpecification>(specifications));
-//            ReadPropertyMultipleAck ack;
-//            ack = (ReadPropertyMultipleAck) localDevice.send(remoteDevice, request);
-//            SequenceOf<ReadAccessResult> results = ack.getListOfReadAccessResults();
-//            
-//            System.out.println("Start read properties");
-//            final long start = System.currentTimeMillis();
-//            System.out.println(String.format("Properties read done in %d ms", System.currentTimeMillis() - start));
-//            
-//            for (ReadAccessResult readAccessResult : results) {
-//                saveObj(readAccessResult.getObjectIdentifier(), readAccessResult);
-//            }
-//            
-//        }
-//    }
-//    
-//    private void saveObj(ObjectIdentifier objectIdentifier, ReadAccessResult readAccessResult) {
-//        Hashtable<String, String> points = new Hashtable<String, String>();
-//        BacnetObjectType bacnetObjectType = null;
-//        
-//        // get object type and assign it to BacnetObjectTypes
-//        for (int dictionaryTypesPosition = 0; dictionaryTypesPosition < dictionaryTypes.length; dictionaryTypesPosition++) {
-//            if (readAccessResult.getObjectIdentifier().toString()
-//                        .contains(dictionaryTypes[dictionaryTypesPosition])) {
-//                BacnetObjectType arr[] = BacnetObjectType.values();
-//                for (BacnetObjectType obj : arr) {
-//                    if (obj.ordinal() == dictionaryTypesPosition) {
-//                        bacnetObjectType = obj;
-//                    }
-//                }
-//            }
-//        }
-//        
-//        for (Result result : readAccessResult.getListOfResults()) {
-//            String propertyIdentifier = result.getPropertyIdentifier().toString();
-//            String propertyValue = result.getReadResult().toString();
-//
-//            System.out.println(result.getPropertyIdentifier().toString() + ": " + result.getReadResult().toString());
-//        }
-//        
-//    }
 
     private void saveObject(ObjectIdentifier objectIdentifier, PropertyValues propertyValues, String remoteDevice, RemoteDevice r) {
 
@@ -258,7 +203,8 @@ public class BacnetDriver {
         }
         if (bacnetObjectType != null) {
             bacnetObjectMap.put(bacnetObjectType, points);
-            disthechController.compare(bacnetObjectType.toString(), points, ObjectIdentifier);
+//            disthechController.compare(bacnetObjectType.toString(), points, ObjectIdentifier);
+            disthechController.addToProfile(bacnetObjectType.toString(), points, ObjectIdentifier);
         }
     }
 

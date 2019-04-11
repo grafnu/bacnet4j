@@ -520,6 +520,7 @@ public class ObjectProperties {
         
         add(ObjectType.binaryInput, PropertyIdentifier.eventMessageTexts, CharacterString.class, true, false, null); // added by Joel
         add(ObjectType.binaryInput, PropertyIdentifier.eventMessageTextsConfig, CharacterString.class, true, false, null); // added by Joel
+        add(ObjectType.binaryOutput, PropertyIdentifier.timeDelay, UnsignedInteger.class, false, false, null); // added by Joel
         add(ObjectType.binaryInput, PropertyIdentifier.timeDelayNormal, UnsignedInteger.class, false, false, null); // added by Joel
         add(ObjectType.binaryInput, PropertyIdentifier.eventDetectionEnable, Boolean.class, false, true, new Boolean(true)); //added by Joel
         add(ObjectType.binaryInput, PropertyIdentifier.eventAlgorithmInhibit, Boolean.class, false, true, new Boolean(true)); //added by Joel
