@@ -16,6 +16,16 @@ public class DistechController {
         initializeProfile();
     }
 
+    /**
+     * Binary output      || *
+     * Analog input (x5)  || * * * * *
+     * Binary input       || *
+     * Binary value       || *
+     * Analog output (x3) || * * *
+     * Analog Value (x4)  || * * * *
+     * Device             || *
+     */
+
     Multimap<String, Map<Map<String, String>, Map<Object, String>>> lines = ArrayListMultimap.create();
 
     Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
@@ -27,29 +37,303 @@ public class DistechController {
     Map<String, Map<String, String[]>> profile = new Hashtable<String, Map<String, String[]>>();
 
     String[] ObjectType = {
-            "AnalogInput", "AnalogOutput", "AnalogValue", "BinaryInput", "BinaryOutput", "BinaryValue", "MultistateInput",
-            "MultistateValue" };
+            "AnalogInput", "AnalogOutput", "AnalogValue", "BinaryInput", "BinaryOutput", "BinaryValue",
+            "Calendar", "Device", "EventEnrollment", "File", "Loop", "Program", "NotificationClass",
+            "Multi_stateInput", "Multi_stateOutput", "Multi_stateValue", "Schedule", "TrendLog" };
 
     String[] AnalogInput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Units", "Property list" };
-
+            "Out of service", "Units", "Property list",
+    };
     String[] AnalogInput_Optional = {
-            "Description", "Device type", "Reliability", "Update interval",
-            "Min pres value", "Max pres value", "Resolution", "COV increment", "Time delay",
-            "Notification class", "High limit", "Low limit", "Deadband", "Limit enable",
-            "Event enable", "Acked transitions", "Notify type", "Event time stamps",
-            "Event message texts", "Event message texts config", "Event detection enable",
-            "Time delay normal", "Event algorithm inhibit", "Event algorithm inhibit ref" };
-
+            "Description", "Device type", "Reliability", "Update interval", "Min pres value", "Max pres value",
+            "Resolution", "Cov increment", "Time delay", "Notification class", "High limit", "Low limit", "Deadband",
+            "Limit enable", "Event enable", "Notify type", "Event time stamps", "Event message texts",
+            "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
+            "Event algorithm inhibit ref",
+    };
     String[] AnalogInput_Proprietary = {
-            "COV period", "Cov min send time" };
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] AnalogOutput_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Units", "Priority array", "Relinquish default", "Property list",
+    };
+    String[] AnalogOutput_Optional = {
+            "Description", "Device type", "Reliability", "Min present value", "Max present value", "Resolution",
+            "Cov increment", "Time delay", "Notification class", "High limit", "Low limit", "Deadband", "Limit enable",
+            "Event enable", "Notify type", "Event time stamps", "Event message texts", "Event message texts config",
+            "Event detection enable", "Time delay normal", "Event algorithm inhibit", "Event algorithm inhibit ref",
+    };
+    String[] AnalogOutput_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] AnalogValue_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Units", "Property list",
+    };
+    String[] AnalogValue_Optional = {
+            "Description", "Reliability", "Priority array", "Relinquish default", "Min present value",
+            "Max present value", "Cov increment", "Time delay", "Notification class", "High limit", "Low limit",
+            "Deadband", "Limit enable", "Event enable", "Notify type", "Event time stamps", "Event message texts",
+            "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
+            "Event algorithm inhibit ref",
+    };
+    String[] AnalogValue_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] BinaryInput_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Polarity", "Property list",
+    };
+    String[] BinaryInput_Optional = {
+            "Description", "Device type", "Reliability", "Inactive text", "Active text", "Change of state time",
+            "Change of state count", "Time of state count reset", "Elapsed active time", "Time of active time reset",
+            "Time delay", "Notification class", "Alarm value", "Event enable", "Notify type", "Event time stamps",
+            "Event message texts", "Event message texts config", "Event detection enable", "Time delay normal",
+            "Event algorithm inhibit", "Event algorithm inhibit ref",
+    };
+    String[] BinaryInput_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] BinaryOutput_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Polarity",
+    };
+    String[] BinaryOutput_Optional = {
+            "Description", "Device type", "Reliability", "Inactive text", "Active text", "Change of state time",
+            "Change of state count", "Time of state count reset", "Elapsed active time", "Time of active time reset",
+            "Minimum off time", "Minimum on time", "Priority array", "Relinquish default", "Time delay",
+            "Notification class", "Feedback value", "Event enable", "Notify type", "Event time stamps",
+            "Event message texts", "Event message texts config", "Event detection enable", "Time delay normal",
+            "Event algorithm inhibit", "Event algorithm inhibit ref", "Property list",
+    };
+    String[] BinaryOutput_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] BinaryValue_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service",
+    };
+    String[] BinaryValue_Optional = {
+            "Description", "Reliability", "Inactive text", "Active text", "Change of state time", "Change of state count",
+            "Time of state count reset", "Elapsed active time", "Time of active time reset", "Minimum off time",
+            "Minimum on time", "Priority array", "Relinquish default", "Time delay", "Notification class", "Alarm value",
+            "Event enable", "Notify type", "Event time stamps", "Event message texts", "Event message texts config",
+            "Event detection enable", "Time delay normal", "Event algorithm inhibit", "Event algorithm inhibit ref",
+            "Property list",
+    };
+    String[] BinaryValue_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] Calendar_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Date list", "Property list",
+    };
+    String[] Calendar_Optional = {
+            "Description",
+    };
+    String[] Calendar_Proprietary = {
+            "Time to next state", "Next state",
+    };
+    String[] Device_Mandatory = {
+            "Object identifier", "Object name", "Object type", "System status", "Vendor name", "Vendor identifier",
+            "Model name", "Firmware revision", "Application software version", "Protocol version", "Protocol revision",
+            "Protocol services supported", "Protocol object types supported", "Object list", "Max apdu length accepted",
+            "Segmentation supported", "Max segments accepted", "Apdu timeout", "Number of apdu retries",
+            "Device address binding", "Database revision", "Property list",
+    };
+    String[] Device_Optional = {
+            "Location", "Description", "Local date", "Local time", "Utc offset", "Daylight savings status",
+            "Apdu segment timeout", "Time synchronization recipients", "Configuration files", "Last restore time",
+            "Backup failure timeout", "Backup preparation time", "Restore preparation time", "Restore completion time",
+            "Backup and restore state", "Active cov subscriptions", "Last restart reason", "Time of device restart",
+            "Restart notification recipients", "Utc time synchronization recipients", "Max master", "Max info frames",
+            "Time synchronization interval", "Align intervals", "Interval offset",
+    };
+    String[] Device_Proprietary = {
+
+    };
+    String[] EventEnrollment_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Event type", "Notify type", "Event parameters",
+            "Object property reference", "Event state", "Event enable", "Notification class", "Event time stamps",
+            "Event detection enable", "Status flags", "Reliability", "Property list",
+    };
+    String[] EventEnrollment_Optional = {
+            "Description", "Acked transitions", "Event message texts", "Event message texts config", "Time delay normal",
+    };
+    String[] EventEnrollment_Proprietary = {
+
+    };
+    String[] File_Mandatory = {
+            "Object identifier", "Object name", "Object type", "File type", "File size", "Modification date", "Archive",
+            "Read only", "File access method", "Property list",
+    };
+    String[] File_Optional = {
+            "Description",
+    };
+    String[] File_Proprietary = {
+
+    };
+    String[] Loop_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Output units", "Manipulated variable reference", "Controlled variable reference",
+            "Controlled variable value", "Controlled variable units", "Setpoint reference", "Setpoint", "Action",
+            "Priority for writing", "Property list",
+    };
+    String[] Loop_Optional = {
+            "Description", "Reliability", "Update interval", "Proportional constant", "Proportional constant units",
+            "Integral constant", "Integral constant units", "Derivative constant", "Derivative constant units", "Bias",
+            "Maximum output", "Minimum output", "Cov increment", "Time delay", "Notification class", "Error limit",
+            "Deadband", "Event enable", "Notify type", "Event time stamps", "Event message texts",
+            "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
+            "Event algorithm inhibit ref",
+    };
+    String[] Loop_Proprietary = {
+            "Loopdeadband", "Saturation time", "Cov period", "Cov min send time", "Ramp time",
+            "Saturation time low limit enable", "Saturation time high limit enable", "Acked transitions",
+    };
+    String[] Multi_stateInput_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Number of states", "Property list",
+    };
+    String[] Multi_stateInput_Optional = {
+            "Description", "Device type", "Reliability", "State text", "Time delay", "Notification class", "Alarm values",
+            "Fault values", "Event enable", "Notify type", "Event time stamps", "Event message texts",
+            "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
+            "Event algorithm inhibit ref",
+    };
+    String[] Multi_stateInput_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] Multi_stateValue_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
+            "Out of service", "Number of states",
+    };
+    String[] Multi_stateValue_Optional = {
+            "Description", "Reliability", "State text", "Priority array", "Relinquish default", "Time delay",
+            "Notification class", "Alarm values", "Fault values", "Event enable", "Notify type", "Event time stamps",
+            "Event message texts", "Event message texts config", "Event detection enable", "Time delay normal",
+            "Event algorithm inhibit", "Event algorithm inhibit ref", "Property list",
+    };
+    String[] Multi_stateValue_Proprietary = {
+            "Cov period", "Cov min send time", "Acked transitions",
+    };
+    String[] Program_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Program state", "Program change", "Status flags",
+            "Out of service", "Property list",
+    };
+    String[] Program_Optional = {
+            "Description", "Description of halt", "Reason for halt", "Reliability",
+    };
+    String[] Program_Proprietary = {
+
+    };
+    String[] NotificationClass_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Notification class", "Priority", "Ack required",
+            "Recipient list", "Property list",
+    };
+    String[] NotificationClass_Optional = {
+            "Description",
+    };
+    String[] NotificationClass_Proprietary = {
+
+    };
+    String[] Schedule_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Present value", "Effective period", "Schedule default",
+            "List of object property references", "Priority for writing", "Status flags", "Out of service",
+            "Property list",
+    };
+    String[] Schedule_Optional = {
+            "Description", "Weekly schedule", "Exception schedule", "Reliability",
+    };
+    String[] Schedule_Proprietary = {
+            "Time to next state", "Next state",
+    };
+    String[] TrendLog_Mandatory = {
+            "Object identifier", "Object name", "Object type", "Enable", "Stop when full", "Buffer size", "Log buffer",
+            "Record count", "Total record count", "Logging type", "Status flags", "Event state", "Property list",
+    };
+    String[] TrendLog_Optional = {
+            "Description", "Start time", "Stop time", "Log device object property", "Log interval",
+            "Cov resubscription interval", "Client cov increment", "Align intervals", "Interval offset", "Trigger",
+            "Reliability", "Notification threshold", "Records since notification", "Last notify record",
+            "Notification class", "Event enable", "Acked transitions", "Notify type", "Event time stamps",
+            "Event message texts", "Event message texts config", "Event detection enable", "Event algorithm inhibit",
+            "Event algorithm inhibit ref",
+    };
+    String[] TrendLog_Proprietary = {
+
+    };
 
     private void initializeProfile() {
         System.out.println("Initializing DistechController...");
         DeviceProperties.put("AnalogInput_Mandatory", AnalogInput_Mandatory);
         DeviceProperties.put("AnalogInput_Optional", AnalogInput_Optional);
         DeviceProperties.put("AnalogInput_Proprietary", AnalogInput_Proprietary);
+
+        DeviceProperties.put("AnalogOutput_Mandatory", AnalogOutput_Mandatory);
+        DeviceProperties.put("AnalogOutput_Optional", AnalogOutput_Optional);
+        DeviceProperties.put("AnalogOutput_Proprietary", AnalogOutput_Proprietary);
+
+        DeviceProperties.put("AnalogValue_Mandatory", AnalogValue_Mandatory);
+        DeviceProperties.put("AnalogValue_Optional", AnalogValue_Optional);
+        DeviceProperties.put("AnalogValue_Proprietary", AnalogValue_Proprietary);
+
+        DeviceProperties.put("BinaryInput_Mandatory", BinaryInput_Mandatory);
+        DeviceProperties.put("BinaryInput_Optional", BinaryInput_Optional);
+        DeviceProperties.put("BinaryInput_Proprietary", BinaryInput_Proprietary);
+
+        DeviceProperties.put("BinaryOutput_Mandatory", BinaryOutput_Mandatory);
+        DeviceProperties.put("BinaryOutput_Optional", BinaryOutput_Optional);
+        DeviceProperties.put("BinaryOutput_Proprietary", BinaryOutput_Proprietary);
+
+        DeviceProperties.put("BinaryValue_Mandatory", BinaryValue_Mandatory);
+        DeviceProperties.put("BinaryValue_Optional", BinaryValue_Optional);
+        DeviceProperties.put("BinaryValue_Proprietary", BinaryValue_Proprietary);
+
+        DeviceProperties.put("Calendar_Mandatory", Calendar_Mandatory);
+        DeviceProperties.put("Calendar_Optional", Calendar_Optional);
+        DeviceProperties.put("Calendar_Proprietary", Calendar_Proprietary);
+
+        DeviceProperties.put("Device_Mandatory", Device_Mandatory);
+        DeviceProperties.put("Device_Optional", Device_Optional);
+        DeviceProperties.put("Device_Proprietary", Device_Proprietary);
+
+        DeviceProperties.put("EventEnrollment_Mandatory", EventEnrollment_Mandatory);
+        DeviceProperties.put("EventEnrollment_Optional", EventEnrollment_Optional);
+        DeviceProperties.put("EventEnrollment_Proprietary", EventEnrollment_Proprietary);
+
+        DeviceProperties.put("File_Mandatory", File_Mandatory);
+        DeviceProperties.put("File_Optional", File_Optional);
+        DeviceProperties.put("File_Proprietary", File_Proprietary);
+
+        DeviceProperties.put("Loop_Mandatory", Loop_Mandatory);
+        DeviceProperties.put("Loop_Optional", Loop_Optional);
+        DeviceProperties.put("Loop_Proprietary", Loop_Proprietary);
+
+        DeviceProperties.put("Multi_stateInput_Mandatory", Multi_stateInput_Mandatory);
+        DeviceProperties.put("Multi_stateInput_Optional", Multi_stateInput_Optional);
+        DeviceProperties.put("Multi_stateInput_Proprietary", Multi_stateInput_Proprietary);
+
+        DeviceProperties.put("Multi_stateValue_Mandatory", Multi_stateValue_Mandatory);
+        DeviceProperties.put("Multi_stateValue_Optional", Multi_stateValue_Optional);
+        DeviceProperties.put("Multi_stateValue_Proprietary", Multi_stateValue_Proprietary);
+
+        DeviceProperties.put("Program_Mandatory", Program_Mandatory);
+        DeviceProperties.put("Program_Optional", Program_Optional);
+        DeviceProperties.put("Program_Proprietary", Program_Proprietary);
+
+        DeviceProperties.put("NotificationClass_Mandatory", NotificationClass_Mandatory);
+        DeviceProperties.put("NotificationClass_Optional", NotificationClass_Optional);
+        DeviceProperties.put("NotificationClass_Proprietary", NotificationClass_Proprietary);
+
+        DeviceProperties.put("Schedule_Mandatory", Schedule_Mandatory);
+        DeviceProperties.put("Schedule_Optional", Schedule_Optional);
+        DeviceProperties.put("Schedule_Proprietary", Schedule_Proprietary);
+
+        DeviceProperties.put("TrendLog_Mandatory", TrendLog_Mandatory);
+        DeviceProperties.put("TrendLog_Optional", TrendLog_Optional);
+        DeviceProperties.put("TrendLog_Proprietary", TrendLog_Proprietary);
 
         for (int count = 0; count < ObjectType.length; count++) {
             String objectType = ObjectType[count];
@@ -86,7 +370,8 @@ public class DistechController {
 
     public void addToProfile(String deviceType, Hashtable<String, Object> DevicePoints, String objectIdentifier) {
 
-        if (Arrays.asList(ObjectType).contains(deviceType) && deviceType == "AnalogInput") {
+        if (Arrays.asList(ObjectType).contains(deviceType)
+                    /*&& (deviceType == "AnalogInput" || deviceType == "AnalogOutput")*/) {
             String[] mandatoryPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Mandatory");
             String[] optionalPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Optional");
             String[] proprietaryPropertiesArrayCopy = DeviceProperties.get(deviceType + "_Proprietary");
@@ -117,12 +402,12 @@ public class DistechController {
                         Map<String, String> pics = new Hashtable<String, String>();
                         pics.put(arrayRef[i], Category[categoryCount]);
                         Map<Object, String> picsValue = new Hashtable<Object, String>();
-                        if(Category[categoryCount] == Category[0]) {
+                        if (Category[categoryCount] == Category[0]) {
                             picsValue.put("", "FAILED");
                         } else {
                             picsValue.put("", "WARNING");
                         }
-                        
+
                         Map<Map<String, String>, Map<Object, String>> obj2 = new Hashtable<Map<String, String>, Map<Object, String>>();
                         obj2.put(pics, picsValue);
                         lines.put(objectIdentifier, obj2);
@@ -138,7 +423,11 @@ public class DistechController {
         pics.put(key, category);
 
         Map<Object, String> picsValue = new Hashtable<Object, String>();
-        picsValue.put(value, "PASSED");
+        if (value.toString().isEmpty()) {
+            picsValue.put(value, "PASSED/EMPTY VALUE");
+        } else {
+            picsValue.put(value, "PASSED");
+        }
 
         Map<Map<String, String>, Map<Object, String>> obj2 = new Hashtable<Map<String, String>, Map<Object, String>>();
         obj2.put(pics, picsValue);
@@ -146,6 +435,8 @@ public class DistechController {
     }
 
     public void print() {
+        
+        System.out.format("\n\n%-30s%-50s%-15s%-35s%-25s\n\n", "Type", "Property Name", "Category", "Value", "Status");
         String prevDeviceType = "";
         for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
             String deviceType = line.getKey();
@@ -156,7 +447,7 @@ public class DistechController {
 
             if (prevDeviceType == "") {
                 prevDeviceType = deviceType;
-                System.out.println("\n" + deviceType + "\n");
+                System.out.println("\n" + deviceType);
             } else {
                 if (deviceType != prevDeviceType) {
                     prevDeviceType = deviceType;
@@ -174,7 +465,7 @@ public class DistechController {
                     value = valueSet.getKey().toString();
                     picsResult = valueSet.getValue();
                 }
-                System.out.format("%-30s%-15s%-35s%-25s\n", propertyName, category, value, picsResult);
+                System.out.format("%-30s%-50s%-15s%-35s%-25s\n", "", propertyName, category, value, picsResult);
             }
         }
     }

@@ -23,6 +23,8 @@ repositories {
 dependencies {
    compile 'org.apache.commons:commons-lang3:3.4'
    compile 'com.google.guava:guava:19.0'
+	compile 'org.apache.pdfbox'
+   
    compile files('lib/rxtx-2.2.jar')
    compile files('lib/seroUtils.jar')
 }

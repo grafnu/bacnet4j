@@ -124,7 +124,7 @@ public class BacnetDriver {
         
         for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
             RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
-
+            System.out.println("Device ID: " + remoteDevice.getObjectIdentifier());
             @SuppressWarnings("unchecked")
             List<ObjectIdentifier> allObjectsIdentifier = ((SequenceOf<ObjectIdentifier>) RequestUtils
                         .sendReadPropertyAllowNull(
@@ -163,9 +163,8 @@ public class BacnetDriver {
                 
 
             bacnetDictionaryObject.addObject(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
-            bacnetDictionaryObject.printAllDevices();
-            
-            
+//            bacnetDictionaryObject.printAllDevices();
+
             disthechController.print();
             
 //            disthechController.printProfile();
@@ -203,7 +202,6 @@ public class BacnetDriver {
         }
         if (bacnetObjectType != null) {
             bacnetObjectMap.put(bacnetObjectType, points);
-//            disthechController.compare(bacnetObjectType.toString(), points, ObjectIdentifier);
             disthechController.addToProfile(bacnetObjectType.toString(), points, ObjectIdentifier);
         }
     }
