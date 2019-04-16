@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.serotonin.bacnet4j.test.RedstoneTest.Report;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -16,18 +17,10 @@ public class DistechController {
         initializeProfile();
     }
 
-    /**
-     * Binary output      || *
-     * Analog input (x5)  || * * * * *
-     * Binary input       || *
-     * Binary value       || *
-     * Analog output (x3) || * * *
-     * Analog Value (x4)  || * * * *
-     * Device             || *
-     */
-
     Multimap<String, Map<Map<String, String>, Map<Object, String>>> lines = ArrayListMultimap.create();
 
+    String reportText = "";
+    Report report = new Report("tmp/PICS.txt");
     Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
 
     String[] Category = {
@@ -437,6 +430,7 @@ public class DistechController {
     public void print() {
         
         System.out.format("\n\n%-30s%-50s%-15s%-35s%-25s\n\n", "Type", "Property Name", "Category", "Value", "Status");
+        reportText += String.format("\n\n%-30s%-50s%-15s%-25s\n\n", "Type", "Property Name", "Category", "Status");
         String prevDeviceType = "";
         for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
             String deviceType = line.getKey();
@@ -448,10 +442,12 @@ public class DistechController {
             if (prevDeviceType == "") {
                 prevDeviceType = deviceType;
                 System.out.println("\n" + deviceType);
+                reportText += "\n" + deviceType + "\n";
             } else {
                 if (deviceType != prevDeviceType) {
                     prevDeviceType = deviceType;
                     System.out.println("\n" + deviceType + "\n");
+                    reportText += "\n" + deviceType + "\n";
                 }
             }
 
@@ -466,7 +462,10 @@ public class DistechController {
                     picsResult = valueSet.getValue();
                 }
                 System.out.format("%-30s%-50s%-15s%-35s%-25s\n", "", propertyName, category, value, picsResult);
+                reportText += String.format("%-30s%-50s%-15s%-25s\n", "", propertyName, category, picsResult);
             }
         }
+
+        report.writeReport(reportText);
     }
 }
