@@ -384,7 +384,7 @@ Analog Output 105
                               Event time stamps                                 Optional       PASSED                   
                               Status flags                                      Mandatory      PASSED                   
                               Object type                                       Mandatory      PASSED                   
-                              Description                                       Optional       PASSED/EMPTY VALUE       
+                              Description                                       Optional       PASSED                   
                               Low limit                                         Optional       PASSED                   
                               Deadband                                          Optional       PASSED                   
                               Event algorithm inhibit ref                       Optional       PASSED                   
@@ -608,3 +608,4 @@ Analog Input 103
                               Cov increment                                     Optional       WARNING                  
                               Cov period                                        Proprietary    WARNING                  
                               Cov min send time                                 Proprietary    WARNING                  
+RESULT pass protocol.bacnet.pic

@@ -23,6 +23,9 @@ public class DistechController {
     Report report = new Report("tmp/PICS.txt");
     Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
 
+    boolean picFailed = false;
+    String picTestName = "protocol.bacnet.pic";
+
     String[] Category = {
             "Mandatory", "Optional", "Proprietary" };
 
@@ -396,6 +399,7 @@ public class DistechController {
                         pics.put(arrayRef[i], Category[categoryCount]);
                         Map<Object, String> picsValue = new Hashtable<Object, String>();
                         if (Category[categoryCount] == Category[0]) {
+                            picFailed = true;
                             picsValue.put("", "FAILED");
                         } else {
                             picsValue.put("", "WARNING");
@@ -466,6 +470,8 @@ public class DistechController {
             }
         }
 
+        if(picFailed) reportText += "RESULT fail " + picTestName + "\n";
+        if(!picFailed) reportText += "RESULT pass " + picTestName + "\n";
         report.writeReport(reportText);
     }
 }

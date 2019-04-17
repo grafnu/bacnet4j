@@ -18,12 +18,10 @@ import com.serotonin.bacnet4j.type.enumerated.*;
 import com.serotonin.bacnet4j.type.notificationParameters.NotificationParameters;
 import com.serotonin.bacnet4j.type.primitive.Boolean;
 import com.serotonin.bacnet4j.type.primitive.CharacterString;
-import com.serotonin.bacnet4j.type.primitive.Double;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import com.serotonin.bacnet4j.type.primitive.Real;
 import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
 import com.serotonin.bacnet4j.util.PropertyReferences;
-import com.serotonin.bacnet4j.util.PropertyValues;
 import com.serotonin.bacnet4j.util.RequestUtils;
 
 import java.util.Arrays;
@@ -38,11 +36,21 @@ public class WriteTest {
 
     String propertyName = "Present value";
     String propertyValue = "0.4";
+    String objectType = "Analog output 105";
 
-    public WriteTest(String broadcastIp, String propertyName, String propertyValue) throws Exception {
+    String[] RealType = {"Present value", "Low limit", "Min pres value", "Max pres value", "Resolution",
+            "Relinquish default", "COV increment", "Low limit", "High limit", "Deadband"};
+
+    String[] BooleanType= {"Out of service", "Event Detection Enable", "Event algorithm inhibit"};
+
+    String[] CharacterStringType = {"Object name", "Description", "Device type", "Profile name",
+            "Event message texts", "Event message texts config", };
+
+    public WriteTest(String broadcastIp, String objectType, String propertyName, String propertyValue) throws Exception {
         this.broadcastIp = broadcastIp;
         this.propertyName = propertyName;
         this.propertyValue = propertyValue;
+        this.objectType = objectType;
         initialiseNetwork();
     }
 
@@ -85,8 +93,6 @@ public class WriteTest {
 
     public void get(LocalDevice localDevice) throws  Exception {
         for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
-
-//            RemoteDevice remoteDevice = localDevice.getRemoteDevices().get(0);
             RequestUtils.getExtendedDeviceInformation(localDevice, remoteDevice);
             System.out.println("Device ID: " + remoteDevice.getObjectIdentifier());
             @SuppressWarnings("unchecked")
@@ -105,8 +111,7 @@ public class WriteTest {
             // and now from all objects under the device object >> ai0, ai1,bi0,bi1...
             for (ObjectIdentifier objectIdentifier : allObjectsIdentifier) {
                 refs.add(objectIdentifier, PropertyIdentifier.all);
-//                System.out.println("Object Identifier: " + objectIdentifier);
-                if(objectIdentifier.toString().equals("Analog Output 105")){
+                if(objectIdentifier.toString().equals(objectType)){
                     setPresentValue(localDevice, remoteDevice, objectIdentifier);
                 }
             }
@@ -117,83 +122,90 @@ public class WriteTest {
 
     public void setPresentValue(LocalDevice localDevice, RemoteDevice remoteDevice, ObjectIdentifier objectIdentifier) {
         try {
-
-            for(PropertyIdentifier p : PropertyIdentifier.ALL) {
-                System.out.println(p);
-            }
+            
             Encodable property = null;
 
-            String[] RealType = {"Present value", "Low limit", "Min pres value", "Max pres value", "Resolution",
-                    "Relinquish default", "COV increment", "Low limit", "High limit", "Deadband"};
+            for (PropertyIdentifier propertyIdentifier  :  PropertyIdentifier.ALL) {
+                if (propertyIdentifier.toString().equals(propertyName)) {
+                    if(Arrays.asList(RealType).contains(propertyName)) {
+                        float floatValue = Float.valueOf(propertyValue.trim()).floatValue();
+                        property = new Real(floatValue);
+                        WritePropertyRequest request =
+                                new WritePropertyRequest(objectIdentifier, propertyIdentifier,
+                                        null, property, null);
+                        localDevice.send(remoteDevice, request);
+                        PropertyValue propertyValue = new PropertyValue(propertyIdentifier, property);
+                        BACnetObject bacnetObject = new BACnetObject(localDevice, objectIdentifier);
+                        subscribeToPropertyWritten(bacnetObject, propertyValue);
+                    }
 
-            String[] BooleanType= {"Out of service", "Event Detection Enable", "Event algorithm inhibit"};
+                    if(Arrays.asList(BooleanType).contains(propertyName)) {
+                        boolean bool = java.lang.Boolean.valueOf(propertyValue);
+                        property = new Boolean(bool);
+                        // this line need to be dynamic
+                        WritePropertyRequest request =
+                                new WritePropertyRequest(objectIdentifier, PropertyIdentifier.outOfService,
+                                        null, property, null);
+                        localDevice.send(remoteDevice, request);
+                        PropertyValue propertyValue = new PropertyValue(propertyIdentifier, property);
+                        BACnetObject bacnetObject = new BACnetObject(localDevice, objectIdentifier);
+                        subscribeToPropertyWritten(bacnetObject, propertyValue);
+                    }
 
-            String[] CharacterStringType = {"Object name", "Description", "Device type", "Profile name",
-                    "Event message texts", "Event message texts config", };
-
-            if(Arrays.asList(RealType).contains(propertyName)) {
-                float floatValue = Float.valueOf(propertyValue.trim()).floatValue();
-                System.out.println("float f = " + floatValue);
-                property = new Real(floatValue);
-
-                WritePropertyRequest request =
-                        new WritePropertyRequest(objectIdentifier, PropertyIdentifier.presentValue, // this line need to be dynamic
-                                null, property, null);
-                localDevice.send(remoteDevice, request);
+                    if(Arrays.asList(CharacterStringType).contains(propertyName)) {
+                        property = new CharacterString(propertyValue);
+                        // this line need to be dynamic
+                        WritePropertyRequest request =
+                                new WritePropertyRequest(objectIdentifier, PropertyIdentifier.description,
+                                        null, property, null);
+                        localDevice.send(remoteDevice, request);
+                        PropertyValue propertyValue = new PropertyValue(propertyIdentifier, property);
+                        BACnetObject bacnetObject = new BACnetObject(localDevice, objectIdentifier);
+                        subscribeToPropertyWritten(bacnetObject, propertyValue);
+                    }
+                }
             }
-
-            if(Arrays.asList(BooleanType).contains(propertyName)) {
-                boolean bool = java.lang.Boolean.valueOf(propertyValue);
-                System.out.println("*********************** " + bool);
-                property = new Boolean(bool);
-                WritePropertyRequest request =
-                        new WritePropertyRequest(objectIdentifier, PropertyIdentifier.outOfService, // this line need to be dynamic
-                                null, property, null);
-                localDevice.send(remoteDevice, request);
-            }
-
-            if(Arrays.asList(CharacterStringType).contains(propertyName)) {
-                property = new CharacterString(propertyValue);
-                WritePropertyRequest request =
-                        new WritePropertyRequest(objectIdentifier, PropertyIdentifier.description, // this line need to be dynamic
-                                null, property, null);
-                localDevice.send(remoteDevice, request);
-            }
-
-
-
-
-
 
             System.out.println("ObjectIdentifier: " + objectIdentifier + " \nWriting to: " + propertyName);
-//            float presentValue = 0.0f;
-//            Encodable property = new Real (presentValue);
-
-//            WritePropertyRequest request =
-//                    new WritePropertyRequest(objectIdentifier, PropertyIdentifier.lowLimit,
-//                            null, property, null);
-//            localDevice.send(remoteDevice, request);
-
-            System.out.println("Subscribing to COV Notification...");
             // Subscribe to this objectidentifier
-            SubscribeCOVRequest req = new SubscribeCOVRequest(new UnsignedInteger(0), objectIdentifier, new Boolean(true),
-                    new UnsignedInteger(0));
-            localDevice.send(remoteDevice, req);
+            subscribeToCOVNotification(remoteDevice, objectIdentifier);
+
+
 
             Thread.sleep(10000); // 10 seconds
 
         } catch (BACnetException | InterruptedException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println("BACnet Exception: " + e.getMessage());
         } finally {
+            // Unsubscribe to COV Notification
+            unsubscribeToCOVNotification(remoteDevice, objectIdentifier);
+        }
+    }
+
+    private void subscribeToCOVNotification(RemoteDevice remoteDevice, ObjectIdentifier objectIdentifier) {
+        try {
+            System.out.println("Subscribing to COV Notification...");
+            SubscribeCOVRequest request = new SubscribeCOVRequest(new UnsignedInteger(0), objectIdentifier,
+                    new Boolean(true),
+                    new UnsignedInteger(0));
+            localDevice.send(remoteDevice, request);
+
+        } catch(Exception e ) {
+            System.out.println("WritePropertyRequest Exception: " + e.getMessage());
+        }
+    }
+
+    private void subscribeToPropertyWritten(BACnetObject bacnetObject, PropertyValue propertyValue) {
+        localDevice.getEventHandler().propertyWritten(bacnetObject, propertyValue);
+    }
+
+    private void unsubscribeToCOVNotification(RemoteDevice remoteDevice, ObjectIdentifier objectIdentifier) {
+        try {
             System.out.println("Unsubscribing to COV Notification...");
-            // Unsubscribe
-            try {
-                localDevice.send(remoteDevice, new SubscribeCOVRequest(new UnsignedInteger(0), objectIdentifier,
-                        null, null));
-            } catch (BACnetException e) {
-                e.printStackTrace();
-            }
+            localDevice.send(remoteDevice, new SubscribeCOVRequest(new UnsignedInteger(0), objectIdentifier,
+                    null, null));
+        } catch (BACnetException e) {
+            System.out.println("Unsubscribe Exception" + e.getMessage());
         }
     }
 
@@ -217,7 +229,7 @@ public class WriteTest {
 
         @Override
         public void propertyWritten(BACnetObject obj, PropertyValue pv) {
-            System.out.println("Wrote " + pv + " to " + obj);
+            System.out.println("Wrote " + pv + " to " + obj.getId());
         }
 
         @Override
@@ -226,24 +238,34 @@ public class WriteTest {
         }
 
         @Override
-        public void covNotificationReceived(UnsignedInteger subscriberProcessIdentifier, RemoteDevice initiatingDevice, ObjectIdentifier monitoredObjectIdentifier, UnsignedInteger timeRemaining, SequenceOf<PropertyValue> listOfValues) {
-            System.out.println("\nLISTENER: covNotificationReceived monitoredObjectIdentifier:  " + monitoredObjectIdentifier.toString());
+        public void covNotificationReceived(UnsignedInteger subscriberProcessIdentifier,
+                                            RemoteDevice initiatingDevice, ObjectIdentifier monitoredObjectIdentifier,
+                                            UnsignedInteger timeRemaining, SequenceOf<PropertyValue> listOfValues) {
+            System.out.println("\nLISTENER: covNotificationReceived monitoredObjectIdentifier:  " +
+                    monitoredObjectIdentifier.toString());
             System.out.println("LISTENER: covNotificationReceived time remaining:  " + timeRemaining.toString());
             System.out.println("LISTENER: covNotificationReceived list of value:  " + listOfValues.toString() + "\n\n");
         }
 
         @Override
-        public void eventNotificationReceived(UnsignedInteger processIdentifier, RemoteDevice initiatingDevice, ObjectIdentifier eventObjectIdentifier, TimeStamp timeStamp, UnsignedInteger notificationClass, UnsignedInteger priority, EventType eventType, CharacterString messageText, NotifyType notifyType, Boolean ackRequired, EventState fromState, EventState toState, NotificationParameters eventValues) {
+        public void eventNotificationReceived(UnsignedInteger processIdentifier,
+                                              RemoteDevice initiatingDevice, ObjectIdentifier eventObjectIdentifier,
+                                              TimeStamp timeStamp, UnsignedInteger notificationClass,
+                                              UnsignedInteger priority, EventType eventType, CharacterString messageText,
+                                              NotifyType notifyType, Boolean ackRequired, EventState fromState,
+                                              EventState toState, NotificationParameters eventValues) {
             System.out.println("LISTENER: eventNotificationReceived " + processIdentifier.toString());
         }
 
         @Override
-        public void textMessageReceived(RemoteDevice textMessageSourceDevice, Choice messageClass, MessagePriority messagePriority, CharacterString message) {
+        public void textMessageReceived(RemoteDevice textMessageSourceDevice, Choice messageClass,
+                                        MessagePriority messagePriority, CharacterString message) {
             System.out.println("LISTENER: textMessageReceived " + textMessageSourceDevice.toString());
         }
 
         @Override
-        public void privateTransferReceived(UnsignedInteger vendorId, UnsignedInteger serviceNumber, Encodable serviceParameters) {
+        public void privateTransferReceived(UnsignedInteger vendorId, UnsignedInteger serviceNumber,
+                                            Encodable serviceParameters) {
             System.out.println("LISTENER: privateTransferReceived " + vendorId.toString());
         }
 

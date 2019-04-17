@@ -21,6 +21,7 @@ public class SearchDuplicatesTest {
     private static LocalDevice localDevice;
     Report report = new Report("tmp/DuplicatesTestReport.txt");
     private String reportText = "";
+    private String picTestName = "protocol.bacnet.addr_unique";
 
     private static List<RemoteDevice> allRemoteDevices = new ArrayList<>();
     static ArrayList<String> objectIdentifiers = new ArrayList<String>();
@@ -78,6 +79,7 @@ public class SearchDuplicatesTest {
         if(objectIdentifiersDuplicates.size() == 0) {
             System.out.println("No duplicates found! \nTEST PASSED");
             reportText = "No duplicates found! \nTEST PASSED";
+            reportText += "\nRESULT pass " + picTestName + "\n";
             report.writeReport(reportText);
         }
 
@@ -104,6 +106,7 @@ public class SearchDuplicatesTest {
             }
             System.out.println("\nTEST FAILED");
             reportText += "\nTEST FAILED";
+            reportText += "\nRESULT fail " + picTestName + "\n";
             report.writeReport(reportText);
         }
     }

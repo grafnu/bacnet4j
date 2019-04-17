@@ -4,10 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
-import com.serotonin.bacnet4j.test.BacnetDictionaryObject;
-import com.serotonin.bacnet4j.test.BacnetObjectType;
 import com.serotonin.bacnet4j.test.DevicesProfile.DistechController;
-import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
@@ -80,6 +77,7 @@ public class BACnetPoints {
 
             bacnetDictionaryObject.addObject(remoteDevice.getObjectIdentifier().toString(), bacnetObjectMap);
             bacnetDictionaryObject.printAllDevices();
+
 
             if(printPICS) disthechController.print();
         }

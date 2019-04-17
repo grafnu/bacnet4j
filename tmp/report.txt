@@ -169,6 +169,38 @@ Device 1010026
 		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
 		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
 
+	BinaryInput
+		Object name = fan_run_status
+		Present value = 0
+		Out of service = false
+		Active text = TRUE
+		Time of state count reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Event enable = [true, true, true]
+		Change of state count = 0
+		Event state = normal
+		Object type = Binary Input
+		Time delay normal = 0
+		Inactive text = FALSE
+		Polarity = 0
+		Alarm value = 0
+		Acked transitions = [true, true, true]
+		Status flags = [false, false, false, false]
+		Change of state time = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Event algorithm inhibit ref = [ObjectPropertyReference(objectIdentifier=Binary Value 4194303, propertyIdentifier=Present value, propertyArrayIndex=null)]
+		Notify type = 0
+		Time of active time reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Event detection enable = false
+		Object identifier = Binary Input 101
+		Reliability = 0
+		Device type = 
+		Event message texts = [, , ]
+		Elapsed active time = 0
+		Notification class = 0
+		Description = 
+		Event algorithm inhibit = false
+		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
+		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
+
 	AnalogValue
 		Object name = fan_run_speed_percentage_setpoint
 		Present value = 0.0
@@ -331,82 +363,15 @@ Device 1010026
 		Location = 
 		Vendor name = Distech Controls, Inc.
 		Restart Notification Recipients = [Encodable(com.serotonin.bacnet4j.type.constructed.Recipient)]
-		Local time = 12:12:14.0
+		Local time = 8:11:45.0
 		Last Restart Reason = 0
 		System status = 0
-		Local date = TUESDAY APRIL 16, 119
+		Local date = WEDNESDAY APRIL 17, 119
 		Configuration files = [File 1]
 		Interval Offset = 0
 		Backup And Restore State = 0
 		Align Intervals = true
 		Time Of Device Restart = Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)
-
-	BinaryValue
-		Object name = device_run_command
-		Present value = 0
-		Out of service = false
-		Active text = TRUE
-		Time of state count reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Relinquish default = 0
-		Event enable = [true, true, true]
-		Change of state count = 0
-		Event state = normal
-		Object type = Binary Value
-		Time delay normal = 0
-		Inactive text = FALSE
-		Alarm value = 0
-		Status flags = [false, false, false, false]
-		Acked transitions = [true, true, true]
-		Change of state time = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Event algorithm inhibit ref = [ObjectPropertyReference(objectIdentifier=Binary Value 4194303, propertyIdentifier=Present value, propertyArrayIndex=null)]
-		Time of active time reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Notify type = 0
-		Event detection enable = false
-		Object identifier = Binary Value 1
-		Reliability = 0
-		Event message texts = [, , ]
-		Time delay = 0
-		Minimum on time = 0
-		Elapsed active time = 0
-		Minimum off time = 0
-		Priority array = [PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null)]
-		Notification class = 0
-		Description = 
-		Event algorithm inhibit = false
-		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
-		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
-
-	BinaryInput
-		Object name = fan_run_status
-		Present value = 0
-		Out of service = false
-		Active text = TRUE
-		Time of state count reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Event enable = [true, true, true]
-		Change of state count = 0
-		Event state = normal
-		Object type = Binary Input
-		Time delay normal = 0
-		Inactive text = FALSE
-		Polarity = 0
-		Alarm value = 0
-		Acked transitions = [true, true, true]
-		Status flags = [false, false, false, false]
-		Change of state time = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Event algorithm inhibit ref = [ObjectPropertyReference(objectIdentifier=Binary Value 4194303, propertyIdentifier=Present value, propertyArrayIndex=null)]
-		Notify type = 0
-		Time of active time reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
-		Event detection enable = false
-		Object identifier = Binary Input 101
-		Reliability = 0
-		Device type = 
-		Event message texts = [, , ]
-		Elapsed active time = 0
-		Notification class = 0
-		Description = 
-		Event algorithm inhibit = false
-		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
-		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
 
 	AnalogOutput
 		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
@@ -417,12 +382,12 @@ Device 1010026
 		Reliability = 0
 		Resolution = 0.1
 		Event algorithm inhibit = false
-		Out of service = true
+		Out of service = false
 		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
-		Status flags = [false, false, false, true]
+		Status flags = [false, false, false, false]
 		Object type = Analog Output
 		Description = This is a short description of the device
-		Low limit = 0.8
+		Low limit = 0.0
 		Min pres value = 0.0
 		Deadband = 0.0
 		Event algorithm inhibit ref = [ObjectPropertyReference(objectIdentifier=Binary Value 4194303, propertyIdentifier=Present value, propertyArrayIndex=null)]
@@ -432,8 +397,8 @@ Device 1010026
 		Notification class = 0
 		Units = percent
 		Notify type = 0
-		Present value = 0.1
-		Priority array = [PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(realValue=0.1)]
+		Present value = 0.0
+		Priority array = [PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(realValue=0.0)]
 		Device type = Analog0To10Volts
 		Relinquish default = 0.0
 		Event enable = [true, true, true]
@@ -549,4 +514,39 @@ Device 1010026
 		Change of state time = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
 		Time delay normal = 0
 		Acked transitions = [true, true, true]
+
+	BinaryValue
+		Object name = device_run_command
+		Present value = 0
+		Out of service = false
+		Active text = TRUE
+		Time of state count reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Relinquish default = 0
+		Event enable = [true, true, true]
+		Change of state count = 0
+		Event state = normal
+		Object type = Binary Value
+		Time delay normal = 0
+		Inactive text = FALSE
+		Alarm value = 0
+		Status flags = [false, false, false, false]
+		Acked transitions = [true, true, true]
+		Change of state time = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Event algorithm inhibit ref = [ObjectPropertyReference(objectIdentifier=Binary Value 4194303, propertyIdentifier=Present value, propertyArrayIndex=null)]
+		Time of active time reset = Encodable(com.serotonin.bacnet4j.type.constructed.DateTime)
+		Notify type = 0
+		Event detection enable = false
+		Object identifier = Binary Value 1
+		Reliability = 0
+		Event message texts = [, , ]
+		Time delay = 0
+		Minimum on time = 0
+		Elapsed active time = 0
+		Minimum off time = 0
+		Priority array = [PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null), PriorityValue(nullValue=Null)]
+		Notification class = 0
+		Description = 
+		Event algorithm inhibit = false
+		Event message texts config = [{D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}, {D.ObjectName}\{ObjectName}\{N.ObjectName}\{EventState}]
+		Event time stamps = [Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp), Encodable(com.serotonin.bacnet4j.type.constructed.TimeStamp)]
 

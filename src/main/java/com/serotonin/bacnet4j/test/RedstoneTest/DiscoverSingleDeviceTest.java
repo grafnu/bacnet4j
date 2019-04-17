@@ -7,8 +7,6 @@ import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.event.DeviceEventAdapter;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
-import com.serotonin.bacnet4j.test.BacnetDictionaryObject;
-import com.serotonin.bacnet4j.test.BacnetObjectType;
 import com.serotonin.bacnet4j.test.DevicesProfile.DistechController;
 import com.serotonin.bacnet4j.transport.Transport;
 
