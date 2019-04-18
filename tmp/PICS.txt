@@ -608,4 +608,4 @@ Analog Input 103
                               Cov increment                                     Optional       WARNING                  
                               Cov period                                        Proprietary    WARNING                  
                               Cov min send time                                 Proprietary    WARNING                  
-RESULT pass protocol.bacnet.pic
+RESULT fail protocol.bacnet.pic

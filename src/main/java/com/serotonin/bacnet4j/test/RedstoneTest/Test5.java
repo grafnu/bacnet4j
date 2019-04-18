@@ -8,7 +8,7 @@ public class Test5 {
 //            throw new IllegalArgumentException("Usage: broadcastIp, localIp, loopDiscover");
 //        }
 
-        if (args.length != 0) {
+        if (args.length != 1) {
             throw new IllegalArgumentException("Usage: broadcastIp");
         }
 
