@@ -41,7 +41,7 @@ public class SearchDuplicatesTest {
 
     public void discoverAllDevices() throws Exception {
 
-        LoopDevice loopDevice = new LoopDevice(IpNetwork.DEFAULT_BROADCAST_IP,
+        LoopDevice loopDevice = new LoopDevice(broadcastIp,
                 IpNetwork.DEFAULT_PORT, localIp);
 
         while (!loopDevice.isTerminate()) {
