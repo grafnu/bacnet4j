@@ -8,6 +8,7 @@ import com.serotonin.bacnet4j.test.LoopDevice;
 public class DiscoverAllDevicesTest {
 
     String localIp = "";
+    String broadcastIp = "";
     boolean loopDiscover = false;
     private static LocalDevice localDevice;
     boolean printPICS = false;
@@ -23,8 +24,9 @@ public class DiscoverAllDevicesTest {
         }
     }
 
-    public DiscoverAllDevicesTest(String localIp, boolean loopDiscover, boolean printPICS) {
+    public DiscoverAllDevicesTest(String localIp, String broadcastIp, boolean loopDiscover, boolean printPICS) {
         this.localIp = localIp;
+        this.broadcastIp = broadcastIp;
         this.loopDiscover = loopDiscover;
         this.printPICS = printPICS;
         try {
@@ -35,7 +37,10 @@ public class DiscoverAllDevicesTest {
     }
 
     private void discoverAllDevices() throws Exception {
-        LoopDevice loopDevice = new LoopDevice(IpNetwork.DEFAULT_BROADCAST_IP,
+//        LoopDevice loopDevice = new LoopDevice(IpNetwork.DEFAULT_BROADCAST_IP,
+//                IpNetwork.DEFAULT_PORT, localIp);
+
+        LoopDevice loopDevice = new LoopDevice(broadcastIp,
                 IpNetwork.DEFAULT_PORT, localIp);
 
         while (!loopDevice.isTerminate()) {

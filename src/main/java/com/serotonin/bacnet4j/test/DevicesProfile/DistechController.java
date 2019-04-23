@@ -262,7 +262,7 @@ public class DistechController {
     };
 
     private void initializeProfile() {
-        System.out.println("Initializing DistechController...");
+//        System.out.println("Initializing DistechController...");
         DeviceProperties.put("AnalogInput_Mandatory", AnalogInput_Mandatory);
         DeviceProperties.put("AnalogInput_Optional", AnalogInput_Optional);
         DeviceProperties.put("AnalogInput_Proprietary", AnalogInput_Proprietary);

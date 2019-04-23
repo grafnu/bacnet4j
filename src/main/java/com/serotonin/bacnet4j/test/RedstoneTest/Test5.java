@@ -20,10 +20,10 @@ public class Test5 {
 //        new WriteTest(broadcastIp,"Analog Output 105", "Present value", "0.5");
 
         // Discover Single Device
-//        new DiscoverSingleDeviceTest(broadcastIp, true);
+//        new DiscoverSingleDeviceTest(broadcastIp, false);
 
         // Discover All Devices
-        new DiscoverAllDevicesTest(localIp, loopDiscover, true);
+        new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, true);
 
         // Check for devices with same ObjectIdentifier
 //        new SearchDuplicatesTest(localIp, loopDiscover);
