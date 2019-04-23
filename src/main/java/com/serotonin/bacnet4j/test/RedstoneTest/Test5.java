@@ -4,30 +4,44 @@ public class Test5 {
 
     public static void main(String[] args) throws Exception {
 
-        if (args.length != 3) {
-            throw new IllegalArgumentException("Usage: broadcastIp, localIp, loopDiscover");
+        if (args.length < 1) {
+            throw new IllegalArgumentException(("Usage: bacnetTestId"));
         }
 
-//        if (args.length != 1) {
-//            throw new IllegalArgumentException("Usage: broadcastIp");
-//        }
+        String bacnetTestId = args[0];
 
-        String broadcastIp = args[0];
-        String localIp = args[1];
-        boolean loopDiscover = "loop".equals(args[2]);
+        switch (bacnetTestId) {
+            case "bacnet_PICS":
+                if (args.length != 4) {
+                    throw new IllegalArgumentException("Usage: bacnetTestId, broadcastIp, localIp, loopDiscover");
+                }
+                String broadcastIp = args[1];
+                String localIp = args[2];
+                boolean loopDiscover = "loop".equals(args[3]);
+                new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, true);
+                break;
 
-        // Write to BACnet Point
-//        new WriteTest(broadcastIp,"Analog Output 105", "Present value", "0.5");
+            case "bacnet_ADDR_UNIQUE":
+                if (args.length != 4) {
+                    throw new IllegalArgumentException("Usage: bacnetTestId, broadcastIp, localIp, loopDiscover");
+                }
+                broadcastIp = args[1];
+                localIp = args[2];
+                loopDiscover = "loop".equals(args[3]);
+                new SearchDuplicatesTest(localIp, broadcastIp, loopDiscover);
+                break;
 
-        // Discover Single Device
-//        new DiscoverSingleDeviceTest(broadcastIp, false);
+            case "bacnet_VERSION":
+                if (args.length != 3) {
+                    throw new IllegalArgumentException("Usage: bacnetTestId, broadcastIp, localIp");
+                }
+                broadcastIp = args[1];
+                localIp = args[2];
+                new BacnetVersion(localIp, broadcastIp);
+                break;
 
-        // Discover All Devices
-        new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, true);
-
-        // Check for devices with same ObjectIdentifier
-//        new SearchDuplicatesTest(localIp, loopDiscover);
-
-
+            default:
+                throw new IllegalArgumentException("Invalid bacnetTestId.");
+        }
     }
 }

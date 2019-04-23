@@ -17,6 +17,7 @@ import java.util.Map;
 public class SearchDuplicatesTest {
 
     String localIp = "";
+    String broadcastIp = "";
     boolean loopDiscover = false;
     private static LocalDevice localDevice;
     Report report = new Report("tmp/DuplicatesTestReport.txt");
@@ -27,8 +28,9 @@ public class SearchDuplicatesTest {
     static ArrayList<String> objectIdentifiers = new ArrayList<String>();
     static ArrayList<String> objectIdentifiersDuplicates = new ArrayList<String>();
 
-    public SearchDuplicatesTest(String localIp, boolean loopDiscover) {
+    public SearchDuplicatesTest(String localIp, String broadcastIp, boolean loopDiscover) {
         this.localIp = localIp;
+        this.broadcastIp = broadcastIp;
         this.loopDiscover = loopDiscover;
         try {
             discoverAllDevices();
