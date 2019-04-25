@@ -40,8 +40,11 @@ public class DiscoverAllDevicesTest {
 //        LoopDevice loopDevice = new LoopDevice(IpNetwork.DEFAULT_BROADCAST_IP,
 //                IpNetwork.DEFAULT_PORT, localIp);
 
-        LoopDevice loopDevice = new LoopDevice(broadcastIp,
+        LoopDevice loopDevice = new LoopDevice("10.255.255.255",
                 IpNetwork.DEFAULT_PORT, localIp);
+
+//        LoopDevice loopDevice = new LoopDevice(broadcastIp,
+//                IpNetwork.DEFAULT_PORT, localIp);
 
         while (!loopDevice.isTerminate()) {
             localDevice = loopDevice.getLocalDevice();

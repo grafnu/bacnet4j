@@ -16,7 +16,7 @@ public class BacnetVersion {
     String localIp = "";
     String broadcastIp = "";
     private static LocalDevice localDevice;
-    Report report = new Report("tmp/DuplicatesTestReport.txt");
+    Report report = new Report("tmp/BacnetVersionTest.txt");
     private String reportText = "";
     private String picTestName = "protocol.bacnet.addr_unique";
 
@@ -53,8 +53,10 @@ public class BacnetVersion {
 
             // Get Device name, version
             Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice, remoteDevice, null,
-                        PropertyIdentifier.objectName, PropertyIdentifier.vendorName, PropertyIdentifier.modelName,
-                        PropertyIdentifier.description, PropertyIdentifier.location, PropertyIdentifier.objectList);
+                        PropertyIdentifier.vendorIdentifier, PropertyIdentifier.vendorName, PropertyIdentifier.instanceOf,
+                        PropertyIdentifier.firmwareRevision, PropertyIdentifier.applicationSoftwareVersion,
+                        PropertyIdentifier.objectName, PropertyIdentifier.modelName, PropertyIdentifier.description,
+                        PropertyIdentifier.location, PropertyIdentifier.objectList, PropertyIdentifier.protocolVersion);
 
 //            System.out.println(values);
             print(values);
@@ -68,19 +70,24 @@ public class BacnetVersion {
             if (key.equals("Object list")) {
                 String[] value = property.getValue().toString().split(",");
                 System.out.print(key + " : ");
+                reportText += key + " : ";
                 for (int i = 0; i < value.length; i ++) {
                     if (i == 0){
                         System.out.print(value[i]);
+                        reportText += value[i];
                     }  else {
                         System.out.format("%-14s%-20s", "", value[i]);
+                        reportText += String.format("%-14s%-20s", "", value[i]);
                     }
-                    if (i % 2 == 0) System.out.println();
+                    if (i % 2 == 0) { System.out.println(); reportText += "\n"; };
                 }
                 System.out.println();
+                reportText += "\n";
 
             } else {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
+                reportText += key + " : " + value;
             }
         }
     }
