@@ -90,5 +90,6 @@ public class BacnetVersion {
                 reportText += key + " : " + value;
             }
         }
+        report.writeReport(reportText);
     }
 }
