@@ -18,6 +18,7 @@ public class BacnetVersion {
     private static LocalDevice localDevice;
     Report report = new Report("tmp/BacnetVersionTest.txt");
     private String reportText = "";
+    private boolean testPassed = false;
 
     public BacnetVersion(String localIp, String broadcastIp) {
         this.localIp = localIp;
@@ -87,10 +88,19 @@ public class BacnetVersion {
             } else {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
-                if (key.equals("Protocol version")) reportText += key + " : " + value + "\n";
+                if (key.equals("Protocol version")) {
+                    reportText += "RESULT pass protocol.bacnet.version";
+                    reportText += key + " : " + value + "\n";
+                    testPassed = true;
+                }
 //                reportText += key + " : " + value;
             }
         }
-        report.writeReport(reportText);
+        if(testPassed) {
+            report.writeReport(reportText);
+        } else {
+            report.writeReport("RESULT fail protocol.bacnet.version");
+        }
+
     }
 }

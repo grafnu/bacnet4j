@@ -81,7 +81,7 @@ public class SearchDuplicatesTest {
         if(objectIdentifiersDuplicates.size() == 0) {
             System.out.println("No duplicates found! \nTEST PASSED");
 //            reportText = "No duplicates found! \nTEST PASSED";
-            reportText += "\nRESULT pass " + picTestName + "\n";
+            reportText += "RESULT pass " + picTestName + "\n";
             report.writeReport(reportText);
         }
 
