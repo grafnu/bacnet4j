@@ -18,7 +18,6 @@ public class BacnetVersion {
     private static LocalDevice localDevice;
     Report report = new Report("tmp/BacnetVersionTest.txt");
     private String reportText = "";
-    private String picTestName = "protocol.bacnet.addr_unique";
 
     public BacnetVersion(String localIp, String broadcastIp) {
         this.localIp = localIp;
@@ -70,24 +69,26 @@ public class BacnetVersion {
             if (key.equals("Object list")) {
                 String[] value = property.getValue().toString().split(",");
                 System.out.print(key + " : ");
-                reportText += key + " : ";
+
+//                reportText += key + " : ";
                 for (int i = 0; i < value.length; i ++) {
                     if (i == 0){
                         System.out.print(value[i]);
-                        reportText += value[i];
+//                        reportText += value[i];
                     }  else {
                         System.out.format("%-14s%-20s", "", value[i]);
-                        reportText += String.format("%-14s%-20s", "", value[i]);
+//                        reportText += String.format("%-14s%-20s", "", value[i]);
                     }
-                    if (i % 2 == 0) { System.out.println(); reportText += "\n"; };
+                    if (i % 2 == 0) { System.out.println(); /*reportText += "\n";*/ };
                 }
                 System.out.println();
-                reportText += "\n";
+//                reportText += "\n";
 
             } else {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
-                reportText += key + " : " + value;
+                if (key.equals("Protocol version")) reportText += key + " : " + value;
+//                reportText += key + " : " + value;
             }
         }
         report.writeReport(reportText);

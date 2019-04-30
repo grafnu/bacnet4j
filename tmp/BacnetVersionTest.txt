@@ -1,11 +1,1 @@
-Protocol version : 1Model name : ECY-303 Rev 1.0AVendor identifier : 364Vendor name : Distech Controls, Inc.Location : Firmware revision : 1.14.17191.1Application software version : 1.10.18199.491Description : Object list : [Device 1010026
-               File 1                            Program 1          
-               Analog Input 103                  Analog Input 104   
-               Analog Input 105                  Analog Input 106   
-               Analog Input 107                  Analog Output 105  
-               Analog Output 106                 Analog Output 107  
-               Analog Value 1                    Analog Value 2     
-               Analog Value 3                    Analog Value 4     
-               Binary Input 101                  Binary Output 101  
-               Binary Value 1]    
-Object name : UK-LON-S2_FCU-00Q
+Protocol version : 1
