@@ -87,7 +87,7 @@ public class BacnetVersion {
             } else {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
-                if (key.equals("Protocol version")) reportText += key + " : " + value;
+                if (key.equals("Protocol version")) reportText += key + " : " + value + "\n";
 //                reportText += key + " : " + value;
             }
         }

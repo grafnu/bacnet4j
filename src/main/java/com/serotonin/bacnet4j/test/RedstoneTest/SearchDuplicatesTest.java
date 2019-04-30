@@ -80,7 +80,7 @@ public class SearchDuplicatesTest {
 
         if(objectIdentifiersDuplicates.size() == 0) {
             System.out.println("No duplicates found! \nTEST PASSED");
-            reportText = "No duplicates found! \nTEST PASSED";
+//            reportText = "No duplicates found! \nTEST PASSED";
             reportText += "\nRESULT pass " + picTestName + "\n";
             report.writeReport(reportText);
         }
@@ -107,7 +107,7 @@ public class SearchDuplicatesTest {
                 reportText += "\n\n\n";
             }
             System.out.println("\nTEST FAILED");
-            reportText += "\nTEST FAILED";
+//            reportText += "\nTEST FAILED";
             reportText += "\nRESULT fail " + picTestName + "\n";
             report.writeReport(reportText);
         }
