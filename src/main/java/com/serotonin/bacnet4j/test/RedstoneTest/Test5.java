@@ -18,7 +18,7 @@ public class Test5 {
                 String broadcastIp = args[1];
                 String localIp = args[2];
                 boolean loopDiscover = "loop".equals(args[3]);
-                new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, false);
+                new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, true);
                 break;
 
             case "bacnet_ADDR_UNIQUE":

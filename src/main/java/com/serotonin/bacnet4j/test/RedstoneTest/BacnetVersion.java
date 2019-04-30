@@ -53,7 +53,7 @@ public class BacnetVersion {
 
             // Get Device name, version
             Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice, remoteDevice, null,
-                        PropertyIdentifier.vendorIdentifier, PropertyIdentifier.vendorName, PropertyIdentifier.instanceOf,
+                        PropertyIdentifier.vendorIdentifier, PropertyIdentifier.vendorName,
                         PropertyIdentifier.firmwareRevision, PropertyIdentifier.applicationSoftwareVersion,
                         PropertyIdentifier.objectName, PropertyIdentifier.modelName, PropertyIdentifier.description,
                         PropertyIdentifier.location, PropertyIdentifier.objectList, PropertyIdentifier.protocolVersion);

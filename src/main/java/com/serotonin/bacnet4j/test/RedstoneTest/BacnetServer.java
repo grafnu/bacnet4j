@@ -31,7 +31,7 @@ public class BacnetServer extends Thread {
     public static void main(String[] args) throws Exception{
 
         IpNetwork network = new IpNetwork("10.255.255.255", 47808,
-                IpNetwork.DEFAULT_BIND_IP, 1, "10.20.91.185");
+                IpNetwork.DEFAULT_BIND_IP, 1, "10.20.94.185");
         Transport transport = new Transport(network);
 
         int localDeviceID = 10000 + (int) ( Math.random() * 10000);
