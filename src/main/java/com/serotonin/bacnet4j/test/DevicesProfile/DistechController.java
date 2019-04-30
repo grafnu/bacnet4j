@@ -21,6 +21,8 @@ public class DistechController {
 
     String reportText = "";
     Report report = new Report("tmp/PICS.txt");
+    String appendixText = "";
+    Report appendices = new Report("tmp/PICS_APPENDIX.txt");
     Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
 
     boolean picFailed = false;
@@ -433,47 +435,50 @@ public class DistechController {
 
     public void print() {
         
-//        System.out.format("\n\n%-30s%-50s%-15s%-35s%-25s\n\n", "Type", "Property Name", "Category", "Value", "Status");
-//        reportText += String.format("\n\n%-30s%-50s%-15s%-25s\n\n", "Type", "Property Name", "Category", "Status");
+        System.out.format("\n\n%-30s%-50s%-15s%-35s%-25s\n\n", "Type", "Property Name", "Category", "Value", "Status");
+        appendixText += String.format("\n\n%-30s%-50s%-15s%-25s\n\n", "Type", "Property Name", "Category", "Status");
         String prevDeviceType = "";
 
         // Include full report of the Test in report.txt
-//        for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
-//            String deviceType = line.getKey();
-//            String propertyName = "";
-//            String category = "";
-//            String value = "";
-//            String picsResult = "";
-//
-//            if (prevDeviceType == "") {
-//                prevDeviceType = deviceType;
-//                System.out.println("\n" + deviceType);
-//                reportText += "\n" + deviceType + "\n";
-//            } else {
-//                if (deviceType != prevDeviceType) {
-//                    prevDeviceType = deviceType;
-//                    System.out.println("\n" + deviceType + "\n");
-//                    reportText += "\n" + deviceType + "\n";
-//                }
-//            }
-//
-//            for (Entry<Map<String, String>, Map<Object, String>> map : line.getValue().entrySet()) {
-//                for (Entry<String, String> keySet : map.getKey().entrySet()) {
-//                    propertyName = keySet.getKey();
-//                    category = keySet.getValue();
-//                }
-//
-//                for (Entry<Object, String> valueSet : map.getValue().entrySet()) {
-//                    value = valueSet.getKey().toString();
-//                    picsResult = valueSet.getValue();
-//                }
-//                System.out.format("%-30s%-50s%-15s%-35s%-25s\n", "", propertyName, category, value, picsResult);
-//                reportText += String.format("%-30s%-50s%-15s%-25s\n", "", propertyName, category, picsResult);
-//            }
-//        }
+        for (Entry<String, Map<Map<String, String>, Map<Object, String>>> line : lines.entries()) {
+            String deviceType = line.getKey();
+            String propertyName = "";
+            String category = "";
+            String value = "";
+            String picsResult = "";
+
+            if (prevDeviceType == "") {
+                prevDeviceType = deviceType;
+                System.out.println("\n" + deviceType);
+                appendixText += "\n" + deviceType + "\n";
+            } else {
+                if (deviceType != prevDeviceType) {
+                    prevDeviceType = deviceType;
+                    System.out.println("\n" + deviceType + "\n");
+                    appendixText += "\n" + deviceType + "\n";
+                }
+            }
+
+            for (Entry<Map<String, String>, Map<Object, String>> map : line.getValue().entrySet()) {
+                for (Entry<String, String> keySet : map.getKey().entrySet()) {
+                    propertyName = keySet.getKey();
+                    category = keySet.getValue();
+                }
+
+                for (Entry<Object, String> valueSet : map.getValue().entrySet()) {
+                    value = valueSet.getKey().toString();
+                    picsResult = valueSet.getValue();
+                }
+                System.out.format("%-30s%-50s%-15s%-35s%-25s\n", "", propertyName, category, value, picsResult);
+                appendixText += String.format("%-30s%-50s%-15s%-25s\n", "", propertyName, category, picsResult);
+            }
+        }
 
         if(picFailed) reportText += "RESULT fail " + picTestName + "\n";
         if(!picFailed) reportText += "RESULT pass " + picTestName + "\n";
         report.writeReport(reportText);
+        appendices.writeReport(appendixText);
+
+
     }
 }

@@ -23,6 +23,8 @@ public class SearchDuplicatesTest {
     Report report = new Report("tmp/DuplicatesTestReport.txt");
     private String reportText = "";
     private String picTestName = "protocol.bacnet.addr_unique";
+    String appendixText = "";
+    Report appendices = new Report("tmp/DuplicatesTestReport_APPENDIX.txt");
 
     private static List<RemoteDevice> allRemoteDevices = new ArrayList<>();
     static ArrayList<String> objectIdentifiers = new ArrayList<String>();
@@ -80,9 +82,10 @@ public class SearchDuplicatesTest {
 
         if(objectIdentifiersDuplicates.size() == 0) {
             System.out.println("No duplicates found! \nTEST PASSED");
-//            reportText = "No duplicates found! \nTEST PASSED";
+            appendixText = "No duplicates found! \nTEST PASSED";
             reportText += "RESULT pass " + picTestName + "\n";
             report.writeReport(reportText);
+            appendices.writeReport(reportText);
         }
 
         else {
@@ -101,15 +104,16 @@ public class SearchDuplicatesTest {
                             PropertyIdentifier.description, PropertyIdentifier.location, PropertyIdentifier.objectList);
 
                     System.out.println(values);
-                    reportText += values;
+                    appendixText += values;
                 }
                 System.out.println("\n\n\n");
-                reportText += "\n\n\n";
+                appendixText += "\n\n\n";
             }
             System.out.println("\nTEST FAILED");
-//            reportText += "\nTEST FAILED";
+            appendixText += "\nTEST FAILED";
             reportText += "\nRESULT fail " + picTestName + "\n";
             report.writeReport(reportText);
+            appendices.writeReport(reportText);
         }
     }
 }

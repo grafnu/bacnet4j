@@ -18,6 +18,8 @@ public class BacnetVersion {
     private static LocalDevice localDevice;
     Report report = new Report("tmp/BacnetVersionTest.txt");
     private String reportText = "";
+    String appendixText = "";
+    Report appendices = new Report("tmp/BacnetVersionTest_APPENDIX.txt");
     private boolean testPassed = false;
 
     public BacnetVersion(String localIp, String broadcastIp) {
@@ -71,29 +73,30 @@ public class BacnetVersion {
                 String[] value = property.getValue().toString().split(",");
                 System.out.print(key + " : ");
 
-//                reportText += key + " : ";
+                appendixText += key + " : ";
                 for (int i = 0; i < value.length; i ++) {
                     if (i == 0){
                         System.out.print(value[i]);
-//                        reportText += value[i];
+                        appendixText += value[i];
                     }  else {
                         System.out.format("%-14s%-20s", "", value[i]);
-//                        reportText += String.format("%-14s%-20s", "", value[i]);
+                        appendixText += String.format("%-14s%-20s", "", value[i]);
                     }
-                    if (i % 2 == 0) { System.out.println(); /*reportText += "\n";*/ };
+                    if (i % 2 == 0) { System.out.println(); appendixText += "\n"; };
                 }
                 System.out.println();
-//                reportText += "\n";
+                appendixText += "\n";
 
             } else {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
                 if (key.equals("Protocol version")) {
                     reportText += "RESULT pass protocol.bacnet.version\n";
-                    reportText += key + " : " + value + "\n";
+                    appendixText += key + " : " + value + "\n";
                     testPassed = true;
+                } else {
+                    appendixText += key + " : " + value;
                 }
-//                reportText += key + " : " + value;
             }
         }
         if(testPassed) {
@@ -101,6 +104,6 @@ public class BacnetVersion {
         } else {
             report.writeReport("RESULT fail protocol.bacnet.version");
         }
-
+        appendices.writeReport(appendixText);
     }
 }
