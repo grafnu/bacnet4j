@@ -89,7 +89,7 @@ public class BacnetVersion {
                 String value = property.getValue().toString();
                 System.out.println(key + " : " + value);
                 if (key.equals("Protocol version")) {
-                    reportText += "RESULT pass protocol.bacnet.version";
+                    reportText += "RESULT pass protocol.bacnet.version\n";
                     reportText += key + " : " + value + "\n";
                     testPassed = true;
                 }
