@@ -40,7 +40,11 @@ import com.serotonin.bacnet4j.type.primitive.Time;
 import com.serotonin.bacnet4j.type.primitive.Unsigned16;
 import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
 
+<<<<<<< HEAD
 public class DistechServer implements Runnable {
+=======
+public class DistechServer {
+>>>>>>> 6b4493f5d9b4e2640ebb9dcc659e5e05fda61b33
 
 	private final int deviceId = (int) Math.floor(Math.random() * 1000.0);
 //	private final int deviceId = 73;
@@ -263,7 +267,11 @@ public class DistechServer implements Runnable {
 		    		    
 		    localDevice.initialize();
 		    System.out.println("Device initialized...");
+<<<<<<< HEAD
 		    new Thread(this).start();
+=======
+		    
+>>>>>>> 6b4493f5d9b4e2640ebb9dcc659e5e05fda61b33
 	    } catch(RuntimeException e) {
 	    	System.out.println("Ex in LoopDevice() ");
             e.printStackTrace();
@@ -273,6 +281,7 @@ public class DistechServer implements Runnable {
 	    }
 	}
 
+<<<<<<< HEAD
 	@Override
 	public void run() {
 		try {
@@ -308,4 +317,6 @@ public class DistechServer implements Runnable {
         return (float) deviceId + (float) Math.random();
     }
 
+=======
+>>>>>>> 6b4493f5d9b4e2640ebb9dcc659e5e05fda61b33
 }
