@@ -1,13 +1,11 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.serotonin.bacnet4j.test.RedstoneTest.BacnetObjectType;
-import com.serotonin.bacnet4j.test.RedstoneTest.Report;
-import com.serotonin.bacnet4j.type.AmbiguousValue;
+package com.serotonin.bacnet4j.test.DaqTest.helper;
 
 import java.util.Hashtable;
 import java.util.Map.Entry;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.serotonin.bacnet4j.type.AmbiguousValue;
 
 public class BacnetDictionaryObject {
 

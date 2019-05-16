@@ -1,11 +1,12 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest;
 
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.test.LoopDevice;
+import com.serotonin.bacnet4j.test.DaqTest.helper.BACnetPoints;
 
-public class DiscoverAllDevicesTest {
+public class PicTest {
 
     String localIp = "";
     String broadcastIp = "";
@@ -13,7 +14,7 @@ public class DiscoverAllDevicesTest {
     private static LocalDevice localDevice;
     boolean printPICS = false;
 
-    public DiscoverAllDevicesTest(String localIp, boolean loopDiscover) {
+    public PicTest(String localIp, boolean loopDiscover) {
         this.localIp = localIp;
         this.loopDiscover = loopDiscover;
         this.printPICS = printPICS;
@@ -24,7 +25,7 @@ public class DiscoverAllDevicesTest {
         }
     }
 
-    public DiscoverAllDevicesTest(String localIp, String broadcastIp, boolean loopDiscover, boolean printPICS) {
+    public PicTest(String localIp, String broadcastIp, boolean loopDiscover, boolean printPICS) {
         this.localIp = localIp;
         this.broadcastIp = broadcastIp;
         this.loopDiscover = loopDiscover;
@@ -37,23 +38,22 @@ public class DiscoverAllDevicesTest {
     }
 
     private void discoverAllDevices() throws Exception {
-//        LoopDevice loopDevice = new LoopDevice(IpNetwork.DEFAULT_BROADCAST_IP,
-//                IpNetwork.DEFAULT_PORT, localIp);
 
-        LoopDevice loopDevice = new LoopDevice("10.255.255.255",
+        LoopDevice loopDevice = new LoopDevice(broadcastIp,
                 IpNetwork.DEFAULT_PORT, localIp);
-
-//        LoopDevice loopDevice = new LoopDevice(broadcastIp,
-//                IpNetwork.DEFAULT_PORT, localIp);
 
         while (!loopDevice.isTerminate()) {
             localDevice = loopDevice.getLocalDevice();
+            
             System.err.println("Sending whois...");
             localDevice.sendGlobalBroadcast(new WhoIsRequest());
+            
             // Wait a bit for responses to come in.
             System.err.println("Waiting...");
             Thread.sleep(5000);
+            
             System.err.println("Processing...");
+            
             getDevicesPoints();
             if (!loopDiscover) {
                 loopDevice.doTerminate();

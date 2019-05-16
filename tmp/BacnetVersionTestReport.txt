@@ -1,0 +1,3 @@
+RESULT pass protocol.bacnet.version
+RESULT pass protocol.bacnet.version
+RESULT pass protocol.bacnet.version

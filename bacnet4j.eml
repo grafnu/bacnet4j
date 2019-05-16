@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="gradle-wrapper.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar!/"/>
+	</lib>
+	<lib name="guava-27.1-jre.jar" scope="COMPILE">
+		<srcroot url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/27.1-jre/5dfa313690a903560bf27478345780a607bf1e9b/guava-27.1-jre-sources.jar!/"/>
+	</lib>
+</component>

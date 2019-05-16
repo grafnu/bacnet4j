@@ -1,4 +1,4 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest.helper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,8 +21,9 @@ public class Report {
 
 		try {
 	      String[] directory = reportFilename.split("/");
-	
+
 	      File dir = new File(directory[directory.length - 2]);
+	      
 	      if (!dir.exists()) dir.mkdirs();
 	
 	      BufferedWriter writer = new BufferedWriter(new FileWriter(reportFilename));

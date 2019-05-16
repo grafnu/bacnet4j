@@ -1,4 +1,4 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest.helper;
 
 public enum BacnetObjectType {
 	Device,

@@ -1,0 +1,51 @@
+****************************** START ******************************
+Protocol version : 1
+Model name : BACnet4J LoopDevice
+Vendor identifier : 236
+Vendor name : Serotonin Software Technologies, Inc.
+Location : London, United Kingdom
+Firmware revision : not set
+Application software version : 1.0.1
+Description : Distech device
+Object list : [Device 97
+               Analog Input 0                    Analog Output 0    
+               Analog Value 0                    Binary Input 0     
+               Binary Output 0                   Binary Value 0]    
+Object name : BACnet device
+
+****************************** END ******************************
+
+****************************** START ******************************
+Protocol version : 1
+Model name : BACnet4J LoopDevice
+Vendor identifier : 236
+Vendor name : Serotonin Software Technologies, Inc.
+Location : London, United Kingdom
+Firmware revision : not set
+Application software version : 1.0.1
+Description : Distech device
+Object list : [Device 340
+               Analog Input 0                    Analog Output 0    
+               Analog Value 0                    Binary Input 0     
+               Binary Output 0                   Binary Value 0]    
+Object name : BACnet device
+
+****************************** END ******************************
+
+****************************** START ******************************
+Protocol version : 1
+Model name : BACnet4J LoopDevice
+Vendor identifier : 236
+Vendor name : Serotonin Software Technologies, Inc.
+Location : London, United Kingdom
+Firmware revision : not set
+Application software version : 1.0.1
+Description : Distech device
+Object list : [Device 853
+               Analog Input 0                    Analog Output 0    
+               Analog Value 0                    Binary Input 0     
+               Binary Output 0                   Binary Value 0]    
+Object name : BACnet device
+
+****************************** END ******************************
+

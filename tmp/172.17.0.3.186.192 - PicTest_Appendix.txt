@@ -1,0 +1,318 @@
+
+
+Type                          Property Name                                     Category       Status                   
+
+
+Analog Input 0
+                              Object name                                       Mandatory      PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Deadband                                          Optional       PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Resolution                                        Optional       PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Low limit                                         Optional       PASSED                   
+                              Limit enable                                      Optional       PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              Update interval                                   Optional       PASSED                   
+                              High limit                                        Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Units                                             Mandatory      PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Device type                                       Optional       WARNING                  
+                              Min pres value                                    Optional       WARNING                  
+                              Max pres value                                    Optional       WARNING                  
+                              Cov increment                                     Optional       WARNING                  
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
+
+Binary Input 0
+                              Object name                                       Mandatory      PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Active text                                       Optional       PASSED                   
+                              Time of state count reset                         Optional       PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Change of state count                             Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Inactive text                                     Optional       PASSED                   
+                              Polarity                                          Mandatory      PASSED                   
+                              Alarm value                                       Optional       PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              Change of state time                              Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Time of active time reset                         Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Device type                                       Optional       PASSED                   
+                              Elapsed active time                               Optional       PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
+
+Binary Value 0
+                              Object name                                       Mandatory      PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Active text                                       Optional       PASSED                   
+                              Time of state count reset                         Optional       PASSED                   
+                              Relinquish default                                Optional       PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Change of state count                             Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Inactive text                                     Optional       PASSED                   
+                              Alarm value                                       Optional       PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              Change of state time                              Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Time of active time reset                         Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Minimum on time                                   Optional       PASSED                   
+                              Elapsed active time                               Optional       PASSED                   
+                              Minimum off time                                  Optional       PASSED                   
+                              Priority array                                    Optional       PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Property list                                     Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
+
+Analog Value 0
+                              Object name                                       Mandatory      PASSED                   
+                              Deadband                                          Optional       PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Relinquish default                                Optional       PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Low limit                                         Optional       PASSED                   
+                              Limit enable                                      Optional       PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              High limit                                        Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Priority array                                    Optional       PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Units                                             Mandatory      PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Min present value                                 Optional       WARNING                  
+                              Max present value                                 Optional       WARNING                  
+                              Cov increment                                     Optional       WARNING                  
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
+
+Analog Output 0
+                              Object name                                       Mandatory      PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Deadband                                          Optional       PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Resolution                                        Optional       PASSED                   
+                              Relinquish default                                Mandatory      PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Low limit                                         Optional       PASSED                   
+                              Limit enable                                      Optional       PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              High limit                                        Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Device type                                       Optional       PASSED                   
+                              Priority array                                    Mandatory      PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Units                                             Mandatory      PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Min present value                                 Optional       WARNING                  
+                              Max present value                                 Optional       WARNING                  
+                              Cov increment                                     Optional       WARNING                  
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
+
+Device 97
+                              Segmentation supported                            Mandatory      PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Max master                                        Optional       PASSED                   
+                              Max segments accepted                             Mandatory      PASSED                   
+                              Application software version                      Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Database revision                                 Mandatory      PASSED                   
+                              Protocol version                                  Mandatory      PASSED                   
+                              Firmware revision                                 Mandatory      PASSED                   
+                              Last restore time                                 Optional       PASSED                   
+                              Vendor identifier                                 Mandatory      PASSED                   
+                              Object name                                       Mandatory      PASSED                   
+                              Max info frames                                   Optional       PASSED                   
+                              Protocol object types supported                   Mandatory      PASSED                   
+                              Model name                                        Mandatory      PASSED                   
+                              Protocol services supported                       Mandatory      PASSED                   
+                              Device address binding                            Mandatory      PASSED                   
+                              Object list                                       Mandatory      PASSED                   
+                              Backup failure timeout                            Optional       PASSED                   
+                              Protocol revision                                 Mandatory      PASSED                   
+                              Time synchronization recipients                   Optional       PASSED                   
+                              Daylight savings status                           Optional       PASSED                   
+                              Location                                          Optional       PASSED                   
+                              Vendor name                                       Mandatory      PASSED                   
+                              Local time                                        Optional       PASSED                   
+                              System status                                     Mandatory      PASSED                   
+                              Local date                                        Optional       PASSED                   
+                              Configuration files                               Optional       PASSED                   
+                              Max apdu length accepted                          Mandatory      FAILED                   
+                              Apdu timeout                                      Mandatory      FAILED                   
+                              Number of apdu retries                            Mandatory      FAILED                   
+                              Utc offset                                        Optional       WARNING                  
+                              Apdu segment timeout                              Optional       WARNING                  
+                              Backup preparation time                           Optional       WARNING                  
+                              Restore preparation time                          Optional       WARNING                  
+                              Restore completion time                           Optional       WARNING                  
+                              Backup and restore state                          Optional       WARNING                  
+                              Active cov subscriptions                          Optional       WARNING                  
+                              Last restart reason                               Optional       WARNING                  
+                              Time of device restart                            Optional       WARNING                  
+                              Restart notification recipients                   Optional       WARNING                  
+                              Utc time synchronization recipients               Optional       WARNING                  
+                              Time synchronization interval                     Optional       WARNING                  
+                              Align intervals                                   Optional       WARNING                  
+                              Interval offset                                   Optional       WARNING                  
+                              Segmentation supported                            Mandatory      PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Max master                                        Optional       PASSED                   
+                              Max segments accepted                             Mandatory      PASSED                   
+                              Application software version                      Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Database revision                                 Mandatory      PASSED                   
+                              Protocol version                                  Mandatory      PASSED                   
+                              Firmware revision                                 Mandatory      PASSED                   
+                              Last restore time                                 Optional       PASSED                   
+                              Vendor identifier                                 Mandatory      PASSED                   
+                              Object name                                       Mandatory      PASSED                   
+                              Max info frames                                   Optional       PASSED                   
+                              Protocol object types supported                   Mandatory      PASSED                   
+                              Model name                                        Mandatory      PASSED                   
+                              Protocol services supported                       Mandatory      PASSED                   
+                              Device address binding                            Mandatory      PASSED                   
+                              Object list                                       Mandatory      PASSED                   
+                              Backup failure timeout                            Optional       PASSED                   
+                              Protocol revision                                 Mandatory      PASSED                   
+                              Time synchronization recipients                   Optional       PASSED                   
+                              Daylight savings status                           Optional       PASSED                   
+                              Location                                          Optional       PASSED                   
+                              Vendor name                                       Mandatory      PASSED                   
+                              Local time                                        Optional       PASSED                   
+                              System status                                     Mandatory      PASSED                   
+                              Local date                                        Optional       PASSED                   
+                              Configuration files                               Optional       PASSED                   
+                              Max apdu length accepted                          Mandatory      FAILED                   
+                              Apdu timeout                                      Mandatory      FAILED                   
+                              Number of apdu retries                            Mandatory      FAILED                   
+                              Utc offset                                        Optional       WARNING                  
+                              Apdu segment timeout                              Optional       WARNING                  
+                              Backup preparation time                           Optional       WARNING                  
+                              Restore preparation time                          Optional       WARNING                  
+                              Restore completion time                           Optional       WARNING                  
+                              Backup and restore state                          Optional       WARNING                  
+                              Active cov subscriptions                          Optional       WARNING                  
+                              Last restart reason                               Optional       WARNING                  
+                              Time of device restart                            Optional       WARNING                  
+                              Restart notification recipients                   Optional       WARNING                  
+                              Utc time synchronization recipients               Optional       WARNING                  
+                              Time synchronization interval                     Optional       WARNING                  
+                              Align intervals                                   Optional       WARNING                  
+                              Interval offset                                   Optional       WARNING                  
+
+Binary Output 0
+                              Object name                                       Mandatory      PASSED                   
+                              Present value                                     Mandatory      PASSED                   
+                              Out of service                                    Mandatory      PASSED                   
+                              Active text                                       Optional       PASSED                   
+                              Time of state count reset                         Optional       PASSED                   
+                              Relinquish default                                Optional       PASSED                   
+                              Event enable                                      Optional       PASSED                   
+                              Change of state count                             Optional       PASSED                   
+                              Event state                                       Mandatory      PASSED                   
+                              Object type                                       Mandatory      PASSED                   
+                              Time delay normal                                 Optional       PASSED                   
+                              Feedback value                                    Optional       PASSED                   
+                              Inactive text                                     Optional       PASSED                   
+                              Polarity                                          Mandatory      PASSED                   
+                              Acked transitions                                 Proprietary    PASSED                   
+                              Status flags                                      Mandatory      PASSED                   
+                              Change of state time                              Optional       PASSED                   
+                              Notify type                                       Optional       PASSED                   
+                              Time of active time reset                         Optional       PASSED                   
+                              Event detection enable                            Optional       PASSED                   
+                              Object identifier                                 Mandatory      PASSED                   
+                              Reliability                                       Optional       PASSED                   
+                              Event message texts                               Optional       PASSED                   
+                              Device type                                       Optional       PASSED                   
+                              Minimum on time                                   Optional       PASSED                   
+                              Elapsed active time                               Optional       PASSED                   
+                              Minimum off time                                  Optional       PASSED                   
+                              Priority array                                    Optional       PASSED                   
+                              Notification class                                Optional       PASSED                   
+                              Description                                       Optional       PASSED                   
+                              Event algorithm inhibit                           Optional       PASSED                   
+                              Time delay                                        Optional       WARNING                  
+                              Event time stamps                                 Optional       WARNING                  
+                              Event message texts config                        Optional       WARNING                  
+                              Event algorithm inhibit ref                       Optional       WARNING                  
+                              Cov period                                        Proprietary    WARNING                  
+                              Cov min send time                                 Proprietary    WARNING                  
