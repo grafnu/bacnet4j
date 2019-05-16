@@ -1,4 +1,4 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest;
 
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SearchDuplicatesTest {
+public class AddrUnique {
 
     String localIp = "";
     String broadcastIp = "";
@@ -30,7 +30,7 @@ public class SearchDuplicatesTest {
     static ArrayList<String> objectIdentifiers = new ArrayList<String>();
     static ArrayList<String> objectIdentifiersDuplicates = new ArrayList<String>();
 
-    public SearchDuplicatesTest(String localIp, String broadcastIp, boolean loopDiscover) {
+    public AddrUnique(String localIp, String broadcastIp, boolean loopDiscover) {
         this.localIp = localIp;
         this.broadcastIp = broadcastIp;
         this.loopDiscover = loopDiscover;
