@@ -9,28 +9,31 @@ import com.serotonin.bacnet4j.test.LoopDevice;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.util.RequestUtils;
+import com.serotonin.bacnet4j.test.DaqTest.helper.Report;
+import com.serotonin.bacnet4j.test.DaqTest.helper.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AddrUnique {
+public class AddrUniqueTest {
 
-    String localIp = "";
-    String broadcastIp = "";
+	private static LocalDevice localDevice;
+    private String localIp = "";
+    private String broadcastIp = "";
     boolean loopDiscover = false;
-    private static LocalDevice localDevice;
-    Report report = new Report("tmp/DuplicatesTestReport.txt");
+    
+    Report report = new Report("tmp/AddrUniqueTestReport.txt");
+    Report appendices = new Report("tmp/AddrUniqueTestReport_APPENDIX.txt");
+    
     private String reportText = "";
+    private String appendixText = "";
     private String picTestName = "protocol.bacnet.addr_unique";
-    String appendixText = "";
-    Report appendices = new Report("tmp/DuplicatesTestReport_APPENDIX.txt");
-
-    private static List<RemoteDevice> allRemoteDevices = new ArrayList<>();
+    
     static ArrayList<String> objectIdentifiers = new ArrayList<String>();
-    static ArrayList<String> objectIdentifiersDuplicates = new ArrayList<String>();
+    static List<RemoteDevice> objectIdentifiersDuplicates = new ArrayList<>();
 
-    public AddrUnique(String localIp, String broadcastIp, boolean loopDiscover) {
+    public AddrUniqueTest(String localIp, String broadcastIp, boolean loopDiscover) {
         this.localIp = localIp;
         this.broadcastIp = broadcastIp;
         this.loopDiscover = loopDiscover;
@@ -54,7 +57,7 @@ public class AddrUnique {
             System.err.println("Waiting...");
             Thread.sleep(5000);
             System.err.println("Processing...");
-            searchForDuplicate();
+            searchForDuplicates();
             if (!loopDiscover) {
                 loopDevice.doTerminate();
             }
@@ -62,58 +65,55 @@ public class AddrUnique {
     }
 
 
-    private void searchForDuplicate() throws BACnetException {
-
+    private void searchForDuplicates() throws BACnetException {
+    	int remoteDeviceCounter = 0;
         for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
-
             if(objectIdentifiers.contains(remoteDevice.getObjectIdentifier().toString())) {
-                System.err.println("\n\nDUPLICATE FOUND! \nObject Identifier: " + remoteDevice.getObjectIdentifier().toString());
-
-                Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice, remoteDevice, null,
-                        PropertyIdentifier.objectName, PropertyIdentifier.vendorName, PropertyIdentifier.modelName,
-                        PropertyIdentifier.description, PropertyIdentifier.location, PropertyIdentifier.objectList);
-                System.out.println(values);
-                objectIdentifiersDuplicates.add(remoteDevice.getObjectIdentifier().toString());
-                continue;
+            	// add previous remote device too
+            	if(remoteDeviceCounter == 1) {
+            		RemoteDevice duplicateRemoteDevice = localDevice.getRemoteDevices().get(0);
+            		objectIdentifiersDuplicates.add(duplicateRemoteDevice); 
+            	}
+                objectIdentifiersDuplicates.add(remoteDevice);
             }
             objectIdentifiers.add(remoteDevice.getObjectIdentifier().toString());
-            allRemoteDevices.add(remoteDevice);
+            remoteDeviceCounter++;
         }
-
-        if(objectIdentifiersDuplicates.size() == 0) {
-            System.out.println("No duplicates found! \nTEST PASSED");
-            appendixText = "No duplicates found! \nTEST PASSED";
+        printResults();
+    }
+    
+    private void printResults() {
+    	// test passed
+    	if(objectIdentifiersDuplicates.size() == 0) {
+            appendixText = "\nTEST PASSED";
             reportText += "RESULT pass " + picTestName + "\n";
             report.writeReport(reportText);
             appendices.writeReport(reportText);
-        }
-
-        else {
-            for(String duplicateObjectIdentifier : objectIdentifiersDuplicates) {
-                List<RemoteDevice> remoteDeviceTemp = new ArrayList<>();
-                for(RemoteDevice remoteDevice : allRemoteDevices) {
-                    if(remoteDevice.getObjectIdentifier().equals(duplicateObjectIdentifier)) {
-                        remoteDeviceTemp.add(remoteDevice);
-                    }
-                }
-
-                for (RemoteDevice remoteDevice : remoteDeviceTemp) {
-                    System.out.println("ObjectIdentifier: " + remoteDevice.getObjectIdentifier());
-                    Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice, remoteDevice, null,
-                            PropertyIdentifier.objectName, PropertyIdentifier.vendorName, PropertyIdentifier.modelName,
-                            PropertyIdentifier.description, PropertyIdentifier.location, PropertyIdentifier.objectList);
-
-                    System.out.println(values);
-                    appendixText += values;
-                }
-                System.out.println("\n\n\n");
-                appendixText += "\n\n\n";
-            }
-            System.out.println("\nTEST FAILED");
-            appendixText += "\nTEST FAILED";
-            reportText += "\nRESULT fail " + picTestName + "\n";
+        } 
+    	
+    	// test failed 
+    	else {
+        	for (int counter = 0; counter < objectIdentifiersDuplicates.size(); counter++) {
+        		Map<PropertyIdentifier, Encodable> values;
+				try {
+					values = RequestUtils.getProperties(
+							localDevice, objectIdentifiersDuplicates.get(counter), null,
+							PropertyIdentifier.objectName, 
+							PropertyIdentifier.vendorName, 
+							PropertyIdentifier.modelName,
+							PropertyIdentifier.description, 
+							PropertyIdentifier.location, 
+							PropertyIdentifier.objectList);
+					appendixText = Utils.printMap(values);
+				} catch (BACnetException e) {
+					System.out.println(e.getMessage());
+				}
+        	}
+            appendixText += "TEST FAILED";
+            reportText += "RESULT fail " + picTestName + "\n";
             report.writeReport(reportText);
-            appendices.writeReport(reportText);
+            appendices.writeReport(appendixText);
         }
+    	System.out.println(appendixText);
     }
 }

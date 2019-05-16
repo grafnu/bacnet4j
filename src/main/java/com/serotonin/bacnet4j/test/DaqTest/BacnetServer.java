@@ -1,82 +1,90 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest;
 
 import com.serotonin.bacnet4j.LocalDevice;
-import com.serotonin.bacnet4j.RemoteDevice;
-import com.serotonin.bacnet4j.event.DeviceEventAdapter;
-import com.serotonin.bacnet4j.exception.BACnetException;
-import com.serotonin.bacnet4j.exception.PropertyValueException;
+import com.serotonin.bacnet4j.exception.BACnetServiceException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.obj.BACnetObject;
-import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
-import com.serotonin.bacnet4j.test.LoopDevice;
+import com.serotonin.bacnet4j.test.DaqTest.WriteTest.Listener;
 import com.serotonin.bacnet4j.transport.Transport;
-import com.serotonin.bacnet4j.type.Encodable;
-import com.serotonin.bacnet4j.type.constructed.Address;
+import com.serotonin.bacnet4j.type.constructed.LimitEnable;
 import com.serotonin.bacnet4j.type.enumerated.EngineeringUnits;
+import com.serotonin.bacnet4j.type.enumerated.EventState;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
-import com.serotonin.bacnet4j.type.enumerated.Segmentation;
+import com.serotonin.bacnet4j.type.primitive.Boolean;
 import com.serotonin.bacnet4j.type.primitive.CharacterString;
-import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
-import com.serotonin.bacnet4j.type.primitive.OctetString;
 import com.serotonin.bacnet4j.type.primitive.Real;
-import com.serotonin.bacnet4j.util.PropertyReferences;
-import com.serotonin.bacnet4j.util.PropertyValues;
-import com.serotonin.bacnet4j.util.RequestUtils;
+import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
+import com.serotonin.bacnet4j.util.queue.ByteQueue;
 
-public class BacnetServer extends Thread {
-
-    private static final int MAX_APDU_LENGTH_ACCEPTED = 1476;
+public class BacnetServer {
+	
+	private final int deviceId = (int) Math.floor(Math.random() * 1000.0);
 
     public static void main(String[] args) throws Exception{
-
-        IpNetwork network = new IpNetwork("10.255.255.255", 47808,
-                IpNetwork.DEFAULT_BIND_IP, 1, "10.20.94.185");
-        Transport transport = new Transport(network);
-
-        int localDeviceID = 10000 + (int) ( Math.random() * 10000);
-
-        LocalDevice localDevice = new LocalDevice(localDeviceID, transport);
-
-        localDevice.getEventHandler().addListener(new Listener());
-        // create sample BACnet object
-        BACnetObject ai0 = new BACnetObject(localDevice,
-                localDevice.getNextInstanceObjectIdentifier(ObjectType.analogInput));
-        ai0.setProperty(PropertyIdentifier.units, EngineeringUnits.centimeters);
-        // Set the COV threshold/increment which is the value at which COV notifications will be triggered
-        ai0.setProperty(PropertyIdentifier.covIncrement, new Real(0.2f));
-        localDevice.addObject(ai0);
-
-
-
-        localDevice.initialize();
-//        localDevice.sendGlobalBroadcast(localDevice.getIAm());
-        localDevice.sendGlobalBroadcast(new WhoIsRequest());
-
-//        RemoteDevice rd = localDevice.getRemoteDeviceCreate(3400205,
-//                new Address(34002, "172.17.7.74:47808"),
-//                new OctetString("172.17.7.74:47808"));
-//        rd.setSegmentationSupported(Segmentation.noSegmentation);
-//        rd.setMaxAPDULengthAccepted(MAX_APDU_LENGTH_ACCEPTED);
-////
-//        ObjectIdentifier obj = new ObjectIdentifier(ObjectType.analogInput, 1);
-//        System.out.println("" + readProperty(localDevice, rd, obj, PropertyIdentifier.covIncrement));
-//        localDevice.terminate();
-    }
-
-    private static Encodable readProperty(LocalDevice ld, RemoteDevice rd, ObjectIdentifier objectIdentifier,
-                                          PropertyIdentifier propertyIdentifier) throws PropertyValueException, BACnetException {
-        PropertyReferences refs = new PropertyReferences();
-        refs.add(objectIdentifier, propertyIdentifier);
-        PropertyValues pvs = RequestUtils.readProperties(ld, rd, refs, null);
-        return pvs.get(objectIdentifier, propertyIdentifier);
-    }
-
-    static class Listener extends DeviceEventAdapter {
-
-        @Override
-        public void iAmReceived(RemoteDevice remoteDevice) {
-            System.out.println("IAm received" + remoteDevice);
+    	if (args.length != 2) {
+            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr");
         }
+        String localIpAddr = args[0];
+        String broadcastIpAddr = args[1];
+        new BacnetServer(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
+    }
+    
+    private boolean terminate;
+    private IpNetwork network;
+    private LocalDevice localDevice;
+    
+    private BACnetObject analogInput1;
+    private BACnetObject analogOutput1;
+    private BACnetObject analogValue1;
+    
+    private BACnetObject binaryInput1;
+    private BACnetObject binaryOutput1;
+    private BACnetObject binaryValue1;
+    
+    private BACnetObject Device;
+    private BACnetObject File1;
+    private BACnetObject Program1;
+    
+    private float resolution = 0.1f;
+
+    
+    public BacnetServer(String broadcastAddress, int port) throws BACnetServiceException, Exception {
+        this(broadcastAddress, port, IpNetwork.DEFAULT_BIND_IP);
+    }
+    
+    public BacnetServer(String broadcastAddress, int port, String localAddress) throws BACnetServiceException, Exception {
+    	network = new IpNetwork(broadcastAddress, port,
+                IpNetwork.DEFAULT_BIND_IP, 0, localAddress);
+            System.out.println("Creating LoopDevice id " + deviceId);
+          Transport transport = new Transport(network);
+          transport.setTimeout(1000);
+          localDevice = new LocalDevice(deviceId, transport);
+          try {
+        	  localDevice.getEventHandler().addListener(new Listener());
+        	  
+        	  localDevice.getConfiguration().setProperty(PropertyIdentifier.modelName,
+                      new CharacterString("BACnet4J LoopDevice"));
+        	  
+        	  analogInput1 = new BACnetObject(localDevice, localDevice.getNextInstanceObjectIdentifier(ObjectType.analogInput));
+        	  
+        	  analogInput1.setProperty(PropertyIdentifier.presentValue, new Real(11));
+        	  analogInput1.setProperty(PropertyIdentifier.objectName, new CharacterString("G1-RLT03-TM-01"));
+        	  analogInput1.setProperty(PropertyIdentifier.deadband, new Real(14));
+        	  analogInput1.setProperty(PropertyIdentifier.resolution, new Real(resolution));
+        	  analogInput1.setProperty(PropertyIdentifier.eventEnable, new CharacterString("[true, true, true]"));
+        	  analogInput1.setProperty(PropertyIdentifier.eventState, new EventState(0)); // 0 = normal
+        	  analogInput1.setProperty(PropertyIdentifier.objectType, new ObjectType(0)); // 0 = analogInput
+        	  analogInput1.setProperty(PropertyIdentifier.timeDelayNormal, new UnsignedInteger(0));
+        	  analogInput1.setProperty(PropertyIdentifier.lowLimit, new Real(0));
+        	  //analogInput1.setProperty(PropertyIdentifier.limitEnable, new LimitEnable(0));
+        	  
+        	  
+        	  analogInput1.setProperty(PropertyIdentifier.outOfService, new Boolean(false));
+        	  analogInput1.setProperty(PropertyIdentifier.units, EngineeringUnits.degreesCelsius);
+        	  
+          } catch (RuntimeException e) {
+        	  System.out.println(e.getMessage());
+          }
     }
 }

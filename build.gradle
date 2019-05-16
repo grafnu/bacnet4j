@@ -24,6 +24,6 @@ dependencies {
    compile 'org.apache.commons:commons-lang3:3.4'
    compile 'com.google.guava:guava:19.0'
    
-   compile files('lib/rxtx-2.2.jar')
-   compile files('lib/seroUtils.jar')
+   //compile files('lib/rxtx-2.2.jar')
+   //compile files('lib/seroUtils.jar')
 }

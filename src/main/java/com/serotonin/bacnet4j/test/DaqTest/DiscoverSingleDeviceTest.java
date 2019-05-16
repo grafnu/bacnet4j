@@ -1,4 +1,4 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -9,6 +9,9 @@ import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.test.DevicesProfile.DistechController;
 import com.serotonin.bacnet4j.transport.Transport;
+import com.serotonin.bacnet4j.test.DaqTest.helper.BacnetDictionaryObject;
+import com.serotonin.bacnet4j.test.DaqTest.helper.BacnetObjectType;
+import com.serotonin.bacnet4j.test.DaqTest.helper.BACnetPoints;
 
 import java.util.Hashtable;
 
