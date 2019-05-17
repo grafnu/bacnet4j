@@ -1,12 +1,12 @@
-package com.serotonin.bacnet4j.test.RedstoneTest;
+package com.serotonin.bacnet4j.test.DaqTest;
 
-public class Test5 {
+public class Main {
 
     public static void main(String[] args) throws Exception {
 
         if (args.length < 1) {
-            throw new IllegalArgumentException(("Usage: bacnetTestId"));
-        }
+          throw new IllegalArgumentException(("Usage: bacnetTestId"));
+       }
 
         String bacnetTestId = args[0];
 
@@ -18,7 +18,7 @@ public class Test5 {
                 String broadcastIp = args[1];
                 String localIp = args[2];
                 boolean loopDiscover = "loop".equals(args[3]);
-                new DiscoverAllDevicesTest(localIp, broadcastIp, loopDiscover, true);
+                new PicTest(localIp, broadcastIp, loopDiscover, true);
                 break;
 
             case "bacnet_ADDR_UNIQUE":
@@ -28,7 +28,7 @@ public class Test5 {
                 broadcastIp = args[1];
                 localIp = args[2];
                 loopDiscover = "loop".equals(args[3]);
-                new SearchDuplicatesTest(localIp, broadcastIp, loopDiscover);
+                new AddrUniqueTest(localIp, broadcastIp, loopDiscover);
                 break;
 
             case "bacnet_VERSION":
@@ -37,7 +37,7 @@ public class Test5 {
                 }
                 broadcastIp = args[1];
                 localIp = args[2];
-                new BacnetVersion(localIp, broadcastIp);
+                new VersionTest(localIp, broadcastIp);
                 break;
 
             default:

@@ -1,3 +1,0 @@
-No duplicates found! 
-TEST PASSED
-RESULT pass protocol.bacnet.addr_unique

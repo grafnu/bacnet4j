@@ -55,9 +55,11 @@ import com.serotonin.bacnet4j.type.constructed.Address;
 import com.serotonin.bacnet4j.type.constructed.Destination;
 import com.serotonin.bacnet4j.type.constructed.EventTransitionBits;
 import com.serotonin.bacnet4j.type.constructed.ObjectTypesSupported;
+import com.serotonin.bacnet4j.type.constructed.Recipient;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
 import com.serotonin.bacnet4j.type.constructed.ServicesSupported;
 import com.serotonin.bacnet4j.type.constructed.TimeStamp;
+import com.serotonin.bacnet4j.type.enumerated.BackupState;
 import com.serotonin.bacnet4j.type.enumerated.DeviceStatus;
 import com.serotonin.bacnet4j.type.enumerated.ErrorClass;
 import com.serotonin.bacnet4j.type.enumerated.ErrorCode;
@@ -66,12 +68,16 @@ import com.serotonin.bacnet4j.type.enumerated.EventType;
 import com.serotonin.bacnet4j.type.enumerated.NotifyType;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
+import com.serotonin.bacnet4j.type.enumerated.RestartReason;
 import com.serotonin.bacnet4j.type.enumerated.Segmentation;
 import com.serotonin.bacnet4j.type.notificationParameters.NotificationParameters;
 import com.serotonin.bacnet4j.type.primitive.Boolean;
 import com.serotonin.bacnet4j.type.primitive.CharacterString;
+import com.serotonin.bacnet4j.type.primitive.Date;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import com.serotonin.bacnet4j.type.primitive.OctetString;
+import com.serotonin.bacnet4j.type.primitive.SignedInteger;
+import com.serotonin.bacnet4j.type.primitive.Time;
 import com.serotonin.bacnet4j.type.primitive.Unsigned16;
 import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
 import com.serotonin.bacnet4j.util.RequestUtils;
@@ -155,6 +161,10 @@ public class LocalDevice {
             objectTypesSupported.setAll(true);
             configuration.setProperty(PropertyIdentifier.protocolObjectTypesSupported, objectTypesSupported);
 
+            SequenceOf<Recipient> recipient = new SequenceOf<Recipient>();
+		    SequenceOf<ObjectIdentifier> configurationFiles = new SequenceOf<ObjectIdentifier>();
+		    SequenceOf<EventTransitionBits> eventTransitionBits = new SequenceOf<EventTransitionBits>();
+		    
             // Set some other required values to defaults
             configuration.setProperty(PropertyIdentifier.objectName, new CharacterString("BACnet device"));
             configuration.setProperty(PropertyIdentifier.systemStatus, DeviceStatus.operational);
@@ -164,6 +174,35 @@ public class LocalDevice {
             configuration.setProperty(PropertyIdentifier.protocolVersion, new UnsignedInteger(1));
             configuration.setProperty(PropertyIdentifier.protocolRevision, new UnsignedInteger(0));
             configuration.setProperty(PropertyIdentifier.databaseRevision, new UnsignedInteger(0));
+            
+		    configuration.setProperty(PropertyIdentifier.maxMaster, new UnsignedInteger(127));
+		    configuration.setProperty(PropertyIdentifier.maxSegmentsAccepted, new UnsignedInteger(255));
+		    configuration.setProperty(PropertyIdentifier.apduSegmentTimeout, new UnsignedInteger(5000));
+		    configuration.setProperty(PropertyIdentifier.objectType, new ObjectType(0)); // 0 = analogInput
+		    configuration.setProperty(PropertyIdentifier.description, new CharacterString("Distech device"));
+		    configuration.setProperty(PropertyIdentifier.restorePreparationTime, new Unsigned16(60));
+		    configuration.setProperty(PropertyIdentifier.numberOfApduRetries, new UnsignedInteger(3));
+		    configuration.setProperty(PropertyIdentifier.restoreCompletionTime, new Unsigned16(300));
+		    configuration.setProperty(PropertyIdentifier.utcTimeSynchronizationRecipients, recipient);
+		    configuration.setProperty(PropertyIdentifier.lastRestoreTime, new TimeStamp(new UnsignedInteger(0)));
+		    configuration.setProperty(PropertyIdentifier.utcOffset, new SignedInteger(300));
+		    configuration.setProperty(PropertyIdentifier.maxInfoFrames, new UnsignedInteger(20));
+		    configuration.setProperty(PropertyIdentifier.apduTimeout, new UnsignedInteger(6000));
+		    configuration.setProperty(PropertyIdentifier.backupFailureTimeout, new Unsigned16(300));
+		    configuration.setProperty(PropertyIdentifier.backupPreparationTime, new Unsigned16(60));
+		    configuration.setProperty(PropertyIdentifier.timeSynchronizationRecipients, recipient);
+		    configuration.setProperty(PropertyIdentifier.timeSynchronizationInterval, new UnsignedInteger(15));
+		    configuration.setProperty(PropertyIdentifier.daylightSavingsStatus, new com.serotonin.bacnet4j.type.primitive.Boolean(true));
+		    configuration.setProperty(PropertyIdentifier.location, new CharacterString("London, United Kingdom"));
+		    configuration.setProperty(PropertyIdentifier.restartNotificationRecipients, recipient);
+		    configuration.setProperty(PropertyIdentifier.localTime, new Time());
+		    configuration.setProperty(PropertyIdentifier.lastRestartReason, new RestartReason(0));
+		    configuration.setProperty(PropertyIdentifier.localDate, new Date());
+		    configuration.setProperty(PropertyIdentifier.configurationFiles, configurationFiles);
+		    configuration.setProperty(PropertyIdentifier.intervalOffset, new UnsignedInteger(0));
+		    configuration.setProperty(PropertyIdentifier.backupAndRestoreState, new BackupState(0));
+		    configuration.setProperty(PropertyIdentifier.alignIntervals, new com.serotonin.bacnet4j.type.primitive.Boolean(true));
+		    configuration.setProperty(PropertyIdentifier.timeOfDeviceRestart, new TimeStamp(new UnsignedInteger(0)));
         }
         catch (BACnetServiceException e) {
             // Should never happen, but wrap in an unchecked just in case.

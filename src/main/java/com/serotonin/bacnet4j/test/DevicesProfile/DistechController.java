@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
+import com.serotonin.bacnet4j.test.DaqTest.helper.Report;
 
-import com.serotonin.bacnet4j.test.RedstoneTest.Report;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -13,20 +13,31 @@ import com.google.common.collect.Multimap;
 
 public class DistechController {
 
-    public DistechController() {
-        initializeProfile();
-    }
+    
+    
 
     Multimap<String, Map<Map<String, String>, Map<Object, String>>> lines = ArrayListMultimap.create();
 
     String reportText = "";
-    Report report = new Report("tmp/PICS.txt");
+    Report report;
     String appendixText = "";
-    Report appendices = new Report("tmp/PICS_APPENDIX.txt");
+    Report appendices;
     Map<String, String[]> DeviceProperties = new Hashtable<String, String[]>();
 
     boolean picFailed = false;
     String picTestName = "protocol.bacnet.pic";
+    
+    public DistechController() {
+    	this.report = new Report ("tmp/PicTestReport.txt");
+    	this.appendices = new Report("tmp/PicTest_Appendix.txt");
+        initializeProfile();
+    }
+    
+    public DistechController(String macAddress) {
+    	this.report = new Report ("tmp/"+ macAddress+" - PicTestReport.txt");
+    	this.appendices = new Report("tmp/"+ macAddress+" - PicTest_Appendix.txt");
+    	initializeProfile();
+    }
 
     String[] Category = {
             "Mandatory", "Optional", "Proprietary" };
@@ -41,7 +52,7 @@ public class DistechController {
 
     String[] AnalogInput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Units", "Property list",
+            "Out of service", "Units"
     };
     String[] AnalogInput_Optional = {
             "Description", "Device type", "Reliability", "Update interval", "Min pres value", "Max pres value",
@@ -55,7 +66,7 @@ public class DistechController {
     };
     String[] AnalogOutput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Units", "Priority array", "Relinquish default", "Property list",
+            "Out of service", "Units", "Priority array", "Relinquish default"
     };
     String[] AnalogOutput_Optional = {
             "Description", "Device type", "Reliability", "Min present value", "Max present value", "Resolution",
@@ -64,25 +75,25 @@ public class DistechController {
             "Event detection enable", "Time delay normal", "Event algorithm inhibit", "Event algorithm inhibit ref",
     };
     String[] AnalogOutput_Proprietary = {
-            "Cov period", "Cov min send time", "Acked transitions",
+            "Cov period", "Cov min send time", "Acked transitions"
     };
     String[] AnalogValue_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Units", "Property list",
+            "Out of service", "Units"
     };
     String[] AnalogValue_Optional = {
             "Description", "Reliability", "Priority array", "Relinquish default", "Min present value",
             "Max present value", "Cov increment", "Time delay", "Notification class", "High limit", "Low limit",
             "Deadband", "Limit enable", "Event enable", "Notify type", "Event time stamps", "Event message texts",
             "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
-            "Event algorithm inhibit ref",
+            "Event algorithm inhibit ref"
     };
     String[] AnalogValue_Proprietary = {
             "Cov period", "Cov min send time", "Acked transitions",
     };
     String[] BinaryInput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Polarity", "Property list",
+            "Out of service", "Polarity"
     };
     String[] BinaryInput_Optional = {
             "Description", "Device type", "Reliability", "Inactive text", "Active text", "Change of state time",
@@ -92,11 +103,11 @@ public class DistechController {
             "Event algorithm inhibit", "Event algorithm inhibit ref",
     };
     String[] BinaryInput_Proprietary = {
-            "Cov period", "Cov min send time", "Acked transitions",
+            "Cov period", "Cov min send time", "Acked transitions"
     };
     String[] BinaryOutput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Polarity",
+            "Out of service", "Polarity"
     };
     String[] BinaryOutput_Optional = {
             "Description", "Device type", "Reliability", "Inactive text", "Active text", "Change of state time",
@@ -104,7 +115,7 @@ public class DistechController {
             "Minimum off time", "Minimum on time", "Priority array", "Relinquish default", "Time delay",
             "Notification class", "Feedback value", "Event enable", "Notify type", "Event time stamps",
             "Event message texts", "Event message texts config", "Event detection enable", "Time delay normal",
-            "Event algorithm inhibit", "Event algorithm inhibit ref", "Property list",
+            "Event algorithm inhibit", "Event algorithm inhibit ref"
     };
     String[] BinaryOutput_Proprietary = {
             "Cov period", "Cov min send time", "Acked transitions",
@@ -125,20 +136,20 @@ public class DistechController {
             "Cov period", "Cov min send time", "Acked transitions",
     };
     String[] Calendar_Mandatory = {
-            "Object identifier", "Object name", "Object type", "Present value", "Date list", "Property list",
+            "Object identifier", "Object name", "Object type", "Present value", "Date list"
     };
     String[] Calendar_Optional = {
             "Description",
     };
     String[] Calendar_Proprietary = {
-            "Time to next state", "Next state",
+            "Time to next state", "Next state"
     };
     String[] Device_Mandatory = {
             "Object identifier", "Object name", "Object type", "System status", "Vendor name", "Vendor identifier",
             "Model name", "Firmware revision", "Application software version", "Protocol version", "Protocol revision",
             "Protocol services supported", "Protocol object types supported", "Object list", "Max apdu length accepted",
             "Segmentation supported", "Max segments accepted", "Apdu timeout", "Number of apdu retries",
-            "Device address binding", "Database revision", "Property list",
+            "Device address binding", "Database revision"
     };
     String[] Device_Optional = {
             "Location", "Description", "Local date", "Local time", "Utc offset", "Daylight savings status",
@@ -146,7 +157,7 @@ public class DistechController {
             "Backup failure timeout", "Backup preparation time", "Restore preparation time", "Restore completion time",
             "Backup and restore state", "Active cov subscriptions", "Last restart reason", "Time of device restart",
             "Restart notification recipients", "Utc time synchronization recipients", "Max master", "Max info frames",
-            "Time synchronization interval", "Align intervals", "Interval offset",
+            "Time synchronization interval", "Align intervals", "Interval offset"
     };
     String[] Device_Proprietary = {
 
@@ -154,20 +165,20 @@ public class DistechController {
     String[] EventEnrollment_Mandatory = {
             "Object identifier", "Object name", "Object type", "Event type", "Notify type", "Event parameters",
             "Object property reference", "Event state", "Event enable", "Notification class", "Event time stamps",
-            "Event detection enable", "Status flags", "Reliability", "Property list",
+            "Event detection enable", "Status flags", "Reliability"
     };
     String[] EventEnrollment_Optional = {
-            "Description", "Acked transitions", "Event message texts", "Event message texts config", "Time delay normal",
+            "Description", "Acked transitions", "Event message texts", "Event message texts config", "Time delay normal"
     };
     String[] EventEnrollment_Proprietary = {
 
     };
     String[] File_Mandatory = {
             "Object identifier", "Object name", "Object type", "File type", "File size", "Modification date", "Archive",
-            "Read only", "File access method", "Property list",
+            "Read only", "File access method"
     };
     String[] File_Optional = {
-            "Description",
+            "Description"
     };
     String[] File_Proprietary = {
 
@@ -176,7 +187,7 @@ public class DistechController {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
             "Out of service", "Output units", "Manipulated variable reference", "Controlled variable reference",
             "Controlled variable value", "Controlled variable units", "Setpoint reference", "Setpoint", "Action",
-            "Priority for writing", "Property list",
+            "Priority for writing"
     };
     String[] Loop_Optional = {
             "Description", "Reliability", "Update interval", "Proportional constant", "Proportional constant units",
@@ -184,72 +195,71 @@ public class DistechController {
             "Maximum output", "Minimum output", "Cov increment", "Time delay", "Notification class", "Error limit",
             "Deadband", "Event enable", "Notify type", "Event time stamps", "Event message texts",
             "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
-            "Event algorithm inhibit ref",
+            "Event algorithm inhibit ref"
     };
     String[] Loop_Proprietary = {
             "Loopdeadband", "Saturation time", "Cov period", "Cov min send time", "Ramp time",
-            "Saturation time low limit enable", "Saturation time high limit enable", "Acked transitions",
+            "Saturation time low limit enable", "Saturation time high limit enable", "Acked transitions"
     };
     String[] Multi_stateInput_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Number of states", "Property list",
+            "Out of service", "Number of states"
     };
     String[] Multi_stateInput_Optional = {
             "Description", "Device type", "Reliability", "State text", "Time delay", "Notification class", "Alarm values",
             "Fault values", "Event enable", "Notify type", "Event time stamps", "Event message texts",
             "Event message texts config", "Event detection enable", "Time delay normal", "Event algorithm inhibit",
-            "Event algorithm inhibit ref",
+            "Event algorithm inhibit ref"
     };
     String[] Multi_stateInput_Proprietary = {
-            "Cov period", "Cov min send time", "Acked transitions",
+            "Cov period", "Cov min send time", "Acked transitions"
     };
     String[] Multi_stateValue_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Status flags", "Event state",
-            "Out of service", "Number of states",
+            "Out of service", "Number of states"
     };
     String[] Multi_stateValue_Optional = {
             "Description", "Reliability", "State text", "Priority array", "Relinquish default", "Time delay",
             "Notification class", "Alarm values", "Fault values", "Event enable", "Notify type", "Event time stamps",
             "Event message texts", "Event message texts config", "Event detection enable", "Time delay normal",
-            "Event algorithm inhibit", "Event algorithm inhibit ref", "Property list",
+            "Event algorithm inhibit", "Event algorithm inhibit ref"
     };
     String[] Multi_stateValue_Proprietary = {
-            "Cov period", "Cov min send time", "Acked transitions",
+            "Cov period", "Cov min send time", "Acked transitions"
     };
     String[] Program_Mandatory = {
             "Object identifier", "Object name", "Object type", "Program state", "Program change", "Status flags",
-            "Out of service", "Property list",
+            "Out of service"
     };
     String[] Program_Optional = {
-            "Description", "Description of halt", "Reason for halt", "Reliability",
+            "Description", "Description of halt", "Reason for halt", "Reliability"
     };
     String[] Program_Proprietary = {
 
     };
     String[] NotificationClass_Mandatory = {
             "Object identifier", "Object name", "Object type", "Notification class", "Priority", "Ack required",
-            "Recipient list", "Property list",
+            "Recipient list"
     };
     String[] NotificationClass_Optional = {
-            "Description",
+            "Description"
     };
     String[] NotificationClass_Proprietary = {
 
     };
     String[] Schedule_Mandatory = {
             "Object identifier", "Object name", "Object type", "Present value", "Effective period", "Schedule default",
-            "List of object property references", "Priority for writing", "Status flags", "Out of service",
-            "Property list",
+            "List of object property references", "Priority for writing", "Status flags", "Out of service"
     };
     String[] Schedule_Optional = {
-            "Description", "Weekly schedule", "Exception schedule", "Reliability",
+            "Description", "Weekly schedule", "Exception schedule", "Reliability"
     };
     String[] Schedule_Proprietary = {
-            "Time to next state", "Next state",
+            "Time to next state", "Next state"
     };
     String[] TrendLog_Mandatory = {
             "Object identifier", "Object name", "Object type", "Enable", "Stop when full", "Buffer size", "Log buffer",
-            "Record count", "Total record count", "Logging type", "Status flags", "Event state", "Property list",
+            "Record count", "Total record count", "Logging type", "Status flags", "Event state"
     };
     String[] TrendLog_Optional = {
             "Description", "Start time", "Stop time", "Log device object property", "Log interval",
@@ -257,7 +267,7 @@ public class DistechController {
             "Reliability", "Notification threshold", "Records since notification", "Last notify record",
             "Notification class", "Event enable", "Acked transitions", "Notify type", "Event time stamps",
             "Event message texts", "Event message texts config", "Event detection enable", "Event algorithm inhibit",
-            "Event algorithm inhibit ref",
+            "Event algorithm inhibit ref"
     };
     String[] TrendLog_Proprietary = {
 
@@ -478,7 +488,5 @@ public class DistechController {
         if(!picFailed) reportText += "RESULT pass " + picTestName + "\n";
         report.writeReport(reportText);
         appendices.writeReport(appendixText);
-
-
     }
 }

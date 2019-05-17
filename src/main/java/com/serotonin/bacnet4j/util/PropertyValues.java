@@ -55,7 +55,7 @@ public class PropertyValues implements Iterable<ObjectPropertyReference>, Serial
     public Encodable get(ObjectPropertyReference opr) throws PropertyValueException {
         Encodable e = getNoErrorCheck(opr);
 
-        if (e instanceof BACnetError)
+        if (e instanceof BACnetError) 
             throw new PropertyValueException((BACnetError) e);
 
         return e;
