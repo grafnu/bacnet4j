@@ -5,6 +5,11 @@ out/
 build/
 readings/
 .idea/codeStyles
-
-
 /bin/
+.settings
+tmp
+.classpath
+bacnet4j.eml
+bacnet4j.iml
+bacnet4j.userlibraries
+
