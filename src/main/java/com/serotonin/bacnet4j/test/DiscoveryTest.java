@@ -69,7 +69,6 @@ public class DiscoveryTest {
     @SuppressWarnings("unchecked")
     private static void doWhoIs(LoopDevice loopDevice)
             throws BACnetException, InterruptedException {
-
         LocalDevice localDevice = loopDevice.getLocalDevice();
 
         System.err.println("Sending whois...");

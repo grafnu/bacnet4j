@@ -253,22 +253,22 @@ public class PropertyIdentifier extends Enumerated {
     public static final PropertyIdentifier lockStatus = new PropertyIdentifier(233);
     public static final PropertyIdentifier maskedAlarmValues = new PropertyIdentifier(234);
     public static final PropertyIdentifier securedStatus = new PropertyIdentifier(235);
-    public static final PropertyIdentifier passbackMode = new PropertyIdentifier(300); // added by Joel
+    public static final PropertyIdentifier passbackMode = new PropertyIdentifier(300);
     public static final PropertyIdentifier backupAndRestoreState = new PropertyIdentifier(338);
     public static final PropertyIdentifier backupPreparationTime = new PropertyIdentifier(339);
     public static final PropertyIdentifier restoreCompletionTime = new PropertyIdentifier(340);
     public static final PropertyIdentifier restorePreparationTime = new PropertyIdentifier(341);
     
     public static final PropertyIdentifier eventMessageTexts = new PropertyIdentifier(351);
-    public static final PropertyIdentifier eventMessageTextsConfig = new PropertyIdentifier(352); // added by Joel
-    public static final PropertyIdentifier eventDetectionEnable = new PropertyIdentifier(353); // added by Joel
-    public static final PropertyIdentifier eventAlgorithmInhibit = new PropertyIdentifier(354); // added by Joel 
-    public static final PropertyIdentifier eventAlgorithmInhibitRef = new PropertyIdentifier(355); // added by Joel
-    public static final PropertyIdentifier timeDelayNormal = new PropertyIdentifier(356); // added by Joel
+    public static final PropertyIdentifier eventMessageTextsConfig = new PropertyIdentifier(352);
+    public static final PropertyIdentifier eventDetectionEnable = new PropertyIdentifier(353);
+    public static final PropertyIdentifier eventAlgorithmInhibit = new PropertyIdentifier(354);
+    public static final PropertyIdentifier eventAlgorithmInhibitRef = new PropertyIdentifier(355);
+    public static final PropertyIdentifier timeDelayNormal = new PropertyIdentifier(356);
     public static final PropertyIdentifier reliabilityEvaluationInhibit = new PropertyIdentifier(357);
-    public static final PropertyIdentifier faultHighLimit = new PropertyIdentifier(388); // added by Joel
-    public static final PropertyIdentifier faultLowLimit = new PropertyIdentifier(389); // added by Joel
-    public static final PropertyIdentifier profileLocation = new PropertyIdentifier(485); // added by Joel
+    public static final PropertyIdentifier faultHighLimit = new PropertyIdentifier(388);
+    public static final PropertyIdentifier faultLowLimit = new PropertyIdentifier(389);
+    public static final PropertyIdentifier profileLocation = new PropertyIdentifier(485);
 
     public static final PropertyIdentifier[] ALL = { ackedTransitions, ackRequired, action, actionText, activeText,
             activeVtSessions, alarmValue, alarmValues, all, allWritesSuccessful, apduSegmentTimeout, apduTimeout,
