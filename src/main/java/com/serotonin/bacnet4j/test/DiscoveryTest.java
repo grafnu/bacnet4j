@@ -49,16 +49,12 @@ public class DiscoveryTest {
     private static List<RemoteDevice> allDevices = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-//        if (args.length != 3) {
-//            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr subcmd");
-//        }
-//        String localIpAddr = args[0];
-//        String broadcastIpAddr = args[1];
-//        boolean loopDiscover = "loop".equals(args[2]);
-
-        String localIpAddr = "172.17.0.1";
-        String broadcastIpAddr = "172.17.255.255";
-        boolean loopDiscover = false;
+        if (args.length != 3) {
+            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr subcmd");
+        }
+        String localIpAddr = args[0];
+        String broadcastIpAddr = args[1];
+        boolean loopDiscover = "loop".equals(args[2]);
 
         LoopDevice loopDevice = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
 
