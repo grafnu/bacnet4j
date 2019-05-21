@@ -258,7 +258,7 @@ public class LoopDevice implements Runnable {
             getMso0().setProperty(PropertyIdentifier.presentValue, new UnsignedInteger(2));
             while (!isTerminate()) {
                 ai0value = getNewRandomValue();
-//                System.out.println("Change values of LoopDevice " + this + "=" + ai0value);
+                System.out.println("Change values of LoopDevice " + this + "=" + ai0value);
 
                 // Update the values in the objects.
                 ai0.setProperty(PropertyIdentifier.presentValue, new Real(ai0value));

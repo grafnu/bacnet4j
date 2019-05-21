@@ -5,17 +5,17 @@
  *
  * Copyright (C) 2006-2009 Serotonin Software Technologies Inc. http://serotoninsoftware.com
  * @author Matthew Lohbihler
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA.
@@ -28,7 +28,7 @@ import com.serotonin.bacnet4j.event.DeviceEventAdapter;
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
-//import com.serotonin.bacnet4j.test.BacnetDriver.Listener;
+import com.serotonin.bacnet4j.test.BacnetDriver.Listener;
 import com.serotonin.bacnet4j.transport.Transport;
 import com.serotonin.bacnet4j.type.constructed.ObjectPropertyReference;
 import com.serotonin.bacnet4j.type.constructed.SequenceOf;
@@ -63,14 +63,13 @@ public class DiscoveryTest {
             if (!loopDiscover) {
                 loopDevice.doTerminate();
             }
-            
         }
     }
 
     @SuppressWarnings("unchecked")
     private static void doWhoIs(LoopDevice loopDevice)
-        throws BACnetException, InterruptedException {
-        
+            throws BACnetException, InterruptedException {
+
         LocalDevice localDevice = loopDevice.getLocalDevice();
 
         System.err.println("Sending whois...");
@@ -94,10 +93,10 @@ public class DiscoveryTest {
                 System.out.println("Query remote device " + d);
                 RequestUtils.getExtendedDeviceInformation(localDevice, d);
                 List<ObjectIdentifier>
-                    oids =
-                    ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
-                        localDevice, d, d.getObjectIdentifier(), PropertyIdentifier.objectList))
-                        .getValues();
+                        oids =
+                        ((SequenceOf<ObjectIdentifier>) RequestUtils.sendReadPropertyAllowNull(
+                                localDevice, d, d.getObjectIdentifier(), PropertyIdentifier.objectList))
+                                .getValues();
 
                 PropertyReferences refs = new PropertyReferences();
                 for (ObjectIdentifier oid : oids)
