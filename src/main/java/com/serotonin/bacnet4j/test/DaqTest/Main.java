@@ -5,7 +5,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
 
     if (args.length < 3) {
-      throw new IllegalArgumentException("Usage: bacnetTestId, broadcastIp, localIp");
+      throw new IllegalArgumentException("Usage: bacnetTestId broadcastIp localIp");
     }
 
     String bacnetTestId = args[0];

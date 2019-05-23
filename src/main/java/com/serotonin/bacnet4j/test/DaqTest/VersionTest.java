@@ -37,37 +37,42 @@ public class VersionTest {
       localDevice = connection.getLocalDevice();
       System.err.println("Sending whois...");
       localDevice.sendGlobalBroadcast(new WhoIsRequest());
-      // Wait a bit for responses to come in.
       System.err.println("Waiting...");
       Thread.sleep(5000);
       System.err.println("Processing...");
-      getVersion();
+      checkDevicesVersionAndGenerateReport();
       connection.doTerminate();
     }
   }
 
-  private void getVersion() {
-    try {
+  private void checkDevicesVersionAndGenerateReport() {
       for (RemoteDevice remoteDevice : localDevice.getRemoteDevices()) {
-        Map<PropertyIdentifier, Encodable> values = RequestUtils.getProperties(localDevice,
-            remoteDevice, null, PropertyIdentifier.vendorIdentifier, PropertyIdentifier.vendorName,
-            PropertyIdentifier.objectList, PropertyIdentifier.objectName,
-            PropertyIdentifier.modelName, PropertyIdentifier.firmwareRevision,
-            PropertyIdentifier.applicationSoftwareVersion, PropertyIdentifier.description,
-            PropertyIdentifier.location, PropertyIdentifier.protocolVersion);
-        getDeviceVersion(values);
-        String formattedMacAddress =
+        Map<PropertyIdentifier, Encodable> values = getDeviceVersionProperties(localDevice, remoteDevice);
+        checkDeviceVersion(values);
+        String formattedDeviceMacAddress =
             remoteDevice.getAddress().getMacAddress().toString().replaceAll("\\[|\\]", "");
-        printReport(formattedMacAddress);
+        generateReport(formattedDeviceMacAddress);
       }
-    } catch (BACnetException e) {
-      System.out.println(e.getMessage());
-      connection.doTerminate();
-    }
     System.out.println(appendixText);
   }
 
-  private void getDeviceVersion(Map<PropertyIdentifier, Encodable> values) {
+  private Map<PropertyIdentifier, Encodable> getDeviceVersionProperties(LocalDevice localDevice, RemoteDevice remoteDevice) {
+    Map<PropertyIdentifier, Encodable> values = null;
+    try {
+      values = RequestUtils.getProperties(localDevice,
+              remoteDevice, null, PropertyIdentifier.vendorIdentifier, PropertyIdentifier.vendorName,
+              PropertyIdentifier.objectList, PropertyIdentifier.objectName,
+              PropertyIdentifier.modelName, PropertyIdentifier.firmwareRevision,
+              PropertyIdentifier.applicationSoftwareVersion, PropertyIdentifier.description,
+              PropertyIdentifier.location, PropertyIdentifier.protocolVersion);
+    } catch(BACnetException e) {
+      System.out.println(e.getMessage());
+      connection.doTerminate();
+    }
+    return values;
+  }
+
+  private void checkDeviceVersion(Map<PropertyIdentifier, Encodable> values) {
     appendixText += ("\n");
     for (Map.Entry<PropertyIdentifier, Encodable> property : values.entrySet()) {
       String key = property.getKey().toString();
@@ -105,9 +110,9 @@ public class VersionTest {
     appendixText += "\n";
   }
 
-  private void printReport(String macAddress) {
-    Report report = new Report("tmp/" + macAddress + "_BacnetVersionTestReport.txt");
-    Report appendices = new Report("tmp/" + macAddress + "_BacnetVersionTest_APPENDIX.txt");
+  private void generateReport(String deviceMacAddress) {
+    Report report = new Report("tmp/" + deviceMacAddress + "_BacnetVersionTestReport.txt");
+    Report appendices = new Report("tmp/" + deviceMacAddress + "_BacnetVersionTest_APPENDIX.txt");
     if (testPassed) {
       report.writeReport(passedReportText);
     } else {

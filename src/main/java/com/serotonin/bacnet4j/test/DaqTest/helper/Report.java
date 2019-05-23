@@ -8,10 +8,6 @@ public class Report {
 
   String reportFilename = "tmp/report.txt";
 
-  public Report() {
-    // constructor...
-  }
-
   public Report(String reportFilename) {
     this.reportFilename = reportFilename;
   }
@@ -24,8 +20,9 @@ public class Report {
 
       File dir = new File(directory[directory.length - 2]);
 
-      if (!dir.exists())
+      if (!dir.exists()) {
         dir.mkdirs();
+      }
 
       BufferedWriter writer = new BufferedWriter(new FileWriter(reportFilename));
       writer.write(report);
