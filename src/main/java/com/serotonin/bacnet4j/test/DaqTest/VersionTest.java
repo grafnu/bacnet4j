@@ -1,11 +1,13 @@
 package com.serotonin.bacnet4j.test.DaqTest;
 
+import java.util.List;
 import java.util.Map;
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.RemoteDevice;
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
+import com.serotonin.bacnet4j.test.DaqTest.helper.BacnetValidation;
 import com.serotonin.bacnet4j.test.DaqTest.helper.Connection;
 import com.serotonin.bacnet4j.test.DaqTest.helper.Report;
 import com.serotonin.bacnet4j.type.Encodable;
@@ -15,14 +17,15 @@ import com.serotonin.bacnet4j.util.RequestUtils;
 public class VersionTest {
 
   private Connection connection;
+  private BacnetValidation validator;
   private static LocalDevice localDevice;
   private String localIp = "";
   private String broadcastIp = "";
 
   private String appendixText = "";
   private boolean testPassed = false;
-  private String passedReportText = "RESULT pass protocol.bacnet.version";
-  private String failedReportText = "RESULT fail protocol.bacnet.version";
+  private String passedReportText = "RESULT pass protocol.bacnet.version\n";
+  private String failedReportText = "RESULT fail protocol.bacnet.version\n";
   private String errorPropertyMessage = "errorClass=Property, errorCode=Unknown property";
 
   public VersionTest(String localIp, String broadcastIp) throws Exception {
@@ -40,7 +43,15 @@ public class VersionTest {
       System.err.println("Waiting...");
       Thread.sleep(5000);
       System.err.println("Processing...");
-      checkDevicesVersionAndGenerateReport();
+      validator = new BacnetValidation(localDevice);
+      boolean bacnetSupported = validator.checkIfBacnetSupported();
+      if (bacnetSupported) {
+        checkDevicesVersionAndGenerateReport();
+      } else {
+        appendixText += "Bacnet not supported.\n";
+        System.out.println(appendixText);
+        generateReport("");
+      }
       connection.doTerminate();
     }
   }
