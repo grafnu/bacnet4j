@@ -1,0 +1,18 @@
+
+Protocol version : 1
+Model name : BACnet4J LoopDevice
+Vendor identifier : 236
+Vendor name : Serotonin Software Technologies, Inc.
+Location : 
+Object list : [Device 654
+               Analog Input 0                    Analog Input 1     
+               Binary Input 0                    Binary Input 1     
+               Multi-state Output 0               Analog Output 0]   
+
+Firmware revision : not set
+Application software version : 1.0.1
+Description : 
+Object name : BACnet device
+
+
+
