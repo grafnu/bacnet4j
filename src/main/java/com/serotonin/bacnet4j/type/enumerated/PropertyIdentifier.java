@@ -250,10 +250,21 @@ public class PropertyIdentifier extends Enumerated {
     public static final PropertyIdentifier lockStatus = new PropertyIdentifier(233);
     public static final PropertyIdentifier maskedAlarmValues = new PropertyIdentifier(234);
     public static final PropertyIdentifier securedStatus = new PropertyIdentifier(235);
+    public static final PropertyIdentifier passbackMode = new PropertyIdentifier(300);
     public static final PropertyIdentifier backupAndRestoreState = new PropertyIdentifier(338);
     public static final PropertyIdentifier backupPreparationTime = new PropertyIdentifier(339);
     public static final PropertyIdentifier restoreCompletionTime = new PropertyIdentifier(340);
     public static final PropertyIdentifier restorePreparationTime = new PropertyIdentifier(341);
+    public static final PropertyIdentifier eventMessageTexts = new PropertyIdentifier(351);
+    public static final PropertyIdentifier eventMessageTextsConfig = new PropertyIdentifier(352);
+    public static final PropertyIdentifier eventDetectionEnable = new PropertyIdentifier(353);
+    public static final PropertyIdentifier eventAlgorithmInhibit = new PropertyIdentifier(354);
+    public static final PropertyIdentifier eventAlgorithmInhibitRef = new PropertyIdentifier(355);
+    public static final PropertyIdentifier timeDelayNormal = new PropertyIdentifier(356);
+    public static final PropertyIdentifier reliabilityEvaluationInhibit = new PropertyIdentifier(357);
+    public static final PropertyIdentifier faultHighLimit = new PropertyIdentifier(388);
+    public static final PropertyIdentifier faultLowLimit = new PropertyIdentifier(389);
+    public static final PropertyIdentifier profileLocation = new PropertyIdentifier(485);
 
     public static final PropertyIdentifier[] ALL = { ackedTransitions, ackRequired, action, actionText, activeText,
             activeVtSessions, alarmValue, alarmValues, all, allWritesSuccessful, apduSegmentTimeout, apduTimeout,
@@ -291,8 +302,10 @@ public class PropertyIdentifier extends Enumerated {
             structuredObjectList, subordinateAnnotations, subordinateList, actualShedLevel, dutyWindow,
             expectedShedLevel, fullDutyBaseline, requestedShedLevel, shedDuration, shedLevelDescriptions, shedLevels,
             stateDescription, doorAlarmState, doorExtendedPulseTime, doorMembers, doorOpenTooLongTime, doorPulseTime,
-            doorStatus, doorUnlockDelayTime, lockStatus, maskedAlarmValues, securedStatus, backupAndRestoreState,
-            backupPreparationTime, restoreCompletionTime, restorePreparationTime, };
+            doorStatus, doorUnlockDelayTime, lockStatus, maskedAlarmValues, securedStatus, passbackMode, backupAndRestoreState,
+            backupPreparationTime, restoreCompletionTime, restorePreparationTime, eventMessageTexts, eventMessageTextsConfig,
+            eventDetectionEnable, eventAlgorithmInhibit, eventAlgorithmInhibitRef, timeDelayNormal, reliabilityEvaluationInhibit,
+            faultHighLimit, faultLowLimit, profileLocation};
 
     public PropertyIdentifier(int value) {
         super(value);
@@ -745,6 +758,8 @@ public class PropertyIdentifier extends Enumerated {
             return "Masked Alarm Values";
         if (type == securedStatus.intValue())
             return "Secured Status";
+        if (type == passbackMode.intValue())
+            return "Pass back mode";
         if (type == backupAndRestoreState.intValue())
             return "Backup And Restore State";
         if (type == backupPreparationTime.intValue())
@@ -753,6 +768,26 @@ public class PropertyIdentifier extends Enumerated {
             return "Restore Completion Time";
         if (type == restorePreparationTime.intValue())
             return "Restore Preparation Time";
+        if (type == eventMessageTexts.intValue())
+            return "Event message texts";
+        if (type == eventMessageTextsConfig.intValue())
+            return "Event message texts config";
+        if (type == eventDetectionEnable.intValue())
+            return "Event detection enable";
+        if (type == eventAlgorithmInhibit.intValue())
+            return "Event algorithm inhibit";
+        if (type == eventAlgorithmInhibitRef.intValue())
+            return "Event algorithm inhibit ref";
+        if (type == timeDelayNormal.intValue())
+            return "Time delay normal";
+        if (type == reliabilityEvaluationInhibit.intValue())
+            return "Reliability evaluation Inhibit";
+        if (type == faultHighLimit.intValue())
+            return "Fault high limit";
+        if (type == faultLowLimit.intValue())
+            return "Fault low limit";
+        if (type == profileLocation.intValue())
+            return "Profile location";
         return "Unknown: " + type;
     }
 }
