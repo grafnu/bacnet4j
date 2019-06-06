@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bacnet4j.iml" filepath="$PROJECT_DIR$/.idea/modules/bacnet4j.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.google.iot-bacnet4j.iml" filepath="$PROJECT_DIR$/.idea/modules/com.google.iot-bacnet4j.iml" group="bacnet4j" />
     </modules>
   </component>
 </project>
