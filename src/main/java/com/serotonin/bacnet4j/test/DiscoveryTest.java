@@ -38,14 +38,12 @@ import com.serotonin.bacnet4j.util.PropertyReferences;
 import com.serotonin.bacnet4j.util.PropertyValues;
 import com.serotonin.bacnet4j.util.RequestUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Matthew Lohbihler
  */
 public class DiscoveryTest {
-    private static List<RemoteDevice> allDevices = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         if (args.length != 3) {
@@ -68,7 +66,6 @@ public class DiscoveryTest {
     @SuppressWarnings("unchecked")
     private static void doWhoIs(LoopDevice loopDevice)
         throws BACnetException, InterruptedException {
-        
         LocalDevice localDevice = loopDevice.getLocalDevice();
 
         System.err.println("Sending whois...");
@@ -81,9 +78,7 @@ public class DiscoveryTest {
         System.err.println("Processing...");
         // Get extended information for all remote devices.
         int deviceId = loopDevice.getDeviceId();
-        System.out.println("device: " + deviceId);
         for (RemoteDevice d : localDevice.getRemoteDevices()) {
-            System.out.println("device: " + d.getObjectIdentifier());
             try {
                 if (d.getInstanceNumber() == deviceId) {
                     System.out.println("Ignoring other device with self-same ID " + deviceId);
@@ -144,5 +139,4 @@ public class DiscoveryTest {
 
         refs.add(oid, PropertyIdentifier.presentValue);
     }
-
 }
