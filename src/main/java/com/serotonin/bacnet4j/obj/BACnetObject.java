@@ -80,8 +80,9 @@ public class BACnetObject implements Serializable {
 
     public BACnetObject(LocalDevice localDevice, ObjectIdentifier id) {
         this.localDevice = localDevice;
-        if (id == null)
+        if (id == null) {
             throw new IllegalArgumentException("object id cannot be null");
+        }
         this.id = id;
         setDefaultValues();
     }
@@ -89,11 +90,16 @@ public class BACnetObject implements Serializable {
     public BACnetObject(LocalDevice localDevice, ObjectIdentifier id, boolean setDefaultValues) throws BACnetServiceException {
         this.localDevice = localDevice;
         this.setDefaultValues = setDefaultValues;
-        if (id == null)
+        if (id == null) {
             throw new IllegalArgumentException("object id cannot be null");
+        }
         this.id = id;
-        if(setDefaultValues){ setDefaultValues(); }
-        else { setProperty(PropertyIdentifier.objectName, new CharacterString(id.toString())); }
+        if(setDefaultValues){
+            setDefaultValues();
+        }
+        else {
+            setProperty(PropertyIdentifier.objectName, new CharacterString(id.toString()));
+        }
     }
 
     private void setDefaultValues() {
