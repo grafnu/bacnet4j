@@ -94,7 +94,7 @@ public class BACnetObject implements Serializable {
             throw new IllegalArgumentException("object id cannot be null");
         }
         this.id = id;
-        if(setDefaultValues){
+        if(setDefaultValues) {
             setDefaultValues();
         }
         else {
