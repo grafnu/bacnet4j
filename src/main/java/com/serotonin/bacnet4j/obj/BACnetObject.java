@@ -76,6 +76,7 @@ public class BACnetObject implements Serializable {
     private final ObjectIdentifier id;
     private final Map<PropertyIdentifier, Encodable> properties = new HashMap<PropertyIdentifier, Encodable>();
     private final List<ObjectCovSubscription> covSubscriptions = new ArrayList<ObjectCovSubscription>();
+    private boolean setDefaultValues = true;
 
     public BACnetObject(LocalDevice localDevice, ObjectIdentifier id) {
         this.localDevice = localDevice;
@@ -87,6 +88,7 @@ public class BACnetObject implements Serializable {
 
     public BACnetObject(LocalDevice localDevice, ObjectIdentifier id, boolean setDefaultValues) throws BACnetServiceException {
         this.localDevice = localDevice;
+        this.setDefaultValues = setDefaultValues;
         if (id == null)
             throw new IllegalArgumentException("object id cannot be null");
         this.id = id;
@@ -405,7 +407,7 @@ public class BACnetObject implements Serializable {
         // Ensure that all required properties have values.
         List<PropertyTypeDefinition> defs = ObjectProperties.getRequiredPropertyTypeDefinitions(id.getObjectType());
         for (PropertyTypeDefinition def : defs) {
-            if (getProperty(def.getPropertyIdentifier()) == null)
+            if (getProperty(def.getPropertyIdentifier()) == null && setDefaultValues)
                 throw new BACnetServiceException(ErrorClass.property, ErrorCode.other, "Required property not set: "
                         + def.getPropertyIdentifier());
         }
