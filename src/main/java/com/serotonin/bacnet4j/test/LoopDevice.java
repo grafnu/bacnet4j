@@ -5,17 +5,17 @@
  *
  * Copyright (C) 2006-2009 Serotonin Software Technologies Inc. http://serotoninsoftware.com
  * @author Matthew Lohbihler
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA.
@@ -54,23 +54,24 @@ import com.serotonin.bacnet4j.type.primitive.Real;
 import com.serotonin.bacnet4j.type.primitive.UnsignedInteger;
 
 /**
- * 
+ *
  * software only device default local loop ;-)
- * 
+ *
  * @author mlohbihler
  * @author aploese
  */
 public class LoopDevice implements Runnable {
 
-    private final int deviceId = (int) Math.floor(Math.random() * 1000.0);
+    private final int deviceId;
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr");
+        if (args.length != 3) {
+            throw new RuntimeException("Usage: bacnetId localIpAddr broadcastIpAddr");
         }
-        String localIpAddr = args[0];
-        String broadcastIpAddr = args[1];
-        LoopDevice ld = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
+        int deviceId = Integer.parseInt(args[0]);
+        String localIpAddr = args[1];
+        String broadcastIpAddr = args[2];
+        LoopDevice ld = new LoopDevice(deviceId, broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
         // java never terminates because of background daemon thread.
     }
 
@@ -84,17 +85,22 @@ public class LoopDevice implements Runnable {
     private BACnetObject mso0;
     private BACnetObject ao0;
 
-    public LoopDevice(String broadcastAddress, int port) throws BACnetServiceException, Exception {
+    public LoopDevice(String broadcastAddress, int port) throws Exception {
         this(broadcastAddress, port, IpNetwork.DEFAULT_BIND_IP);
     }
 
-    public LoopDevice(String broadcastAddress, int port, String localAddress) throws BACnetServiceException, Exception {
+    public LoopDevice(String broadcastAddress, int port, String defaultBindIp) throws Exception {
+        this((int) Math.floor(Math.random() * 1000.0), broadcastAddress, port, defaultBindIp);
+    }
+
+    public LoopDevice(int deviceId, String broadcastAddress, int port, String localAddress) throws Exception {
+        this.deviceId = deviceId;
         network = new IpNetwork(broadcastAddress, port,
             IpNetwork.DEFAULT_BIND_IP, 0, localAddress);
         System.out.println("Creating LoopDevice id " + deviceId);
-      Transport transport = new Transport(network);
-      transport.setTimeout(1000);
-      localDevice = new LocalDevice(deviceId, transport);
+        Transport transport = new Transport(network);
+        transport.setTimeout(1000);
+        localDevice = new LocalDevice(deviceId, transport);
         try {
             localDevice.getEventHandler().addListener(new DeviceEventListener() {
 
@@ -126,29 +132,29 @@ public class LoopDevice implements Runnable {
 
                 @Override
                 public void covNotificationReceived(UnsignedInteger subscriberProcessIdentifier,
-                        RemoteDevice initiatingDevice, ObjectIdentifier monitoredObjectIdentifier,
-                        UnsignedInteger timeRemaining, SequenceOf<PropertyValue> listOfValues) {
+                    RemoteDevice initiatingDevice, ObjectIdentifier monitoredObjectIdentifier,
+                    UnsignedInteger timeRemaining, SequenceOf<PropertyValue> listOfValues) {
                     System.out.println("loopDevice covNotificationReceived");
                 }
 
                 @Override
                 public void eventNotificationReceived(UnsignedInteger processIdentifier, RemoteDevice initiatingDevice,
-                        ObjectIdentifier eventObjectIdentifier, TimeStamp timeStamp, UnsignedInteger notificationClass,
-                        UnsignedInteger priority, EventType eventType, CharacterString messageText,
-                        NotifyType notifyType, Boolean ackRequired, EventState fromState, EventState toState,
-                        NotificationParameters eventValues) {
+                    ObjectIdentifier eventObjectIdentifier, TimeStamp timeStamp, UnsignedInteger notificationClass,
+                    UnsignedInteger priority, EventType eventType, CharacterString messageText,
+                    NotifyType notifyType, Boolean ackRequired, EventState fromState, EventState toState,
+                    NotificationParameters eventValues) {
                     System.out.println("loopDevice eventNotificationReceived");
                 }
 
                 @Override
                 public void textMessageReceived(RemoteDevice textMessageSourceDevice, Choice messageClass,
-                        MessagePriority messagePriority, CharacterString message) {
+                    MessagePriority messagePriority, CharacterString message) {
                     System.out.println("loopDevice textMessageReceived");
                 }
 
                 @Override
                 public void privateTransferReceived(UnsignedInteger vendorId, UnsignedInteger serviceNumber,
-                        Encodable serviceParameters) {
+                    Encodable serviceParameters) {
                     System.out.println("loopDevice privateTransferReceived");
                 }
 
@@ -167,7 +173,7 @@ public class LoopDevice implements Runnable {
             // look for the big static block at the end;
             // properties of device object
             localDevice.getConfiguration().setProperty(PropertyIdentifier.modelName,
-                    new CharacterString("BACnet4J LoopDevice"));
+                new CharacterString("BACnet4J LoopDevice"));
 
             // Set up a few objects.
             ai0 = new BACnetObject(localDevice, localDevice.getNextInstanceObjectIdentifier(ObjectType.analogInput));
@@ -213,7 +219,7 @@ public class LoopDevice implements Runnable {
             bi1.setProperty(PropertyIdentifier.activeText, new CharacterString("Good"));
 
             mso0 = new BACnetObject(localDevice,
-                    localDevice.getNextInstanceObjectIdentifier(ObjectType.multiStateOutput));
+                localDevice.getNextInstanceObjectIdentifier(ObjectType.multiStateOutput));
             mso0.setProperty(PropertyIdentifier.objectName, new CharacterString("Vegetable"));
             mso0.setProperty(PropertyIdentifier.numberOfStates, new UnsignedInteger(4));
             mso0.setProperty(PropertyIdentifier.stateText, 1, new CharacterString("Tomato"));
@@ -241,7 +247,7 @@ public class LoopDevice implements Runnable {
     }
 
     public String toString() {
-      return "device-" + deviceId;
+        return "device-" + deviceId;
     }
 
     @Override
