@@ -46,14 +46,15 @@ import java.util.List;
 public class DiscoveryTest {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 3) {
-            throw new RuntimeException("Usage: localIpAddr broadcastIpAddr subcmd");
+        if (args.length != 4) {
+            throw new RuntimeException("Usage: deviceId localIpAddr broadcastIpAddr subcmd");
         }
-        String localIpAddr = args[0];
-        String broadcastIpAddr = args[1];
-        boolean loopDiscover = "loop".equals(args[2]);
+        int deviceId = Integer.parseInt(args[0]);
+        String localIpAddr = args[1];
+        String broadcastIpAddr = args[2];
+        boolean loopDiscover = "loop".equals(args[3]);
 
-        LoopDevice loopDevice = new LoopDevice(broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
+        LoopDevice loopDevice = new LoopDevice(deviceId, broadcastIpAddr, IpNetwork.DEFAULT_PORT, localIpAddr);
 
         while (!loopDevice.isTerminate()) {
             doWhoIs(loopDevice);
